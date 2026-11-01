@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bandwidth or Capacity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground:      #EFF1F3;
+    --surface:     #FFFFFF;
+    --surface-2:   #F6F8FA;
+    --ink:         #14171B;
+    --ink-2:       #565D66;
+    --ink-3:       #858C95;
+    --rule:        #DBDFE4;
+    --rule-strong: #C2C8CF;
+    --accent:      #B07818;
+    --accent-fill: #D89A2E;
+    --accent-wash: #F6EAD2;
+    --pos:         #2C7A5B;
+    --warn:        #A8761A;
+    --neg:         #A8483C;
+    --shadow:      0 1px 2px rgba(20,23,27,.06), 0 8px 24px rgba(20,23,27,.05);
+
+    --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --f-body:    "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --f-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0E1114;
+      --surface:     #161A1F;
+      --surface-2:   #1C2127;
+      --ink:         #E4E8EC;
+      --ink-2:       #98A0A9;
+      --ink-3:       #6C747D;
+      --rule:        #272D34;
+      --rule-strong: #39414A;
+      --accent:      #E0AC4E;
+      --accent-fill: #D89A2E;
+      --accent-wash: #2A2317;
+      --pos:         #56AE87;
+      --warn:        #D8A245;
+      --neg:         #CE7568;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0E1114;
+    --surface:     #161A1F;
+    --surface-2:   #1C2127;
+    --ink:         #E4E8EC;
+    --ink-2:       #98A0A9;
+    --ink-3:       #6C747D;
+    --rule:        #272D34;
+    --rule-strong: #39414A;
+    --accent:      #E0AC4E;
+    --accent-fill: #D89A2E;
+    --accent-wash: #2A2317;
+    --pos:         #56AE87;
+    --warn:        #D8A245;
+    --neg:         #CE7568;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead { display: flex; flex-direction: column; gap: 20px; }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .eyebrow span.sep { color: var(--rule-strong); }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5.6vw, 3.7rem);
+    line-height: 1.03;
+    letter-spacing: -.028em;
+    margin: 0;
+    text-wrap: balance;
+    max-width: 17ch;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .deck {
+    max-width: 64ch;
+    font-size: 1.0625rem;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .deck strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- section scaffolding ---------- */
+
+  section { display: flex; flex-direction: column; gap: 22px; }
+
+  .sec-head { display: flex; flex-direction: column; gap: 7px; }
+
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: -.018em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .sec-note {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: .9375rem;
+    max-width: 68ch;
+  }
+
+  /* ---------- config cards ---------- */
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(222px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 18px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: var(--shadow);
+  }
+  .card.fresh { border-color: color-mix(in srgb, var(--accent) 42%, var(--rule)); }
+
+  .card-top { display: flex; flex-direction: column; gap: 3px; }
+
+  .card h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -.012em;
+    margin: 0;
+  }
+  .card .price {
+    font-family: var(--f-mono);
+    font-size: .8125rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .meters { display: flex; flex-direction: column; gap: 10px; }
+
+  .meter { display: flex; flex-direction: column; gap: 5px; }
+
+  .meter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .meter-row b {
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .track {
+    height: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    background: var(--accent-fill);
+    border-radius: 0 3px 3px 0;
+  }
+  .fill.dim { background: var(--rule-strong); }
+
+  .card-char {
+    margin: 0;
+    font-size: .875rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+    border-top: 1px solid var(--rule);
+    padding-top: 12px;
+  }
+
+  /* ---------- chart ---------- */
+
+  .figure {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 22px 20px 16px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .figure svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+  .fig-caption {
+    margin: 14px 0 0;
+    padding-top: 13px;
+    border-top: 1px solid var(--rule);
+    font-size: .8125rem;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+
+  .grid-line { stroke: var(--rule); stroke-width: 1; }
+  .axis-line { stroke: var(--rule-strong); stroke-width: 1; }
+  .tick-txt {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    fill: var(--ink-3);
+  }
+  .axis-title {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    fill: var(--ink-3);
+  }
+  .pt-label {
+    font-family: var(--f-body);
+    font-size: 12.5px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+  .pt-sub {
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    fill: var(--ink-2);
+  }
+  .dot { fill: var(--accent-fill); stroke: var(--surface); stroke-width: 2; }
+  .dot-ref { fill: none; stroke: var(--ink-3); stroke-width: 2; stroke-dasharray: 3 2.5; }
+  .link-line { stroke: var(--accent-fill); stroke-width: 1.5; stroke-dasharray: 4 3; opacity: .55; }
+  .cmp-line { stroke: var(--ink-3); stroke-width: 1.5; stroke-dasharray: 2 3; opacity: .8; }
+  .cmp-txt {
+    font-family: var(--f-mono);
+    font-size: 9.5px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    fill: var(--ink-3);
+  }
+  .hit { fill: transparent; cursor: pointer; }
+  .hit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .tip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: 3px;
+    padding: 8px 11px;
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transition: opacity .12s ease;
+    z-index: 10;
+    white-space: nowrap;
+  }
+  .tip.on { opacity: 1; }
+  .tip b { font-family: var(--f-body); font-size: 12.5px; display: block; margin-bottom: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .tip { transition: none; }
+  }
+
+  /* ---------- tables ---------- */
+
+  .scroller {
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: .875rem;
+  }
+  table.wide { min-width: 1160px; }
+  table.narrow { min-width: 760px; }
+
+  caption { display: none; }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--rule-strong);
+    text-align: left;
+    padding: 13px 13px;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: .8125rem;
+    letter-spacing: -.008em;
+    color: var(--ink);
+    z-index: 2;
+    vertical-align: bottom;
+    line-height: 1.3;
+  }
+  thead th:first-child {
+    left: 0;
+    z-index: 3;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  thead th small {
+    display: block;
+    font-family: var(--f-mono);
+    font-size: 9.5px;
+    font-weight: 400;
+    letter-spacing: .03em;
+    color: var(--ink-3);
+    margin-top: 3px;
+  }
+
+  tbody th {
+    position: sticky;
+    left: 0;
+    background: var(--surface);
+    text-align: left;
+    padding: 12px 13px;
+    font-weight: 500;
+    font-size: .8125rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    z-index: 1;
+    min-width: 168px;
+    line-height: 1.35;
+  }
+  tbody th small {
+    display: block;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  tbody td {
+    padding: 12px 13px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--ink-2);
+    line-height: 1.4;
+    font-size: .8125rem;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td { border-bottom: none; }
+
+  .num {
+    font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: .8125rem;
+  }
+  .unit { color: var(--ink-3); font-weight: 400; font-size: .6875rem; }
+
+  tr.band th, tr.band td { background: var(--surface-2); }
+
+  .flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--f-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 2px 6px 2px 5px;
+    border-radius: 2px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .flag::before {
+    content: "";
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    flex: none;
+  }
+  .flag.yes { color: var(--pos);  border-color: color-mix(in srgb, var(--pos) 35%, transparent); }
+  .flag.mid { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+  .flag.no  { color: var(--neg);  border-color: color-mix(in srgb, var(--neg) 35%, transparent); }
+  .flag.no::before { border-radius: 0; }
+  .flag.mid::before { border-radius: 1px; transform: rotate(45deg); }
+
+  .cell { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
+
+  /* ---------- verdict ---------- */
+
+  .verdicts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(262px, 1fr));
+    gap: 14px;
+  }
+
+  .verdict {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule-strong);
+    border-radius: 3px;
+    padding: 17px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: var(--shadow);
+  }
+  .verdict.pick { border-left-color: var(--accent-fill); }
+  .verdict.avoid { border-left-color: var(--neg); }
+
+  .verdict .cond {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .verdict h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    margin: 0;
+    letter-spacing: -.012em;
+  }
+  .verdict p { margin: 0; font-size: .875rem; color: var(--ink-2); line-height: 1.55; }
+
+  /* ---------- callout ---------- */
+
+  .callout {
+    background: var(--accent-wash);
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    border-radius: 3px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .callout .cond {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .callout p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 72ch;
+  }
+  .callout p + p { color: var(--ink-2); font-size: .9375rem; }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  footer h4 {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0;
+  }
+  footer p {
+    margin: 0;
+    font-size: .8125rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 78ch;
+  }
+  footer strong { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 620px) {
+    .wrap { padding: 40px 18px 72px; gap: 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">
+      <span>Local inference hardware</span>
+      <span class="sep">/</span>
+      <span>Prices rechecked 1 Nov 2026</span>
+      <span class="sep">/</span>
+      <span>Windows 11 + WSL2 workstation</span>
+    </div>
+    <h1>Every rig is short of <em>bandwidth</em> or short of <em>room</em>.</h1>
+    <p class="deck">
+      Token generation is memory-bandwidth-bound, and model size sets the floor on memory. Those two
+      numbers decide almost everything else, and nothing here is generous with both at a sane price, so
+      <strong>what you are really buying is memory.</strong> Seven weeks after the August pass, the
+      conclusions have moved: NVIDIA raised the DGX Spark 48% and the RTX 5090 trades 60% higher, while
+      Apple has not changed a price. The machine that looked expensive in August is now the value option.
+    </p>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2>The eleven configurations</h2>
+      <p class="sec-note">
+        Bars are scaled to the largest value in this comparison: 960&nbsp;GB of usable memory and
+        1,792&nbsp;GB/s of bandwidth. Prices are delivered cost at October street rates, including about
+        11% sales tax. Arrows mark what moved since the August pass.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Dual RTX 3090</h3>
+          <span class="price">~$3,660 delivered &middot; &uarr;5%</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>48 GB</b></div>
+            <div class="track"><div class="fill" style="width:10%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>936 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:52.2%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          The only genuinely cheap option left. Room for a 70B dense model, no FP4 or FP8 hardware,
+          700&nbsp;W and a lot of heat in the room.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Single RTX 5090</h3>
+          <span class="price">~$6,000 delivered &middot; &uarr;64%</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>32 GB</b></div>
+            <div class="track"><div class="fill" style="width:6.7%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>1,792 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:100%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Fastest silicon here, hardest ceiling, and the most damaged by October. New floor $4,921, used
+          floor $5,880: used now trades <em>above</em> new, which is what thin stock looks like.
+        </p>
+      </article>
+
+      <article class="card fresh">
+        <div class="card-top">
+          <h3>1&times; Radeon AI PRO R9700</h3>
+          <span class="price">~$2,550 delivered</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>32 GB</b></div>
+            <div class="track"><div class="fill" style="width:3.3%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>640 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:35.7%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          The cheapest 32&nbsp;GB on this page, at 42% of a 5090's cost for the same capacity. You pay with
+          36% of its bandwidth, a third of its prefill, and ROCm.
+        </p>
+      </article>
+
+      <article class="card fresh">
+        <div class="card-top">
+          <h3>2&times; Radeon AI PRO R9700</h3>
+          <span class="price">~$4,660 delivered</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>64 GB</b></div>
+            <div class="track"><div class="fill" style="width:6.7%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>640 GB/s</b></div>
+            <div class="track"><div class="fill dim" style="width:35.7%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          64&nbsp;GB for $1,000 more than dual 3090s, which is the only way to fit a 70B Q4 on AMD. Like
+          the Spark pair, the second card adds room and no single-stream speed.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>DGX Spark 64GB</h3>
+          <span class="price">~$5,550 delivered &middot; new SKU</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~55 GB</b></div>
+            <div class="track"><div class="fill" style="width:5.7%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>273 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:15.2%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Announced 3 Oct, partners ship 23 Oct. Costs more than the 128GB did in August and
+          <strong>cannot hold gpt-oss-120b</strong>, which was the Spark's whole argument.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>DGX Spark 128GB</h3>
+          <span class="price">~$7,700 delivered &middot; &uarr;48%</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~110 GB</b></div>
+            <div class="track"><div class="fill" style="width:11.5%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>273 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:15.2%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Still the only box architecturally identical to a GB200 target, but $4,699 became $6,950 in
+          October. The memory-value argument is gone.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>2&times; DGX Spark 128GB</h3>
+          <span class="price">~$15,400 delivered &middot; &uarr;40%</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~220 GB</b></div>
+            <div class="track"><div class="fill" style="width:22.9%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>273 GB/s</b></div>
+            <div class="track"><div class="fill dim" style="width:15.2%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Now costs more than a 256GB M5 Ultra and nearly as much as a 512GB one, for a quarter of the
+          bandwidth. Indefensible outside a hard CUDA requirement.
+        </p>
+      </article>
+
+      <article class="card fresh">
+        <div class="card-top">
+          <h3>M5 Ultra 256GB</h3>
+          <span class="price">~$12,000 delivered &middot; unchanged</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~230 GB</b></div>
+            <div class="track"><div class="fill" style="width:24%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>1,200 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:67%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Shipping since 22 Sep at the same price as August. Twice the memory of a 128GB Spark, 4.4&times;
+          the bandwidth, for $4,300 more. In August that gap was $5,000 the other way.
+        </p>
+      </article>
+
+      <article class="card fresh">
+        <div class="card-top">
+          <h3>M5 Ultra 512GB</h3>
+          <span class="price">~$24,750 delivered &middot; now priced</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~480 GB</b></div>
+            <div class="track"><div class="fill" style="width:50%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>1,200 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:67%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Orderable since 28 Oct at $22,299. The memory alone is $15,500, so the second 256&nbsp;GB costs
+          $45/GB against $25/GB for the first. Holds DeepSeek V3.2 at Q4 with room to spare.
+        </p>
+      </article>
+
+      <article class="card fresh">
+        <div class="card-top">
+          <h3>2&times; M5 Ultra 256GB</h3>
+          <span class="price">~$24,000 delivered &middot; unchanged</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~460 GB</b></div>
+            <div class="track"><div class="fill" style="width:47.9%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Effective bandwidth</span><b>~1,600 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:89.3%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Unlike a Spark cluster, this gains throughput as well as room. RDMA over Thunderbolt 5 measured
+          about 34% faster on two nodes than one, with EXO.
+        </p>
+      </article>
+
+      <article class="card fresh">
+        <div class="card-top">
+          <h3>2&times; M5 Ultra 512GB</h3>
+          <span class="price">~$49,500 delivered</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~960 GB</b></div>
+            <div class="track"><div class="fill" style="width:100%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Effective bandwidth</span><b>~1,600 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:89.3%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          Runs Kimi K2.5 at a trillion parameters, or DeepSeek V3.2 at Q8. Still the only path here to
+          frontier open weights at frontier quality, now at a confirmed $49,500 rather than an estimate.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>The trade space</h2>
+      <p class="sec-note">
+        Up and to the right is better. The memory axis is logarithmic because the range now spans 32&nbsp;GB
+        to nearly a terabyte. For clustered configurations the vertical axis shows <em>effective</em>
+        bandwidth, which is what the second box actually delivers: a second Spark moves you right and
+        nowhere else, while a second Mac moves you up and right.
+      </p>
+    </div>
+
+    <div class="figure" id="fig">
+      <svg viewBox="0 0 720 400" role="img" aria-labelledby="fig-t fig-d">
+        <title id="fig-t">Usable memory against effective bandwidth for twelve configurations</title>
+        <desc id="fig-d">
+          On a logarithmic memory axis: RTX 5090 at 32 gigabytes and 1,792 gigabytes per second. Radeon AI
+          PRO R9700 at the same 32 gigabytes but only 640. Dual RTX 3090 at 48 and 936. Two R9700 at 64 and
+          the same 640. DGX Spark 64GB at 55 usable and 273. RTX PRO 6000 at 96 and 1,792. DGX Spark 128GB
+          at 110 and 273. Two DGX Sparks at 220 and the same 273. M5 Ultra 256GB at 230 and 1,200. Two M5
+          Ultra 256GB at 460 and an effective 1,600. M5 Ultra 512GB at 480 and 1,200. Two M5 Ultra 512GB at
+          960 and an effective 1,600.
+        </desc>
+
+        <line class="grid-line" x1="80" y1="286" x2="690" y2="286"></line>
+        <line class="grid-line" x1="80" y1="222" x2="690" y2="222"></line>
+        <line class="grid-line" x1="80" y1="158" x2="690" y2="158"></line>
+        <line class="grid-line" x1="80" y1="94"  x2="690" y2="94"></line>
+        <line class="grid-line" x1="80" y1="30"  x2="690" y2="30"></line>
+
+        <text class="tick-txt" x="72" y="290" text-anchor="end">500</text>
+        <text class="tick-txt" x="72" y="226" text-anchor="end">1000</text>
+        <text class="tick-txt" x="72" y="162" text-anchor="end">1500</text>
+        <text class="tick-txt" x="72" y="98"  text-anchor="end">2000</text>
+
+        <line class="axis-line" x1="80" y1="350" x2="690" y2="350"></line>
+        <line class="axis-line" x1="80" y1="350" x2="80"  y2="20"></line>
+
+        <text class="tick-txt" x="182" y="366" text-anchor="middle">32</text>
+        <text class="tick-txt" x="283" y="366" text-anchor="middle">64</text>
+        <text class="tick-txt" x="385" y="366" text-anchor="middle">128</text>
+        <text class="tick-txt" x="487" y="366" text-anchor="middle">256</text>
+        <text class="tick-txt" x="588" y="366" text-anchor="middle">512</text>
+        <text class="tick-txt" x="690" y="366" text-anchor="middle">1024</text>
+
+        <text class="axis-title" x="80" y="390">Usable memory (GB, log scale)</text>
+        <text class="axis-title" x="-6" y="0" transform="translate(22,196) rotate(-90)">Effective bandwidth (GB/s)</text>
+
+        <!-- one Spark to two: purely horizontal, no throughput gain -->
+        <line class="link-line" x1="375" y1="315" x2="452" y2="315"></line>
+        <text class="cmp-txt" x="413" y="337" text-anchor="middle">no gain</text>
+
+        <!-- one Mac to two: up and right -->
+        <line class="link-line" x1="482" y1="189" x2="562" y2="152"></line>
+        <line class="link-line" x1="590" y1="189" x2="669" y2="152"></line>
+        <text class="cmp-txt" x="524" y="160" text-anchor="middle">+34%</text>
+
+        <!-- reference: RTX PRO 6000 -->
+        <circle class="dot-ref" cx="343" cy="121" r="7"></circle>
+        <text class="pt-label" x="357" y="118" fill="var(--ink-2)">RTX PRO 6000</text>
+        <text class="pt-sub" x="357" y="133">96 GB &middot; ~$19.4k</text>
+
+        <!-- RTX 5090 -->
+        <circle class="dot" cx="182" cy="121" r="7.5"></circle>
+        <text class="pt-label" x="182" y="103" text-anchor="middle">RTX 5090</text>
+        <text class="pt-sub" x="182" y="149" text-anchor="middle">32 GB &middot; 1,792</text>
+
+        <!-- Dual 3090 -->
+        <circle class="dot" cx="241" cy="230" r="7.5"></circle>
+        <text class="pt-label" x="229" y="227" text-anchor="end">Dual RTX 3090</text>
+        <text class="pt-sub" x="229" y="242" text-anchor="end">48 GB &middot; 936</text>
+
+        <!-- 1x Radeon AI PRO R9700 -->
+        <circle class="dot" cx="182" cy="268" r="7.5"></circle>
+        <text class="pt-label" x="182" y="250" text-anchor="middle">R9700 32GB</text>
+        <text class="pt-sub" x="182" y="288" text-anchor="middle">32 GB &middot; 640</text>
+
+        <!-- 2x Radeon AI PRO R9700 -->
+        <circle class="dot" cx="283" cy="268" r="7.5"></circle>
+        <text class="pt-label" x="297" y="262">2&times; R9700</text>
+        <text class="pt-sub" x="297" y="277">64 GB &middot; 640</text>
+
+        <!-- Spark 64GB (new SKU) -->
+        <circle class="dot" cx="261" cy="315" r="7.5"></circle>
+        <text class="pt-label" x="249" y="312" text-anchor="end">Spark 64GB</text>
+        <text class="pt-sub" x="249" y="327" text-anchor="end">55 GB &middot; 273</text>
+
+        <!-- Spark 128GB -->
+        <circle class="dot" cx="363" cy="315" r="7.5"></circle>
+        <text class="pt-label" x="363" y="297" text-anchor="middle">Spark 128GB</text>
+        <text class="pt-sub" x="363" y="340" text-anchor="middle">110 GB &middot; 273</text>
+
+        <!-- 2x Spark -->
+        <circle class="dot" cx="464" cy="315" r="7.5"></circle>
+        <text class="pt-label" x="478" y="312">2&times; Spark</text>
+        <text class="pt-sub" x="478" y="327">220 GB &middot; 273</text>
+
+        <!-- M5 Ultra 256 -->
+        <circle class="dot" cx="471" cy="196" r="7.5"></circle>
+        <text class="pt-label" x="459" y="193" text-anchor="end">M5U 256GB</text>
+        <text class="pt-sub" x="459" y="208" text-anchor="end">230 GB &middot; 1,200</text>
+
+        <!-- 2x M5 Ultra 256 -->
+        <circle class="dot" cx="573" cy="145" r="7.5"></circle>
+        <text class="pt-label" x="573" y="127" text-anchor="middle">2&times; M5U 256GB</text>
+        <text class="pt-sub" x="573" y="115" text-anchor="middle">460 GB &middot; ~1,600</text>
+
+        <!-- M5 Ultra 512 -->
+        <circle class="dot" cx="579" cy="196" r="7.5"></circle>
+        <text class="pt-label" x="593" y="200">M5U 512GB</text>
+        <text class="pt-sub" x="593" y="215">480 GB &middot; 1,200</text>
+
+        <!-- 2x M5 Ultra 512 -->
+        <circle class="dot" cx="680" cy="145" r="7.5"></circle>
+        <text class="pt-label" x="668" y="142" text-anchor="end">2&times; M5U 512GB</text>
+        <text class="pt-sub" x="668" y="157" text-anchor="end">960 GB &middot; ~1,600</text>
+
+        <circle class="hit" cx="182" cy="121" r="19" tabindex="0" data-n="RTX 5090"          data-s="32 GB · 1,792 GB/s · ~$6,000 delivered · ↑64%"></circle>
+        <circle class="hit" cx="343" cy="121" r="19" tabindex="0" data-n="RTX PRO 6000"      data-s="96 GB · 1,792 GB/s · ~$19,400 delivered"></circle>
+        <circle class="hit" cx="241" cy="230" r="19" tabindex="0" data-n="Dual RTX 3090"     data-s="48 GB · 936 GB/s · ~$3,660 delivered · ↑5%"></circle>
+        <circle class="hit" cx="182" cy="268" r="19" tabindex="0" data-n="Radeon AI PRO R9700" data-s="32 GB · 640 GB/s · ~$2,550 delivered · ROCm"></circle>
+        <circle class="hit" cx="283" cy="268" r="19" tabindex="0" data-n="2× Radeon AI PRO R9700" data-s="64 GB · 640 GB/s · ~$4,660 delivered · ROCm"></circle>
+        <circle class="hit" cx="261" cy="315" r="19" tabindex="0" data-n="DGX Spark 64GB"    data-s="55 GB · 273 GB/s · ~$5,550 delivered · new SKU"></circle>
+        <circle class="hit" cx="363" cy="315" r="19" tabindex="0" data-n="DGX Spark 128GB"   data-s="110 GB · 273 GB/s · ~$7,700 delivered · ↑48%"></circle>
+        <circle class="hit" cx="464" cy="315" r="19" tabindex="0" data-n="2× DGX Spark"      data-s="220 GB · 273 GB/s effective · ~$15,400 delivered · ↑40%"></circle>
+        <circle class="hit" cx="471" cy="196" r="19" tabindex="0" data-n="M5 Ultra 256GB"    data-s="230 GB · 1,200 GB/s · ~$12,000 delivered · unchanged"></circle>
+        <circle class="hit" cx="573" cy="145" r="19" tabindex="0" data-n="2× M5 Ultra 256GB" data-s="460 GB · ~1,600 GB/s effective · ~$24,000 delivered"></circle>
+        <circle class="hit" cx="579" cy="196" r="19" tabindex="0" data-n="M5 Ultra 512GB"    data-s="480 GB · 1,200 GB/s · ~$24,750 delivered · now priced"></circle>
+        <circle class="hit" cx="680" cy="145" r="19" tabindex="0" data-n="2× M5 Ultra 512GB" data-s="960 GB · ~1,600 GB/s effective · ~$49,500 delivered"></circle>
+      </svg>
+      <div class="tip" id="tip" role="status" aria-live="polite"></div>
+      <p class="fig-caption">
+        The RTX PRO 6000 is drawn as a dashed reference, not an option. The chart does not plot price, which
+        is where the interesting comparisons now live: the R9700 sits directly below the RTX 5090 at
+        identical memory, and costs 42% as much for 36% of the bandwidth. Hover any point for its delivered
+        cost.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What memory actually costs</h2>
+      <p class="sec-note">
+        With DRAM driving every price here, the two honest value metrics are dollars per gigabyte of usable
+        memory and dollars per gigabyte per second of bandwidth. All figures are delivered cost including
+        about 11% sales tax, applied consistently; adjust for your own rate. <strong>In August
+        the Spark beat the M5 Ultra on memory value, $50/GB against $52. It now loses, $70 against
+        $52.</strong> Note also that every Apple configuration lands at the same $52/GB: the 512&nbsp;GB
+        tier, priced on 28 October, buys more memory in one box but no better value per gigabyte.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="narrow">
+        <caption>Cost efficiency by memory and by bandwidth</caption>
+        <thead>
+          <tr>
+            <th scope="col">Configuration</th>
+            <th scope="col">Delivered cost</th>
+            <th scope="col">Since Aug</th>
+            <th scope="col">Per GB of memory</th>
+            <th scope="col">Per GB/s of bandwidth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Dual RTX 3090<small>used pair, $1,350 each</small></th>
+            <td><span class="num">~$3,660</span></td>
+            <td><span class="num">+5%</span></td>
+            <td><span class="num">$76</span></td>
+            <td><span class="num">$3.91</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Single RTX 5090</th>
+            <td><span class="num">~$6,000</span></td>
+            <td><span class="num">+64%</span> <span class="flag no">Worst move</span></td>
+            <td><span class="num">$188</span></td>
+            <td><span class="num">$3.35</span> <span class="flag yes">Best</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">1&times; Radeon AI PRO R9700<small>$1,299 MSRP, ~$1,800 street</small></th>
+            <td><span class="num">~$2,550</span></td>
+            <td><span class="unit">new entry</span></td>
+            <td><span class="num">$80</span></td>
+            <td><span class="num">$3.98</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">2&times; Radeon AI PRO R9700</th>
+            <td><span class="num">~$4,660</span></td>
+            <td><span class="unit">new entry</span></td>
+            <td><span class="num">$73</span></td>
+            <td><span class="num">$7.28</span></td>
+          </tr>
+          <tr>
+            <th scope="row">DGX Spark 64GB<small>new SKU, 3 Oct</small></th>
+            <td><span class="num">~$5,550</span></td>
+            <td><span class="unit">new</span></td>
+            <td><span class="num">$101</span></td>
+            <td><span class="num">$20.33</span></td>
+          </tr>
+          <tr>
+            <th scope="row">DGX Spark 128GB</th>
+            <td><span class="num">~$7,700</span></td>
+            <td><span class="num">+48%</span></td>
+            <td><span class="num">$70</span></td>
+            <td><span class="num">$28.21</span></td>
+          </tr>
+          <tr>
+            <th scope="row">2&times; DGX Spark 128GB</th>
+            <td><span class="num">~$15,400</span></td>
+            <td><span class="num">+40%</span></td>
+            <td><span class="num">$70</span></td>
+            <td><span class="num">$56.41</span> <span class="flag no">Worst</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">M5 Ultra 256GB<small>36/80 bin, 1TB SSD</small></th>
+            <td><span class="num">~$12,000</span></td>
+            <td><span class="flag yes">Unchanged</span></td>
+            <td><span class="num">$52</span> <span class="flag yes">Best</span></td>
+            <td><span class="num">$10.00</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">M5 Ultra 512GB<small>36/80 bin, 1TB SSD</small></th>
+            <td><span class="num">~$24,750</span></td>
+            <td><span class="flag mid">Now priced</span></td>
+            <td><span class="num">$52</span></td>
+            <td><span class="num">$20.63</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">2&times; M5 Ultra 256GB<small>Thunderbolt 5 RDMA cluster</small></th>
+            <td><span class="num">~$24,000</span></td>
+            <td><span class="flag yes">Unchanged</span></td>
+            <td><span class="num">$52</span></td>
+            <td><span class="num">$15.00</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">2&times; M5 Ultra 512GB<small>Thunderbolt 5 RDMA cluster</small></th>
+            <td><span class="num">~$49,500</span></td>
+            <td><span class="flag mid">Now priced</span></td>
+            <td><span class="num">$52</span></td>
+            <td><span class="num">$30.94</span></td>
+          </tr>
+          <tr>
+            <th scope="row">RTX PRO 6000<small>reference, not an option</small></th>
+            <td><span class="num">~$19,400</span></td>
+            <td><span class="num">+7%</span></td>
+            <td><span class="num">$202</span> <span class="flag no">Worst</span></td>
+            <td><span class="num">$10.83</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Capability matrix</h2>
+      <p class="sec-note">
+        Generation speed at batch size 1, Q4-class quantization unless noted. Shaded rows are the ones that
+        decide the purchase. Scroll sideways for the Apple columns. The new 64&nbsp;GB Spark is absent
+        because one line settles it: ~55&nbsp;GB usable will not hold gpt-oss-120b's ~60&nbsp;GB, so it
+        loses the capability that made the Spark interesting and inherits every other limitation.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="wide">
+        <caption>Capabilities of six local inference configurations</caption>
+        <thead>
+          <tr>
+            <th scope="col">Capability</th>
+            <th scope="col">Dual RTX 3090<small>48 GB &middot; 936 GB/s</small></th>
+            <th scope="col">RTX 5090<small>32 GB &middot; 1,792 GB/s</small></th>
+            <th scope="col">1&times; DGX Spark<small>110 GB &middot; 273 GB/s</small></th>
+            <th scope="col">2&times; DGX Spark<small>220 GB &middot; 273 GB/s</small></th>
+            <th scope="col">M5 Ultra 256GB<small>230 GB &middot; 1,200 GB/s</small></th>
+            <th scope="col">M5 Ultra 512GB<small>480 GB &middot; 1,200 GB/s</small></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <th scope="row">Small dense<small>8–14B, Q4</small></th>
+            <td><span class="num">55–95</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">120–160</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">15–30</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">15–30</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~120</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~120</span> <span class="unit">tok/s</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Mid dense<small>32B, Q4</small></th>
+            <td><span class="num">~28</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~56</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~8</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~8</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~50</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~50</span> <span class="unit">tok/s</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Large dense<small>70B, Q4 &middot; ~40 GB</small></th>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
+            <td><span class="flag no">Will not fit</span></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">2.7–5</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">2.7–5</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~25</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~25</span> <span class="unit">tok/s</span></span></div></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Small MoE<small>gpt-oss-20b &middot; ~12 GB</small></th>
+            <td><span class="num">70–90</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~200</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">86</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">86</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~200</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~200</span> <span class="unit">tok/s</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Large MoE<small>gpt-oss-120b</small></th>
+            <td><div class="cell"><span class="flag mid">CPU offload</span><span><span class="num">10–20</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag no">Will not fit</span><span><span class="num">5–15</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">60.6</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">60.6</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits at Q8</span><span><span class="num">~170</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits at Q8</span><span><span class="num">~170</span> <span class="unit">tok/s</span></span></div></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Very large MoE<small>Qwen3 235B class, Q4</small></th>
+            <td><span class="flag no">Will not fit</span></td>
+            <td><span class="flag no">Will not fit</span></td>
+            <td><div class="cell"><span class="flag mid">Q3 only</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~29</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~29</span> <span class="unit">tok/s</span></span></div></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Frontier MoE<small>DeepSeek V3.2 671B, Q4 &middot; ~340 GB</small></th>
+            <td><span class="flag no">No</span></td>
+            <td><span class="flag no">No</span></td>
+            <td><span class="flag no">No</span></td>
+            <td><div class="cell"><span class="flag mid">Q2 only</span><span class="unit">quality suffers</span></div></td>
+            <td><span class="flag no">No</span></td>
+            <td><div class="cell"><span class="flag yes">Fits at Q4</span><span><span class="num">~31</span> <span class="unit">tok/s</span></span></div></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Best model at ≥50 tok/s<small>the interactive threshold</small></th>
+            <td>13B dense</td>
+            <td>32B dense</td>
+            <td>gpt-oss-120b</td>
+            <td>gpt-oss-120b</td>
+            <td><strong style="color:var(--ink)">235B-class MoE</strong></td>
+            <td><strong style="color:var(--ink)">671B at Q4</strong></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Prefill<small>prompt processing</small></th>
+            <td><span class="num">2,000–4,000</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">2,600–8,000</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">1,027–1,956</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">1,027–1,956</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~2,600</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~2,600</span> <span class="unit">tok/s</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Max context, 32B dense<small>after Q4 weights, FP16 KV</small></th>
+            <td><span class="num">~107K</span> <span class="unit">tok</span></td>
+            <td><span class="num">~46K</span> <span class="unit">tok</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Max context, 70B dense<small>after Q4 weights, FP16 KV</small></th>
+            <td><span class="num">~19K</span> <span class="unit">tok</span></td>
+            <td><span class="flag no">Will not fit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Software stack</th>
+            <td><div class="cell"><span class="flag yes">CUDA, x86</span><span class="unit">everything works</span></div></td>
+            <td><div class="cell"><span class="flag yes">CUDA, x86</span><span class="unit">everything works</span></div></td>
+            <td><div class="cell"><span class="flag mid">CUDA, aarch64</span><span class="unit">container-first, sm_121</span></div></td>
+            <td><div class="cell"><span class="flag mid">CUDA, aarch64</span><span class="unit">plus cluster config</span></div></td>
+            <td><div class="cell"><span class="flag no">Metal / MLX</span><span class="unit">no CUDA, no vLLM</span></div></td>
+            <td><div class="cell"><span class="flag no">Metal / MLX</span><span class="unit">no CUDA, no vLLM</span></div></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Concurrent serving<small>continuous batching</small></th>
+            <td><span class="flag yes">vLLM</span></td>
+            <td><span class="flag yes">vLLM</span></td>
+            <td><span class="flag yes">vLLM</span></td>
+            <td><span class="flag yes">vLLM</span></td>
+            <td><span class="flag no">Single-user</span></td>
+            <td><span class="flag no">Single-user</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Fine-tuning reach</th>
+            <td>QLoRA to 70B</td>
+            <td>LoRA to ~32B</td>
+            <td>QLoRA past 70B</td>
+            <td>Largest CUDA reach</td>
+            <td>MLX LoRA only</td>
+            <td>MLX LoRA only</td>
+          </tr>
+
+          <tr>
+            <th scope="row">Build &amp; ops burden</th>
+            <td><span class="flag no">Highest</span></td>
+            <td><span class="flag mid">Moderate</span></td>
+            <td><span class="flag yes">None</span></td>
+            <td><span class="flag yes">Low</span></td>
+            <td><span class="flag yes">None</span></td>
+            <td><span class="flag yes">None</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Peak power</th>
+            <td><span class="num">700</span> <span class="unit">W, loud</span></td>
+            <td><span class="num">575</span> <span class="unit">W, loud</span></td>
+            <td><span class="num">140</span> <span class="unit">W, silent</span></td>
+            <td><span class="num">280</span> <span class="unit">W, silent</span></td>
+            <td><span class="num">~270</span> <span class="unit">W, quiet</span></td>
+            <td><span class="num">~270</span> <span class="unit">W, quiet</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Cost as configured</th>
+            <td><span class="num">~$3,660</span></td>
+            <td><span class="num">~$6,000</span></td>
+            <td><span class="num">~$7,700</span></td>
+            <td><span class="num">~$15,400</span></td>
+            <td><span class="num">~$12,000</span></td>
+            <td><span class="num">~$24,750</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>The AMD option, compared where it actually competes</h2>
+      <p class="sec-note">
+        The R9700 gets its own table rather than a column in the matrix above, because the honest comparison
+        is against the other discrete cards, not against unified-memory appliances. Everything here is
+        llama.cpp-class, batch size 1, Q4.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="narrow">
+        <caption>Radeon AI PRO R9700 against the NVIDIA cards at similar capacity</caption>
+        <thead>
+          <tr>
+            <th scope="col">Discrete cards</th>
+            <th scope="col">1&times; R9700</th>
+            <th scope="col">RTX 5090</th>
+            <th scope="col">Dual RTX 3090</th>
+            <th scope="col">2&times; R9700</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="band">
+            <th scope="row">Memory</th>
+            <td><span class="num">32</span> <span class="unit">GB GDDR6</span></td>
+            <td><span class="num">32</span> <span class="unit">GB GDDR7</span></td>
+            <td><span class="num">48</span> <span class="unit">GB GDDR6X</span></td>
+            <td><span class="num">64</span> <span class="unit">GB GDDR6</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Bandwidth</th>
+            <td><span class="num">640</span> <span class="unit">GB/s</span></td>
+            <td><span class="num">1,792</span> <span class="unit">GB/s</span></td>
+            <td><span class="num">936</span> <span class="unit">GB/s</span></td>
+            <td><span class="num">640</span> <span class="unit">GB/s</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Delivered cost</th>
+            <td><span class="num">~$2,550</span></td>
+            <td><span class="num">~$6,000</span></td>
+            <td><span class="num">~$3,660</span></td>
+            <td><span class="num">~$4,660</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Per GB of memory</th>
+            <td><span class="num">$80</span></td>
+            <td><span class="num">$188</span> <span class="flag no">Worst</span></td>
+            <td><span class="num">$76</span></td>
+            <td><span class="num">$73</span> <span class="flag yes">Best here</span></td>
+          </tr>
+          <tr>
+            <th scope="row">27–32B dense, Q4</th>
+            <td><span class="num">29–33</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~56</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~28</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">29–33</span> <span class="unit">tok/s</span></td>
+          </tr>
+          <tr>
+            <th scope="row">35B MoE, Q4<small>Qwen3.5-35B-A3B</small></th>
+            <td><div class="cell"><span class="num">127</span> <span class="unit">tok/s Vulkan</span><span class="unit">156 tuned</span></div></td>
+            <td><span class="num">194</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~90</span> <span class="unit">tok/s est</span></td>
+            <td><span class="num">127–156</span> <span class="unit">tok/s</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Prefill, 512-token prompt</th>
+            <td><span class="num">2,713</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">7,026</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">2,000–4,000</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">2,713</span> <span class="unit">tok/s</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Prefill gap vs 5090 at 32K</th>
+            <td><span class="num">3.44&times;</span> <span class="unit">slower</span> <span class="flag no">The problem</span></td>
+            <td><span class="flag yes">Baseline</span></td>
+            <td><span class="num">~2&times;</span> <span class="unit">slower</span></td>
+            <td><span class="num">3.44&times;</span> <span class="unit">slower</span></td>
+          </tr>
+          <tr>
+            <th scope="row">70B Q4 fully on GPU<small>~42.5 GB</small></th>
+            <td><span class="flag no">Will not fit</span></td>
+            <td><span class="flag no">Will not fit</span></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~10</span> <span class="unit">tok/s est</span></span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">Software stack</th>
+            <td><div class="cell"><span class="flag mid">ROCm 7.2 / Vulkan</span><span class="unit">gfx1201 official</span></div></td>
+            <td><span class="flag yes">CUDA</span></td>
+            <td><span class="flag yes">CUDA</span></td>
+            <td><span class="flag mid">ROCm 7.2 / Vulkan</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Power</th>
+            <td><span class="num">300</span> <span class="unit">W</span></td>
+            <td><span class="num">575</span> <span class="unit">W</span></td>
+            <td><span class="num">700</span> <span class="unit">W</span></td>
+            <td><span class="num">600</span> <span class="unit">W</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="cond">A correction, and then the catch</span>
+      <p>
+        <strong>AMD's software story is better than this page said.</strong> The earlier verdict here came
+        from Strix Halo (gfx1151), where Vulkan beat AMD's own ROCm by 2.5&times; and PyTorch needed
+        community wheels. The discrete R9700 is gfx1201, and <strong>ROCm 7.2 lists it as officially
+        supported on Linux and Windows</strong> with precompiled kernels and no HSA_OVERRIDE workaround.
+        That is a real improvement and the earlier blanket dismissal of AMD does not transfer to this card.
+      </p>
+      <p>
+        Official support is still not the same as parity. The fastest measured llama.cpp result on this card
+        was on <em>Vulkan</em>, not ROCm (127&nbsp;tok/s, rising to 156 with AMDVLK plus a patch), and Ollama
+        ships ROCm 6.x libraries with no gfx1201 kernels, so discovery times out and falls back to CPU until
+        you set <code>OLLAMA_VULKAN=1</code>. You are still choosing your backend per model rather than
+        installing one thing that works.
+      </p>
+      <p>
+        <strong>And prefill is the disqualifier for agentic work.</strong> 2,713&nbsp;tok/s against the
+        5090's 7,026 at a 512-token prompt, widening to <strong>3.44&times; slower at 32K</strong>. An agent
+        loop re-sends its whole context every turn, so prefill is the number you feel most and the one where
+        this card is weakest. It is an excellent cheap-VRAM card for batch work and a poor one for the job
+        on this page.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Context, which changes all of the above</h2>
+      <p class="sec-note">
+        Every number in the matrix is a depth-zero number, and you will almost never run at depth zero. An
+        agentic loop re-sends its whole conversation each turn, so context imposes three separate costs:
+        memory to hold the KV cache, seconds of prefill before the first token, and a permanent decode
+        slowdown because attention reads the entire cache on every token generated.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="wide">
+        <caption>How each configuration behaves at context depth</caption>
+        <thead>
+          <tr>
+            <th scope="col">At depth</th>
+            <th scope="col">Dual RTX 3090</th>
+            <th scope="col">RTX 5090</th>
+            <th scope="col">1&times; DGX Spark</th>
+            <th scope="col">2&times; DGX Spark</th>
+            <th scope="col">M5 Ultra 256GB</th>
+            <th scope="col">M5 Ultra 512GB</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <th scope="row">KV free after 70B Q4<small>weights ~40 GB</small></th>
+            <td><span class="num">~6</span> <span class="unit">GB</span></td>
+            <td><span class="flag no">No fit</span></td>
+            <td><span class="num">~68</span> <span class="unit">GB</span></td>
+            <td><span class="num">~178</span> <span class="unit">GB</span></td>
+            <td><span class="num">~188</span> <span class="unit">GB</span></td>
+            <td><span class="num">~438</span> <span class="unit">GB</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">KV free after gpt-oss-120b<small>weights ~60 GB at MXFP4</small></th>
+            <td><span class="flag no">No fit</span></td>
+            <td><span class="flag no">No fit</span></td>
+            <td><span class="num">~48</span> <span class="unit">GB</span></td>
+            <td><span class="num">~158</span> <span class="unit">GB</span></td>
+            <td><span class="num">~168</span> <span class="unit">GB</span></td>
+            <td><span class="num">~418</span> <span class="unit">GB</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Time to first token @ 32K<small>prefill only</small></th>
+            <td><span class="num">~11</span> <span class="unit">s</span></td>
+            <td><span class="num">~6</span> <span class="unit">s</span></td>
+            <td><span class="num">~31</span> <span class="unit">s</span></td>
+            <td><span class="num">~31</span> <span class="unit">s</span></td>
+            <td><span class="num">~13</span> <span class="unit">s</span></td>
+            <td><span class="num">~13</span> <span class="unit">s</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Time to first token @ 128K</th>
+            <td><div class="cell"><span class="flag mid">If it fits</span><span><span class="num">~43</span> <span class="unit">s</span></span></div></td>
+            <td><div class="cell"><span class="flag mid">If it fits</span><span><span class="num">~26</span> <span class="unit">s</span></span></div></td>
+            <td><span class="num">~125</span> <span class="unit">s</span></td>
+            <td><span class="num">~125</span> <span class="unit">s</span></td>
+            <td><span class="num">~50</span> <span class="unit">s</span></td>
+            <td><span class="num">~50</span> <span class="unit">s</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Decode loss at 32K depth<small>versus depth zero</small></th>
+            <td><span class="num">~30%</span></td>
+            <td><span class="num">~30%</span></td>
+            <td><div class="cell"><span class="num">33%</span><span class="unit">measured: 60.6 → 40.6</span></div></td>
+            <td><span class="num">33%</span></td>
+            <td><span class="num">~30%</span></td>
+            <td><span class="num">~30%</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Prefill loss at 32K depth</th>
+            <td><span class="num">~40%</span></td>
+            <td><span class="num">~40%</span></td>
+            <td><div class="cell"><span class="num">47%</span><span class="unit">measured: 1,956 → 1,027</span></div></td>
+            <td><span class="num">47%</span></td>
+            <td><span class="num">~45%</span></td>
+            <td><span class="num">~45%</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Prefix caching<small>reuse of the unchanged prefix</small></th>
+            <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
+            <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
+            <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
+            <td><span class="flag mid">Per-node only</span></td>
+            <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">community, not upstream</span></div></td>
+            <td><span class="flag yes">vllm-mlx</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">KV quantization</th>
+            <td><span class="flag yes">Q8 / Q4 KV</span></td>
+            <td><span class="flag yes">Q8 / Q4 KV</span></td>
+            <td><span class="flag yes">Q8 / Q4 KV</span></td>
+            <td><span class="flag yes">Q8 / Q4 KV</span></td>
+            <td><span class="flag mid">Q8 KV in MLX</span></td>
+            <td><span class="flag mid">Q8 KV in MLX</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="cond">The non-obvious part</span>
+      <p>
+        MoE models decay faster with context than dense ones, because the KV cache is compared against
+        <em>active</em> parameters rather than total.
+      </p>
+      <p>
+        gpt-oss-120b reads about 2.7&nbsp;GB of active weights per token. Its KV cache at 32K context is
+        roughly 2.4&nbsp;GB. So at that depth the model is reading nearly twice as much memory per token as
+        it was at depth zero, which is exactly the 33% slowdown the Spark benchmarks show. A dense 70B model
+        reads 40&nbsp;GB of weights against the same few GB of cache and barely notices. The Spark's whole
+        advantage lives in MoE models, and that advantage is the thing context erodes fastest.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="callout">
+      <span class="cond">Seven weeks changed the answer</span>
+      <p>
+        In August, two Sparks (~$11,000) and one 256GB M5 Ultra (~$12,000) held the same memory for roughly
+        the same money, and the Mac's 4.4&times; bandwidth made it the better buy by a nose. Today two Sparks
+        cost <strong>~$15,400</strong> and the Mac still costs ~$12,000. The Mac is now
+        <strong>$3,400 cheaper</strong> with the same memory and four times the bandwidth.
+      </p>
+      <p>
+        The cleaner comparison at that budget is now a 256&nbsp;GB Mac, not a 512&nbsp;GB one. Apple priced
+        the 512&nbsp;GB tier at $22,299 on 28 October, well above the ~$16,000 this page had extrapolated,
+        so two Sparks at ~$15,400 are no longer within reach of it. Against the 256&nbsp;GB machine at
+        ~$12,000 they lose outright on every axis; against the 512&nbsp;GB machine at ~$24,750 they are
+        simply a different budget.
+      </p>
+      <p>
+        CUDA remains the one real defence: the Mac has no upstream vLLM, no NVIDIA container stack, and a
+        much thinner fine-tuning ecosystem. If the purchase exists to develop against the stack you deploy
+        to, a single Spark still earns its place. Two of them no longer do at any price on this page.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Clustering: does a second box buy speed, or only room?</h2>
+      <p class="sec-note">
+        macOS Tahoe 26.2 added an RDMA driver for Thunderbolt 5, letting one Mac read another's memory
+        directly. Paired with EXO, that turns two Macs into a cluster that gains throughput and not just
+        room. The table below holds hardware and interconnect fixed and varies only the model and the
+        runtime, so the rows are directly comparable to each other. The Spark cluster is handled separately
+        underneath, because no equivalent measurement exists for it.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="narrow">
+        <caption>Mac cluster scaling, measured</caption>
+        <thead>
+          <tr>
+            <th scope="col">Model &amp; runtime<small>all: M3 Ultra Studios, Thunderbolt 5</small></th>
+            <th scope="col">1 node</th>
+            <th scope="col">2 nodes</th>
+            <th scope="col">4 nodes</th>
+            <th scope="col">2-node change</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="band">
+            <th scope="row">Qwen3 235B<small>EXO, with RDMA</small></th>
+            <td><span class="num">19.5</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">26.2</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">31.9</span> <span class="unit">tok/s</span></td>
+            <td><span class="flag yes">+34%</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">DeepSeek V3.1 671B<small>EXO, with RDMA</small></th>
+            <td><span class="num">21.1</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">27.8</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">32.5</span> <span class="unit">tok/s</span></td>
+            <td><span class="flag yes">+32%</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Qwen3 235B<small>llama.cpp, no RDMA</small></th>
+            <td><span class="num">20.4</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">17.2</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">15.2</span> <span class="unit">tok/s</span></td>
+            <td><span class="flag no">&minus;16%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="cond">The Spark side, stated honestly</span>
+      <p>
+        There is no equivalent measurement for a two-Spark cluster, so it does not belong in the table above.
+      </p>
+      <p>
+        What is known: the two Sparks are joined by a 200GbE ConnectX-7 link, and under pipeline parallelism
+        each layer still executes once, which yields capacity without throughput. That is the basis for the
+        flat figure used elsewhere on this page, and it is <strong>inference from the interconnect, not a
+        benchmark</strong>. NVIDIA has published nothing comparable to Apple's four-node numbers. Given that
+        EXO gains on Macs specifically by distributing expert weights so each node reads less memory per
+        token, a Spark cluster running a comparable expert-parallel setup over RDMA could plausibly do the
+        same. Treat the two-Spark throughput number as a conservative assumption that has not been tested,
+        and if that configuration is on your shortlist, go looking for a benchmark before believing this page.
+      </p>
+    </div>
+
+    <div class="callout">
+      <span class="cond">Two findings, one of which corrects this page</span>
+      <p>
+        <strong>The runtime decides whether clustering helps at all.</strong> Compare rows one and three:
+        same model, same hardware, same interconnect, and EXO with RDMA gains 34% on two nodes while
+        llama.cpp <em>loses</em> 16%. Adding a second Mac and running the wrong software makes your setup
+        slower than a single machine. This is not a hardware property you can buy; it is a configuration you
+        have to get right.
+      </p>
+      <p>
+        <strong>These measurements say my single-node Mac estimates were optimistic.</strong> The figures
+        above are M3 Ultra at 819&nbsp;GB/s. Scaling by bandwidth puts a single M5 Ultra at roughly
+        31&nbsp;tok/s on DeepSeek 671B and 29 on Qwen3 235B, not the 48 and 50–80 this page previously
+        derived from bandwidth arithmetic alone. Very large MoE models evidently run at well under the
+        efficiency that mid-size models achieve, most likely because expert routing scatters memory access.
+        The matrix now uses the measurement-derived figures.
+      </p>
+      <p>
+        <strong>And the pair now wins, which is a reversal.</strong> This page previously said two
+        256&nbsp;GB machines cost $6,400 more than one 512&nbsp;GB machine for less memory. That rested on
+        an estimated 512&nbsp;GB price of ~$17,600. Apple published the real number on 28 October: $22,299,
+        or <strong>~$24,750 delivered</strong>. Two 256&nbsp;GB machines come to ~$24,000. So the pair is
+        now <strong>$750 cheaper</strong>, with 20&nbsp;GB less memory and about 34% more throughput. The
+        single box still wins on simplicity, one machine rather than two, and no dependency on EXO or the
+        RDMA path. But it is no longer the cheaper option, and the earlier conclusion was an artifact of my
+        estimate rather than of Apple's pricing.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>The software stack, which is half the purchase</h2>
+      <p class="sec-note">
+        These machines run four different software worlds, and the differences decide what you can run, how
+        soon after release, and what you can do besides inference. One reassuring constant first: every stack
+        below exposes an OpenAI-compatible HTTP endpoint, so from your WSL2 shell the client side looks
+        identical no matter what you buy. The stack determines what happens on the box, not how you reach it.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="wide">
+        <caption>Inference engine availability by platform</caption>
+        <thead>
+          <tr>
+            <th scope="col">Engine</th>
+            <th scope="col">CUDA x86<small>3090, 5090</small></th>
+            <th scope="col">CUDA aarch64<small>DGX Spark</small></th>
+            <th scope="col">Metal / MLX<small>M5 Ultra</small></th>
+            <th scope="col">ROCm / Vulkan<small>AMD Halo</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">llama.cpp<small>GGUF, universal</small></th>
+            <td><span class="flag yes">Native</span></td>
+            <td><span class="flag yes">Native</span></td>
+            <td><div class="cell"><span class="flag yes">Metal</span><span class="unit">n_gpu_layers = -1</span></div></td>
+            <td><div class="cell"><span class="flag mid">Vulkan</span><span class="unit">not ROCm, see below</span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">Ollama<small>llama.cpp wrapper</small></th>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">vLLM<small>batching, PagedAttention</small></th>
+            <td><span class="flag yes">Native, day 0</span></td>
+            <td><div class="cell"><span class="flag mid">Containers only</span><span class="unit">NGC images</span></div></td>
+            <td><div class="cell"><span class="flag no">Upstream: no</span><span class="unit">MPS is experimental</span></div></td>
+            <td><span class="flag no">Painful</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">vllm-mlx<small>community reimplementation</small></th>
+            <td>—</td>
+            <td>—</td>
+            <td><div class="cell"><span class="flag yes">Yes</span><span class="unit">batching, paged KV, prefix cache, /v1/messages</span></div></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <th scope="row">SGLang</th>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag mid">Partial</span></td>
+            <td><span class="flag no">No</span></td>
+            <td><span class="flag no">No</span></td>
+          </tr>
+          <tr>
+            <th scope="row">TensorRT-LLM<small>NVIDIA's own</small></th>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag no">No</span></td>
+            <td><span class="flag no">No</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">MLX / mlx-lm<small>Apple's framework</small></th>
+            <td><span class="flag no">No</span></td>
+            <td><span class="flag no">No</span></td>
+            <td><div class="cell"><span class="flag yes">Fastest here</span><span class="unit">20–40% over llama.cpp</span></div></td>
+            <td><span class="flag no">No</span></td>
+          </tr>
+          <tr>
+            <th scope="row">PyTorch / transformers<small>run a paper's code</small></th>
+            <td><span class="flag yes">Official wheels</span></td>
+            <td><div class="cell"><span class="flag mid">aarch64 gaps</span><span class="unit">containers fill them</span></div></td>
+            <td><div class="cell"><span class="flag mid">MPS backend</span><span class="unit">incomplete op coverage</span></div></td>
+            <td><div class="cell"><span class="flag no">Community wheels</span><span class="unit">no official gfx1151</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scroller">
+      <table class="wide">
+        <caption>Capabilities that follow from the stack, not the silicon</caption>
+        <thead>
+          <tr>
+            <th scope="col">Capability</th>
+            <th scope="col">CUDA x86</th>
+            <th scope="col">DGX Spark</th>
+            <th scope="col">M5 Ultra</th>
+            <th scope="col">AMD Halo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="band">
+            <th scope="row">Prefix caching<small>the agentic-loop multiplier</small></th>
+            <td><span class="flag yes">vLLM APC</span></td>
+            <td><span class="flag yes">vLLM APC</span></td>
+            <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">slot reuse in llama.cpp / mlx-lm</span></div></td>
+            <td><span class="flag mid">Slot reuse only</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Continuous batching</th>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+            <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">community project</span></div></td>
+            <td><span class="flag no">No</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Anthropic-format endpoint<small>drives Claude Code directly</small></th>
+            <td><span class="flag mid">Via LiteLLM</span></td>
+            <td><span class="flag mid">Via LiteLLM</span></td>
+            <td><div class="cell"><span class="flag yes">Native</span><span class="unit">vllm-mlx serves /v1/messages</span></div></td>
+            <td><span class="flag mid">Via LiteLLM</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Speculative decoding</th>
+            <td><span class="flag yes">Mature</span></td>
+            <td><span class="flag yes">Mature</span></td>
+            <td><span class="flag mid">MLX draft models</span></td>
+            <td><span class="flag mid">llama.cpp only</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Grammars / structured output</th>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+            <td><span class="flag yes">Yes</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Fine-tuning toolchain<small>PEFT, TRL, Unsloth, Axolotl</small></th>
+            <td><span class="flag yes">All of it</span></td>
+            <td><div class="cell"><span class="flag mid">Most of it</span><span class="unit">aarch64 builds vary</span></div></td>
+            <td><div class="cell"><span class="flag no">MLX LoRA only</span><span class="unit">separate ecosystem</span></div></td>
+            <td><span class="flag no">Fragile</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Image / video / TTS models</th>
+            <td><span class="flag yes">Everything</span></td>
+            <td><span class="flag yes">Most</span></td>
+            <td><span class="flag mid">Ported subset</span></td>
+            <td><span class="flag mid">Ported subset</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scroller">
+      <table class="narrow">
+        <caption>Model and format availability</caption>
+        <thead>
+          <tr>
+            <th scope="col">Concern</th>
+            <th scope="col">CUDA x86 &amp; Spark</th>
+            <th scope="col">M5 Ultra</th>
+            <th scope="col">AMD Halo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Client access from WSL2<small>how you actually reach the box</small></th>
+            <td colspan="3" style="color:var(--ink)">
+              Identical for all three. The engine runs on the server and exposes an OpenAI-compatible HTTP
+              endpoint; from WSL2 you use the <code>openai</code> SDK, LiteLLM, LangChain or curl against
+              <code>http://host:port/v1</code>. You never install MLX, CUDA or ROCm on the client.
+            </td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Lag on a new model release</th>
+            <td><div class="cell"><span class="flag yes">Day 0</span><span class="unit">transformers and vLLM ship with it</span></div></td>
+            <td><div class="cell"><span class="flag mid">Days to weeks</span><span class="unit">needs an mlx-community conversion, or GGUF</span></div></td>
+            <td><div class="cell"><span class="flag mid">Days</span><span class="unit">GGUF only in practice</span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">Quantization formats</th>
+            <td>GGUF, AWQ, GPTQ, FP8, NVFP4, MXFP4, compressed-tensors</td>
+            <td>GGUF, plus MLX 4-bit and 8-bit after conversion</td>
+            <td>GGUF, effectively</td>
+          </tr>
+          <tr>
+            <th scope="row">Conversion step</th>
+            <td><span class="flag yes">None</span></td>
+            <td><span class="flag mid">Required for MLX</span></td>
+            <td><span class="flag yes">None</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="cond">Three conclusions that change the ranking</span>
+      <p>
+        <strong>The Spark's CUDA advantage is narrower than "it runs CUDA" implies.</strong> It is aarch64
+        CUDA on compute capability sm_121, which means NGC containers work but many pip wheels do not, you
+        meet compute-capability-specific bugs like the FP4-to-Marlin fallback before anyone else does, and
+        the user population finding those bugs is small. It is not a drop-in Linux CUDA box, and the weekends
+        it costs are real.
+      </p>
+      <p>
+        <strong>The Mac is an inference appliance, not a development platform, and it is very good at being
+        one.</strong> MLX runs 20–40% faster than llama.cpp on the same silicon, which means the M5 Ultra
+        estimates here may be conservative rather than optimistic. Upstream vLLM does not run on Metal, but
+        the community <em>vllm-mlx</em> project reimplements the important parts: continuous batching, a
+        paged KV cache, prefix caching, and an Anthropic <code>/v1/messages</code> endpoint that Claude Code
+        can be pointed at directly. What genuinely does not exist is the fine-tuning toolchain: PEFT, TRL,
+        Unsloth and Axolotl are CUDA projects, and MLX's own LoRA is a separate ecosystem. If the job is
+        serving models, the Mac is fine. If it includes fine-tuning conventionally or running arbitrary
+        research code, it is not.
+      </p>
+      <p>
+        <strong>AMD's memory advantage does not survive contact with its software.</strong> On Strix-class
+        hardware the Vulkan backend beats AMD's own ROCm on llama.cpp prompt processing by roughly 2.5&times;
+        (880 versus 350 tok/s on Llama-2-7B Q4_0), the HIP path barely beats CPU for prefill, gfx1151 rocBLAS
+        kernels run several times less efficiently than their discrete-GPU equivalents, and PyTorch needs
+        community wheels because official ones do not exist. Gorgon Halo's 160&nbsp;GB at $3,999 is the best
+        capacity-per-dollar on this page and I still would not buy it.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What's on the horizon</h2>
+      <p class="sec-note">
+        Purchase timing is part of the decision, so here is what is actually coming and how firm each item
+        is. The short version: <strong>nothing meaningfully better arrives in the next twelve months</strong>,
+        while memory prices keep climbing.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="wide">
+        <caption>Upcoming hardware relevant to this comparison</caption>
+        <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Timing</th>
+            <th scope="col">Memory</th>
+            <th scope="col">Bandwidth</th>
+            <th scope="col">What it would change</th>
+            <th scope="col">Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="band">
+            <th scope="row">AMD Gorgon Halo<small>Ryzen AI Max 400 series</small></th>
+            <td>Shipping now</td>
+            <td><span class="num">192</span> <span class="unit">GB, 160 usable</span></td>
+            <td><span class="num">~256</span> <span class="unit">GB/s</span></td>
+            <td>A live Spark alternative today: 50% more memory, x86, dev box from $3,999. ROCm, not CUDA.</td>
+            <td><span class="flag yes">Announced</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">DGX Spark software<small>TensorRT-LLM, llama.cpp, PyTorch</small></th>
+            <td>Continuous</td>
+            <td>unchanged</td>
+            <td>unchanged</td>
+            <td>NVIDIA claims 2.5&times; average gains since launch, concentrated in prefill. Decode is bandwidth-bound and cannot improve.</td>
+            <td><span class="flag yes">Claimed</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">DGX Spark II</th>
+            <td><span class="flag no">Not announced</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td>GB10 is the same silicon as N1/N1X, now heading into laptops. A refresh most plausibly rides N2.</td>
+            <td><span class="flag no">No signal</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">NVIDIA N2 series</th>
+            <td>Q3 2027</td>
+            <td>unknown</td>
+            <td>unknown</td>
+            <td>The earliest credible basis for a second-generation Spark.</td>
+            <td><span class="flag mid">Roadmap leak</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">AMD Medusa Halo<small>Ryzen AI MAX 500, Zen 6 + RDNA 5</small></th>
+            <td>2027–2028</td>
+            <td>unknown</td>
+            <td><span class="num">461</span>–<span class="num">691</span> <span class="unit">GB/s</span></td>
+            <td>The first unified-memory box to escape the bandwidth trap. LPDDR6 at 14,400 MT/s, 256-bit or a rumored 384-bit bus.</td>
+            <td><span class="flag mid">Leak, unconfirmed</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Apple M6</th>
+            <td>2026</td>
+            <td>entry-level</td>
+            <td><span class="num">~200</span> <span class="unit">GB/s</span></td>
+            <td>Nothing. Apple is skipping the high-end M6 variants entirely, so no M6 Max or Ultra exists.</td>
+            <td><span class="flag mid">Reported</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">Apple M7 / M7 Pro &amp; Max</th>
+            <td>2027</td>
+            <td>unknown</td>
+            <td><span class="num">~240</span> <span class="unit">GB/s base</span></td>
+            <td>AI-focused generation with a reworked Neural Engine. Does not reach the Studio.</td>
+            <td><span class="flag mid">Reported</span></td>
+          </tr>
+
+          <tr class="band">
+            <th scope="row">Apple M7 Ultra Mac Studio</th>
+            <td>2028</td>
+            <td>unknown</td>
+            <td>unknown</td>
+            <td>The next Mac Studio worth waiting for, roughly two years out. An M5 Ultra bought now stays top of the line unusually long.</td>
+            <td><span class="flag mid">Reported</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="cond">What this means for timing</span>
+      <p>
+        The usual reason to wait is that something better is close. Right now nothing is.
+      </p>
+      <p>
+        Apple's next Studio is 2028. NVIDIA has announced no Spark successor and has moved GB10 into laptops.
+        AMD's Gorgon Halo is a memory bump on 2025 silicon, and its real successor is 2027 at the earliest.
+        Meanwhile DRAM prices are rising, not falling, so waiting costs money rather than saving it. The one
+        genuinely interesting item on the horizon is LPDDR6: if Medusa Halo lands at 691&nbsp;GB/s with a
+        large memory pool, it breaks the capacity-versus-bandwidth trade this whole page is built on. That is
+        two years away and unconfirmed, which is not a plan you can buy against today.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Configuring the Mac, if it's the Mac</h2>
+      <p class="sec-note">
+        Apple sells the M5 Ultra in two bins. The one that matters for LLM work is the one that costs less,
+        because <strong>both run at the same 1,200&nbsp;GB/s</strong> and decode is bandwidth-bound.
+      </p>
+    </div>
+
+    <div class="scroller">
+      <table class="narrow">
+        <caption>M5 Ultra bin comparison for inference</caption>
+        <thead>
+          <tr>
+            <th scope="col">Attribute</th>
+            <th scope="col">30-core CPU / 64-core GPU</th>
+            <th scope="col">36-core CPU / 80-core GPU</th>
+            <th scope="col">What it costs you</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="band">
+            <th scope="row">Memory bandwidth</th>
+            <td><span class="num">1,200</span> <span class="unit">GB/s</span></td>
+            <td><span class="num">1,200</span> <span class="unit">GB/s</span></td>
+            <td><span class="flag yes">No difference</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Decode speed<small>token generation</small></th>
+            <td><span class="num">~170</span> <span class="unit">tok/s, gpt-oss-120b</span></td>
+            <td><span class="num">~170</span> <span class="unit">tok/s, gpt-oss-120b</span></td>
+            <td><span class="flag yes">Within noise</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Prefill<small>compute-bound, scales with GPU cores</small></th>
+            <td><span class="num">~2,100</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~2,600</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~25%</span> <span class="unit">faster</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Time to first token @ 32K</th>
+            <td><span class="num">~16</span> <span class="unit">s</span></td>
+            <td><span class="num">~13</span> <span class="unit">s</span></td>
+            <td><span class="num">~3</span> <span class="unit">s per turn</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Neural Engine</th>
+            <td><span class="num">32</span> <span class="unit">core</span></td>
+            <td><span class="num">32</span> <span class="unit">core</span></td>
+            <td><span class="flag yes">No difference</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Max memory</th>
+            <td><span class="num">256</span> <span class="unit">GB</span></td>
+            <td><span class="num">512</span> <span class="unit">GB</span></td>
+            <td><span class="flag mid">512GB needs 80-core</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Price at 256GB / 1TB<small>pre-tax</small></th>
+            <td><span class="num">$9,499</span> <span class="unit">if offered</span></td>
+            <td><span class="num">$10,799</span></td>
+            <td><span class="num">+$1,300</span></td>
+          </tr>
+          <tr class="band">
+            <th scope="row">Availability at 256GB</th>
+            <td><span class="flag mid">Unconfirmed</span></td>
+            <td><span class="flag yes">Confirmed</span></td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="cond">Where the $1,300 goes</span>
+      <p>
+        The upgrade buys 25% more GPU cores and 20% more CPU cores. It buys <strong>zero</strong> extra
+        memory bandwidth, which is the only thing decode speed depends on.
+      </p>
+      <p>
+        In an agentic turn you prefill once and decode thousands of times, so decode dominates wall-clock and
+        decode is identical across the bins. For inference alone the 64-core bin would be the better buy.
+        <strong>But the configurator appears to pair 256&nbsp;GB only with the 36/80 bin</strong>, in which
+        case the choice does not exist and the delivered price is ~$12,000 rather than the $9,499 a base-bin
+        machine would cost. Every price on this page assumes the 36/80 bin. Verify in the configurator before
+        budgeting against the lower figure.
+      </p>
+      <p>
+        Same logic on storage: Apple charges $500 to go from 1&nbsp;TB to 2&nbsp;TB, which is $500/TB. A
+        Thunderbolt 5 NVMe enclosure is about $250 once, plus Gen&nbsp;4 drives at roughly $100–130/TB in the
+        current NAND shortage, so a 4&nbsp;TB external lands near $175/TB all-in and streams weights at about
+        6,000&nbsp;MB/s. That is roughly 80% of the Mac's internal SSD, and it turns a 60&nbsp;GB model load
+        into a ten-second wait. Take the 1&nbsp;TB internal and put the difference toward the memory tier.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Which one, and when</h2>
+    </div>
+    <div class="verdicts">
+
+      <article class="verdict pick">
+        <span class="cond">If value rules &middot; ~$3,660</span>
+        <h3>Dual RTX 3090</h3>
+        <p>
+          Used 3090s rose 23% while 5090s rose 60%, so this is now the only option under $5,000 and its
+          relative position improved. Memory at $76/GB against the 5090's $188. Runs a 70B dense model on
+          GPU, which the 5090 cannot. You still pay in 700&nbsp;W and a build you have to engineer.
+        </p>
+      </article>
+
+      <article class="verdict">
+        <span class="cond">If VRAM per dollar rules &middot; ~$2,550</span>
+        <h3>Radeon AI PRO R9700</h3>
+        <p>
+          32&nbsp;GB for 42% of a 5090's price, at $80/GB against $188. ROCm 7.2 supports it officially now,
+          which is more than AMD's integrated parts can say. But prefill runs 3.44&times; slower than a 5090
+          at 32K context, so it is the wrong card for an agent loop and a good one for batch work.
+        </p>
+      </article>
+
+      <article class="verdict">
+        <span class="cond">If latency rules &middot; ~$6,000</span>
+        <h3>Single RTX 5090</h3>
+        <p>
+          Still the lowest latency per dollar on models that fit in 32&nbsp;GB. But it is now the worst
+          memory value here outside the PRO 6000, supply is reportedly thin enough that used trades above
+          new, and it costs more than a 128&nbsp;GB Spark. Buy only if 32&nbsp;GB genuinely covers you.
+        </p>
+      </article>
+
+      <article class="verdict">
+        <span class="cond">If CUDA parity rules &middot; ~$7,700</span>
+        <h3>DGX Spark 128GB</h3>
+        <p>
+          Still the only machine here that is the same architecture as a GB200 target, and still the cheapest
+          CUDA path to a 120B MoE. But $4,699 became $6,950, so the value case that justified it is gone.
+          Buy it for stack parity now, not for the memory.
+        </p>
+      </article>
+
+      <article class="verdict avoid">
+        <span class="cond">Avoid &middot; ~$5,550</span>
+        <h3>DGX Spark 64GB</h3>
+        <p>
+          Costs more than the 128&nbsp;GB model did in August, has worse memory value than the 128&nbsp;GB
+          does now ($101/GB against $70), and ~55&nbsp;GB usable will not hold gpt-oss-120b. It is a cheaper
+          Spark that cannot do the thing Sparks are for.
+        </p>
+      </article>
+
+      <article class="verdict pick">
+        <span class="cond">Best all-round &middot; ~$12,000</span>
+        <h3>M5 Ultra 256GB</h3>
+        <p>
+          230&nbsp;GB at 1,200&nbsp;GB/s, unchanged in price while everything NVIDIA sells rose. Now
+          $3,400 <em>cheaper</em> than two Sparks with the same memory and four times the bandwidth, and
+          the best memory value on the page outside the unpriced 512. Costs you CUDA and fine-tuning.
+        </p>
+      </article>
+
+      <article class="verdict">
+        <span class="cond">If one box matters &middot; ~$24,750</span>
+        <h3>M5 Ultra 512GB</h3>
+        <p>
+          480&nbsp;GB in a single machine, running DeepSeek V3.2 at Q4 around 31&nbsp;tok/s. At $52/GB it
+          offers no better memory value than the 256&nbsp;GB model, and two of those cost $750 less with
+          more throughput. Buy this for operational simplicity, not economics.
+        </p>
+      </article>
+
+      <article class="verdict">
+        <span class="cond">If frontier weights rule &middot; ~$49,500</span>
+        <h3>2&times; M5 Ultra 512GB</h3>
+        <p>
+          ~960&nbsp;GB, enough for Kimi K2.5 at a trillion parameters or DeepSeek V3.2 at Q8, and still the
+          only entry here that runs frontier open weights at frontier quality. At a confirmed $49,500 this
+          is now a capital decision, not a hardware purchase. Requires EXO and macOS Tahoe 26.2.
+        </p>
+      </article>
+
+      <article class="verdict">
+        <span class="cond">Better than the 512 &middot; ~$24,000</span>
+        <h3>2&times; M5 Ultra 256GB</h3>
+        <p>
+          ~460&nbsp;GB at roughly 34% more throughput than a single box, and now <strong>$750 cheaper</strong>
+          than one 512&nbsp;GB machine once Apple's real 512 price landed. You give up 20&nbsp;GB and take on
+          cluster ops. For anything but a hard single-box requirement, this is the better $24k.
+        </p>
+      </article>
+
+      <article class="verdict avoid">
+        <span class="cond">Avoid &middot; ~$15,400</span>
+        <h3>2&times; DGX Spark 128GB</h3>
+        <p>
+          October's 48% increase finished this one off. It now costs $3,400 <em>more</em> than a 256&nbsp;GB
+          M5 Ultra with the same memory and a quarter of the bandwidth, and the worst bandwidth-per-dollar on
+          the page at $56.41. Only a hard 200&nbsp;GB-of-CUDA requirement justifies it.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <footer>
+    <h4>Method and confidence</h4>
+    <p>
+      <strong>Prices are delivered cost</strong>, meaning street price plus about 11% sales tax (a US West Coast metro rate),
+      applied uniformly so the comparison holds; substitute your own rate. Underlying pre-tax street rates as
+      of <strong>19 October 2026</strong>, with the August figures shown for contrast. RTX 3090 used $1,350
+      (was $1,095–$1,181, +23%), new $1,550–$1,950; RTX 5090 new floor $4,921 and used floor $5,880 against
+      a $1,999 MSRP (was $4,288–$4,381, +64% new and +60% used, with used now above new on thin stock, and
+      an unconfirmed Tom's Hardware report that NVIDIA has halted GB202 production for consumer cards);
+      DGX Spark 128GB <strong>$6,950</strong>, raised 3 October from $4,699 and from $3,999 at launch, with
+      a new 64GB SKU at $4,999 shipping from partners 23 October; RTX PRO 6000 $15,999–$16,000 retail
+      (was $13,998–$15,499). <strong>Radeon AI PRO R9700</strong> carries a $1,299 MSRP that nobody pays:
+      the working figure here is $1,800 a card, from a lowest tracked US price of $1,827 on 26 October,
+      Amazon listings near $1,700 in mid-October, a 12-month median of $1,460, and used listings starting
+      about $1,907. Asking prices, not completed sales. M5 Ultra Mac Studio starts at
+      $5,499 for the 30-core CPU / 64-core GPU bin with 96&nbsp;GB and 1&nbsp;TB. The ladder from there:
+      +$1,300 for the 36/80 bin, +$4,000 for 256&nbsp;GB, +$500 for 2&nbsp;TB. The configurator appears to
+      pair 256&nbsp;GB only with the 36/80 bin, so the working figure is $10,799 pre-tax, about $12,000
+      delivered, confirmed against a real configurator session. <strong>Apple has not changed its existing
+      prices since 25 August</strong>, which is why every Apple row reads "unchanged" and why the relative
+      conclusions moved without Apple doing anything. <strong>The 512&nbsp;GB tier went on sale 28 October
+      at $22,299</strong> for the 36/80 bin with 1&nbsp;TB, about $24,750 delivered. The memory option alone
+      is $15,500. Note what that implies: the first 160&nbsp;GB above the 96&nbsp;GB base costs $25/GB, and
+      the next 256&nbsp;GB costs $45/GB. This page previously estimated $16,000 by extrapolating Apple's
+      96→256 rate linearly, and was low by $6,300. Apple's memory ladder escalates at the top tier; do not
+      extrapolate it straight.
+    </p>
+    <p>
+      <strong>Performance.</strong> R9700 figures are measured llama.cpp results on a single card: 127.4
+      tok/s on Vulkan for Qwen3.5-35B-A3B rising to 156.3 tuned, 29–33 tok/s on Qwen3.5-27B dense, ~99 tok/s
+      on Qwen2.5-Coder-7B with a tuned ROCm build, and ~2,713 tok/s prefill at 512 tokens. Its dual-card
+      figures assume layer splitting, so decode matches a single card and only capacity grows; the 70B
+      estimate there is derived, not measured. Measured: DGX Spark gpt-oss figures from the llama.cpp
+      benchmark thread;
+      RTX 3090 and RTX PRO 6000 figures from published llama.cpp and Ollama runs; M5 Max figures at
+      614&nbsp;GB/s from hardware-corner's benchmark set, including gpt-oss-120b Q8 at 87.9&nbsp;tok/s decode
+      and 1,325&nbsp;tok/s prefill. <strong>All M5 Ultra numbers here are derived, not measured</strong> —
+      scaled from those M5 Max results by the 1.95× bandwidth ratio, since the Ultra is two Max dies. Apple's
+      claimed 4.3× AI compute over M3 Ultra suggests prefill could beat this estimate. RTX 5090 speeds come
+      from RTX PRO 6000 measurements, since both use the GB202 die at the full 1,792&nbsp;GB/s. Other derived
+      figures use tok/s ≈ bandwidth × efficiency ÷ bytes read per token. Treat everything as ±20%.
+    </p>
+    <p>
+      <strong>Context figures.</strong> KV cache sizes are computed from published model architectures
+      (2 × layers × KV heads × head dim × bytes), not measured: about 0.32&nbsp;MB per token for Llama-class
+      70B, 0.26&nbsp;MB for a 32B, and 0.072&nbsp;MB for gpt-oss-120b, whose grouped-query attention and
+      sliding-window layers make it unusually cheap. Time-to-first-token is context ÷ prefill rate at that
+      depth. The Spark's depth curve is measured (60.57&nbsp;tok/s decode at depth 0 falling to 40.55 at
+      32K; 1,956&nbsp;tok/s prefill falling to 1,027); the other columns apply the same shape, since the
+      decay is a property of the KV-to-weights ratio rather than of the machine.
+    </p>
+    <p>
+      <strong>Structural caveats.</strong> Dual-3090 speeds assume llama.cpp layer splitting, where cards
+      work sequentially and effective bandwidth stays at 936&nbsp;GB/s; vLLM tensor parallelism reaches
+      roughly 1.4–1.6× that with a more fragile setup. Two-Spark figures assume pipeline parallelism over the
+      200GbE ConnectX-7 link, which adds capacity but not throughput; NVIDIA has not published cluster-scaling
+      figures comparable to Apple's, so that flat number is inference from the interconnect rather than a
+      measurement, and a tensor-parallel Spark cluster with RDMA might do better than shown. Multi-Mac numbers
+      come from four M3 Ultra Studios at 819&nbsp;GB/s, scaled by bandwidth to the M5 Ultra; they require
+      macOS Tahoe 26.2 for the Thunderbolt 5 RDMA driver and EXO as the runtime, and do not apply to
+      llama.cpp, which scales negatively across nodes. Apple-silicon batching and prefix caching assume the
+      community vllm-mlx server rather than mlx-lm or llama.cpp.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var fig = document.getElementById('fig');
+    var tip = document.getElementById('tip');
+    if (!fig || !tip) return;
+
+    function show(el) {
+      var r = el.getBoundingClientRect();
+      var f = fig.getBoundingClientRect();
+      tip.innerHTML = '<b></b>';
+      tip.querySelector('b').textContent = el.dataset.n;
+      tip.appendChild(document.createTextNode(el.dataset.s));
+      tip.classList.add('on');
+      var x = r.left - f.left + r.width / 2;
+      var y = r.top - f.top;
+      var w = tip.offsetWidth;
+      x = Math.max(8, Math.min(x - w / 2, f.width - w - 8));
+      tip.style.left = x + 'px';
+      tip.style.top = Math.max(4, y - tip.offsetHeight - 8) + 'px';
+    }
+
+    function hide() { tip.classList.remove('on'); }
+
+    fig.querySelectorAll('.hit').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { show(el); });
+      el.addEventListener('mouseleave', hide);
+      el.addEventListener('focus', function () { show(el); });
+      el.addEventListener('blur', hide);
+    });
+  })();
+</script>
+</body>
+</html>
