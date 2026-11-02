@@ -1,4 +1,4 @@
-# Local LLM Inference Hardware: Bandwidth or Capacity
+# Local LLM Inference Hardware: Bandwidth or Usable Memory
 
 A comparison of eleven hardware configurations for running large language models
 locally, built between August and November 2026 during a severe DRAM and NAND
@@ -17,14 +17,14 @@ tokens/sec ≈ (bandwidth × efficiency) / bytes read per token
 ```
 
 Model size sets the floor on how much memory you need. Those two numbers,
-capacity and bandwidth, decide almost everything else, and nothing on the market
-is generous with both at a reasonable price. Every configuration here is short
+usable memory and bandwidth, determine almost everything else, and nothing on
+the market offers plenty of both at a reasonable price. Every configuration here is short
 of one or the other.
 
 ## Headline findings
 
 **Mixture-of-experts changes which number matters.** A 117B-parameter MoE like
-gpt-oss-120b activates about 5.1B parameters per token, so it needs capacity for
+gpt-oss-120b activates about 5.1B parameters per token, so it needs memory for
 all of them but bandwidth for only a slice. That is why a DGX Spark runs a 120B
 MoE at 60 tok/s and a 32B dense model at 8 tok/s. See `docs/methodology.md`.
 
@@ -81,7 +81,7 @@ analysis and will be wrong again. Check them again before you buy anything.
 
 - **Add a LICENSE.** Nothing here picks one for you. The prose and page are the
   author's; the benchmark figures belong to the sources credited in
-  `docs/sources.md` and are cited rather than reproduced wholesale.
+  `docs/sources.md` and are cited rather than reproduced wholesale
 - **Check the attribution** in `docs/sources.md` if you plan to quote figures
-  rather than link to them.
-- The page contains no personal data, credentials, or private information.
+  rather than link to them
+- The page contains no personal data, credentials, or private information

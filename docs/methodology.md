@@ -59,9 +59,9 @@ separate costs:
    Llama-class 70B and 0.26 MB for a 32B. gpt-oss-120b needs only about
    0.036 MB/token: it uses grouped-query attention, and only half of its 36
    layers use full attention. The other half keep a 128-token sliding window,
-   so their cache does not grow with context.
-2. **Prefill time.** Context ÷ prefill rate at that depth.
-3. **Decode decay.** Attention reads the entire cache on every token generated.
+   so their cache does not grow with context
+2. **Prefill time.** Context ÷ prefill rate at that depth
+3. **Decode decay.** Attention reads the entire cache on every token generated
 
 The Spark's depth curve is measured: 60.57 tok/s decode at depth 0 falling to
 40.55 at 32K, and 1,956 tok/s prefill falling to 1,027. Other columns apply the
@@ -90,7 +90,7 @@ of cache at 32K, a rise of about 29%, so it loses about a fifth of its speed.
 
 - All M5 Ultra figures, scaled from M5 Max by the 1.95x bandwidth ratio (the
   Ultra is two Max dies). Apple's claimed 4.3x AI compute over M3 Ultra suggests
-  prefill could beat these estimates.
+  prefill could beat these estimates
 - RTX 5090 figures, taken from RTX PRO 6000 measurements, since both use the
   GB202 die at the full 1,792 GB/s
 - Two-Spark cluster throughput, inferred from the interconnect rather than

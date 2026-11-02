@@ -82,13 +82,13 @@ answers the prompt?
 Wrong at three levels, and the corrections are the useful part:
 
 - **Not model-level.** Only the feed-forward sublayer is replicated. Attention,
-  embeddings, and norms are shared. Mixtral 8x7B has 46.7B parameters, not 56B.
+  embeddings, and norms are shared. Mixtral 8x7B has 46.7B parameters, not 56B
 - **Not one expert, not per prompt.** Routing is top-k (4 of 128 for
   gpt-oss-120b) and happens independently at every layer for every token. A
-  36-layer model makes 36 routing decisions per token.
+  36-layer model makes 36 routing decisions per token
 - **Experts are not topic specialists.** Routing is learned end to end with no
   supervision; what emerges clusters around token-level and syntactic patterns.
-  The name is inherited from a 1991 paper and is misleading.
+  The name is inherited from a 1991 paper and is misleading
 
 ---
 
