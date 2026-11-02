@@ -63,6 +63,7 @@ every reversal.
 | `data/configurations.csv` | The configuration matrix as machine-readable data |
 | `scripts/validate_html.py` | Structure and table-consistency checker for the page |
 | `scripts/wrap_document.py` | Wraps an HTML fragment as a complete document |
+| `LICENSE` | The CC BY 4.0 license |
 
 ## Confidence
 
@@ -78,11 +79,13 @@ plus a host PC for the GPU builds (about $500 before tax for one card, $600 for
 two, $1,500 for the RTX PRO 6000 workstation). They were wrong twice during this
 analysis and will be wrong again. Check them again before you buy anything.
 
-## Before publishing this repo
+## License
 
-- **Add a LICENSE.** Nothing here picks one for you. The prose and page are the
-  author's; the benchmark figures belong to the sources credited in
-  `docs/sources.md` and are cited rather than reproduced wholesale
-- **Check the attribution** in `docs/sources.md` if you plan to quote figures
-  rather than link to them
-- The page contains no personal data, credentials, or private information
+Copyright 2026 Scott Cottrille. Everything in this repo is licensed under
+[Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
+(CC BY 4.0), and the full text is in `LICENSE`. You can copy, adapt and use any
+of it for any purpose, including commercially. In return, you must credit the
+author, link to the license, and say whether you changed anything.
+
+The benchmark figures on the page come from the sources credited in
+`docs/sources.md`. If you reuse a figure, credit its original source too.
