@@ -7,6 +7,12 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
+## 2 Nov 2026: light and dark switch
+
+A button at the top right of the page switches between light and dark mode.
+The page follows your system setting until you use it, and then remembers your
+choice on that browser.
+
 ## 2 Nov 2026: links to each section
 
 Each section title now ends with a link icon. Clicking it puts the section's
