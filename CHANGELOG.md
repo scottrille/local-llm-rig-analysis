@@ -7,6 +7,13 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
+## 1 Nov 2026: sortable cost table
+
+The three cost columns in "What memory actually costs" can be sorted. The first
+click sorts from cheapest to most expensive, and a second click reverses it.
+
+---
+
 ## 1 Nov 2026: general audience
 
 Removed the Windows 11 + WSL2 framing that came from the original question, and
