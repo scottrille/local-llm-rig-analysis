@@ -7,6 +7,15 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
+## 1 Nov 2026: cost per GB on the chart
+
+Renamed "The trade space" to "Memory versus bandwidth". Bubble area on that
+chart now shows delivered cost per gigabyte of usable memory, with a size key,
+and each bubble is labeled with its $/GB. Labels were repositioned so that none
+of them overlap a bubble, a line or another label.
+
+---
+
 ## 1 Nov 2026: consistency and public-release pass
 
 Rewrote the page so that it describes only the current state of the analysis.
