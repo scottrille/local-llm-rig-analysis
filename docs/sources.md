@@ -9,7 +9,10 @@ original before quoting numbers.
 - [Performance of llama.cpp on NVIDIA DGX Spark](https://github.com/ggml-org/llama.cpp/discussions/16578) — the primary Spark source, including the depth curve (gpt-oss-120b tg32 from 60.57 at depth 0 to 40.55 at 32K, pp2048 from 1,956 to 1,027)
 - [Local LLM benchmarks on RTX PRO 6000 Blackwell](https://www.vaditaslim.com/blog/local-llm-benchmarks-rtx-pro-6000) — eight models, pp512 and tg128
 - [sglang LLM inference: RTX Pro 6000 vs DGX Spark](https://github.com/casualcomputer/rtx_pro_6000_vs_dgx_spark) — six architectures, batch sizes 1 to 32
-- [Apple M5 Max for local LLMs: first benchmarks](https://www.hardware-corner.net/m5-max-local-llm-benchmarks-20261233/) — the M5 Max basis for all M5 Ultra extrapolations
+- [Apple M5 Max for local LLMs: first benchmarks](https://www.hardware-corner.net/m5-max-local-llm-benchmarks-20261233/) — the M5 Max basis for the M5 Ultra extrapolations
+- [gpt-oss-120b on M5 Ultra (80c), oMLX benchmark](https://omlx.ai/benchmarks/performance/dx5x4yhw) — 110.1 tok/s decode on a 256 GB machine, 24 Sep 2026
+- [Apple silicon LLM benchmarks, LLMCheck](https://llmcheck.net/benchmarks) — collected M5 Ultra measurements, including gpt-oss-120b at 120 tok/s (96 at 32K) and gpt-oss-20b at 184
+- [M5 Ultra LLM benchmarks, fireside-labs](https://github.com/fireside-labs/m5-ultra-llm-benchmarks) — an owner's 30-core CPU / 64-core GPU, 256 GB machine, which confirms that the bin is sold at 256 GB
 - [LLM tokens/sec benchmarks 2026: RTX 4090 vs 3090](https://mustafa.net/llm-tokens-per-second-benchmarks/) — RTX 3090 dense figures
 - [Why DGX Spark runs 70B LLMs at 2.7 tokens/s](https://www.mayhemcode.com/2026/08/why-dgx-spark-runs-70b-llms-at-27.html)
 - [Radeon AI PRO R9700 for local AI in 2026](https://runaihome.com/blog/amd-radeon-ai-pro-r9700-local-ai-hardware-guide-2026/) — R9700 measured llama.cpp results and street pricing
@@ -29,6 +32,13 @@ original before quoting numbers.
 - [RDMA over Thunderbolt 5 for Mac clusters, AppleInsider](https://appleinsider.com/articles/25/12/20/ai-calculations-on-mac-cluster-gets-a-big-boost-from-new-rdma-support-on-thunderbolt-5) — the four-node EXO vs llama.cpp scaling figures
 - [Explore distributed inference and training with MLX, WWDC26](https://developer.apple.com/videos/play/wwdc2026/233/)
 - [Running DeepSeek V3 671B on a Mac cluster, EXO Labs](https://blog.exolabs.net/day-2/)
+- [exo, exo-explore on GitHub](https://github.com/exo-explore/exo) — maintainer, Apache 2.0 license, tensor parallelism over RDMA, MLX backend
+- [1.5 TB of VRAM on Mac Studio: RDMA over Thunderbolt 5, Jeff Geerling](https://jeffgeerling.com/blog/2025/15-tb-vram-on-mac-studio-rdma-over-thunderbolt-5) — EXO versus llama.cpp RPC, and the RDMA latency drop from ~300 to under 50 microseconds
+- [Apple's MLX turns four Macs into a trillion-parameter cluster, AlphaSignal](https://alphasignal.ai/news/apple-s-mlx-turns-four-macs-into-a-trillion-parameter-cluster) — JACCL at 50–60 Gb/s over Thunderbolt 5
+- [vLLM 0.17.0 MXFP4 patches for DGX Spark, NVIDIA Developer Forums](https://forums.developer.nvidia.com/t/vllm-0-17-0-mxfp4-patches-for-dgx-spark-qwen3-5-35b-a3b-70-tok-s-gpt-oss-120b-80-tok-s-tp-2/362824) — gpt-oss-120b on two Sparks with TP=2: 51.82 tok/s stock, 80.88 patched
+- [Running gpt-oss-120b on a single DGX Spark, Conselara](https://conselara.dev/notes/gpt-oss-120b-single-dgx-spark/) — one Spark at 37–39 tok/s on the stock NGC vLLM, 59–63 with a community fork
+- [Two DGX Sparks linked: setup and measured speeds](https://eurokommerz.at/blog/dgx-spark-two-nodes-and-beyond-llms/) — NVIDIA's Qwen3 235B NVFP4 TensorRT-LLM figure (11.73 tok/s, TP=2) and the ~190 Gb/s RDMA link test
+- [Two NVIDIA DGX Sparks, three open models, Techstrong.ai](https://techstrong.ai/features/two-nvidia-dgx-sparks-three-open-models-and-the-benchmark-that-misled-us/) — 1.71x single-stream scaling with TP=2 (model not stated), and ConnectX-7 throughput
 
 ## Software stacks
 

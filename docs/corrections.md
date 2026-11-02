@@ -253,6 +253,43 @@ every other place that depended on the old figure. This is the same lesson as
 
 ---
 
+## 16. The flat two-Spark figure
+
+**Claimed:** A second Spark adds memory but no throughput, so the two-Spark
+column repeated one Spark's speeds and the chart drew the pair at 273 GB/s with
+"no gain". A paragraph speculated that an expert-parallel setup over RDMA
+"might" do better.
+
+**Actually:** That reasoning holds only for layer splitting. With tensor
+parallelism in vLLM, two Sparks run gpt-oss-120b about a third faster than one
+(38 to 52 tok/s stock, about 60 to 81 patched), and NVIDIA publishes two-Spark
+TensorRT-LLM figures. The ConnectX-7 link already supports RDMA.
+
+**Fix:** The pair is now drawn at about 365 GB/s effective (+33%), its cost per
+GB/s is $42.19 rather than $56.41, and the clustering section explains which
+software splits a model in which way.
+
+**Why it happened:** The analysis assumed the runtime it knew (pipeline
+parallelism) and called the result "an inference from the interconnect" instead
+of looking for tensor-parallel results.
+
+---
+
+## 17. M5 Ultra gpt-oss-120b speed
+
+**Claimed:** ~170 tok/s, scaled from the M5 Max by the 1.95x bandwidth ratio.
+
+**Actually:** Owners measured 110 to 120 tok/s with MLX on 256 GB machines,
+falling to 96 at 32K tokens of context (a 20% loss, where the page had
+assumed ~30%).
+
+**Fix:** The matrix, the bin table and the context table use the measured
+figures, and the footer marks the remaining scaled M5 Ultra figures as
+optimistic. The 30/64 bin, previously listed as unconfirmed at 256 GB, is
+offered at $9,499 list.
+
+---
+
 ## The pattern
 
 Four of these (1, 2, 3, 8) are the same error: treating a number with a clock on
@@ -261,7 +298,8 @@ different costume: checking the canonical implementation, finding it absent, and
 concluding the capability did not exist. One (7) is a model applied outside its
 validated range. One (9) is a presentation failure that smuggled an assumption
 in alongside measurements. Two (13, 15) are internal inconsistencies: a fix
-made in one place and not followed through the rest of the page.
+made in one place and not followed through the rest of the page. Two (16, 17)
+are derived figures that stayed on the page after measurements appeared.
 
 The conclusions in this repo will age. The habit of marking which numbers were
 measured, which were derived, and which were assumed is what makes it possible

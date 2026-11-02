@@ -7,6 +7,40 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
+## 1 Nov 2026: measured results, term links, clearer explanations
+
+**Two Sparks now gain speed on the page.** The two-Spark figures had assumed
+layer splitting, where the second box adds memory only. Published vLLM results
+with tensor parallelism show about +33% on gpt-oss-120b, so the pair is drawn at
+about 365 GB/s effective, its cost per GB/s falls from $56.41 to $42.19, and the
+matrix uses the measured two-Spark results. The verdict does not change: the
+pair still costs $3,400 more than a 256 GB M5 Ultra, with less than a third of
+its bandwidth.
+
+**M5 Ultra gpt-oss figures are measured.** Owners measured gpt-oss-120b at 110
+to 120 tok/s, versus the ~170 that scaling from the M5 Max predicted, and a 20%
+decode loss at 32K tokens of context. The 30-core CPU / 64-core GPU bin is
+offered at 256 GB ($9,499 list), and the page now recommends the 36/80 bin for
+most LLM work because it prefills about 25% faster.
+
+The clustering section explains EXO and the alternatives (MLX distributed,
+llama.cpp RPC, multi-node vLLM, TensorRT-LLM), with who maintains each one and
+whether a second machine adds speed. It also gives the Thunderbolt 5 RDMA
+throughput. The context callout explains, with its arithmetic, why MoE models
+slow down more as context grows.
+
+Every defined term links to its definition at its first use in each section.
+New definitions cover FP4, MXFP4 and NVFP4, gfx1151 and gfx1201, HIP, the AMD
+Halo chips, EXO, PyTorch, fine-tuning, speculative decoding, aarch64, compute
+capability, and the Thunderbolt 5 and ConnectX-7 links.
+
+All eleven configuration cards share one border color, and recommendations in
+"Which one, and when" have a green bar and a "Recommended" label, distinct from
+the red "Avoid" bar. Renamed "Capability matrix" to "Model capability matrix"
+and the software section to "The software each platform runs".
+
+---
+
 ## 1 Nov 2026: sortable cost table, plain wording, definitions
 
 The three cost columns in "What memory actually costs" can be sorted. The first

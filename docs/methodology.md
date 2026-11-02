@@ -91,13 +91,15 @@ of cache at 32K, a rise of about 29%, so it loses about a fifth of its speed.
 
 **Derived:**
 
-- All M5 Ultra figures, scaled from M5 Max by the 1.95x bandwidth ratio (the
-  Ultra is two Max dies). Apple's claimed 4.3x AI compute over M3 Ultra suggests
-  prefill could beat these estimates
+- M5 Ultra figures other than gpt-oss-120b and gpt-oss-20b, scaled from M5 Max
+  by the 1.95x bandwidth ratio (the Ultra is two Max dies). Owner measurements of
+  gpt-oss-120b (110 to 120 tok/s with MLX) came in well below the ~170 that this
+  scaling predicted, so treat the scaled figures as optimistic. Apple's claimed
+  4.3x AI compute over M3 Ultra suggests prefill could beat these estimates
+- Two-Spark figures for models without a two-Spark measurement, scaled by the
+  +33% that tensor parallelism gave gpt-oss-120b
 - RTX 5090 figures, taken from RTX PRO 6000 measurements, since both use the
   GB202 die at the full 1,792 GB/s
-- Two-Spark cluster throughput, inferred from the interconnect rather than
-  benchmarked (see below)
 - R9700 dual-card figures, assuming layer splitting
 
 ## Structural caveats
@@ -107,13 +109,16 @@ sequentially and effective bandwidth stays at a single card's rate. You buy
 capacity, not speed. vLLM tensor parallelism reaches roughly 1.4 to 1.6x that,
 with a more fragile setup.
 
-**Two-Spark figures are an assumption, not a measurement.** Under pipeline
-parallelism each layer still executes once, which yields capacity without
-throughput. NVIDIA has published nothing comparable to Apple's four-node numbers.
-Since EXO gains on Macs specifically by distributing expert weights so each node
-reads less memory per token, a Spark cluster running comparable expert
-parallelism over RDMA could plausibly do the same. Treat the flat figure as
-conservative and untested.
+**Two-Spark figures assume tensor parallelism.** With layer splitting
+(pipeline parallelism, as in llama.cpp RPC) each layer still runs on one machine
+at a time, so the second Spark adds capacity without throughput. With tensor
+parallelism in vLLM or TensorRT-LLM over the ConnectX-7 link, both Sparks work
+on every layer and each reads half the weights. Published single-request results
+for gpt-oss-120b in vLLM: about 38 tok/s on one Spark and 52 on two with the
+standard release (+35%), and about 60 versus 81 with community patches (+33%).
+NVIDIA reports Qwen3 235B at NVFP4 at 11.7 tok/s on two Sparks in
+TensorRT-LLM. The page uses +33% for the pair, an effective bandwidth of about
+365 GB/s, which is close to the +34% that two Macs gain with EXO.
 
 **Multi-Mac figures require specific software.** macOS Tahoe 26.2 for the
 Thunderbolt 5 RDMA driver, and EXO as the runtime. They do not apply to

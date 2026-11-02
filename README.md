@@ -38,10 +38,11 @@ that you notice. This is where the low-bandwidth machines and the AMD card are
 weakest, and it does not show up in the tokens/sec figures that people usually
 quote.
 
-**Clustering works very differently across platforms.** Two Macs over
-Thunderbolt 5 with RDMA and EXO gain about 34% throughput. The same hardware
-running llama.cpp *loses* 16%. The runtime, not the silicon, determines whether a
-second box helps.
+**The software decides whether a second box adds speed.** Two Macs over
+Thunderbolt 5 with RDMA and EXO gain about 34% throughput, and two DGX Sparks
+running vLLM with tensor parallelism gain about a third. The same Macs running
+llama.cpp *lose* 16%, because it splits the model by layers and the machines take
+turns.
 
 **Prices moved more than the analysis did.** Between August and October NVIDIA
 raised the DGX Spark 128GB list price 48%, used RTX 3090s rose 23%, the lowest
