@@ -66,7 +66,7 @@ every reversal.
 ## Confidence
 
 Treat every performance figure as accurate to roughly ±20%. Sources differ in
-quantization, inference engine, and context depth, and some figures are derived
+quantization, inference engine, and context length, and some figures are derived
 from the bandwidth model rather than measured. `docs/methodology.md` marks which
 is which, and `docs/corrections.md` is the honest record of where the derivations
 failed.

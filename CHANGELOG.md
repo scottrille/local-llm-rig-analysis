@@ -7,10 +7,14 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
-## 1 Nov 2026: sortable cost table
+## 1 Nov 2026: sortable cost table, plain context wording
 
 The three cost columns in "What memory actually costs" can be sorted. The first
 click sorts from cheapest to most expensive, and a second click reverses it.
+
+Replaced the benchmark jargon "depth" and "depth zero" in the context section
+with "with an empty context" and "with 32K tokens of context". The methodology
+doc defines "depth" for readers who meet it in benchmark results.
 
 ---
 

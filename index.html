@@ -1429,7 +1429,8 @@
     <div class="sec-head">
       <h2>Context, which changes all of the above</h2>
       <p class="sec-note">
-        Every number in the matrix is measured at depth zero, and you will almost never run at depth zero.
+        Every number in the matrix is measured with an empty context: the model generates right after a very
+        short prompt. Real use almost never looks like that.
         A chat re-sends the whole conversation with each message, and agents and document retrieval add
         long tool outputs and documents on top, so context adds three separate costs. You need memory to
         hold the KV cache, you wait for prefill before the first token, and decoding slows down, because
@@ -1439,10 +1440,10 @@
 
     <div class="scroller">
       <table class="wide">
-        <caption>How each configuration behaves at context depth</caption>
+        <caption>How each configuration behaves with a long context</caption>
         <thead>
           <tr>
-            <th scope="col">At depth</th>
+            <th scope="col">With context</th>
             <th scope="col">Dual RTX 3090</th>
             <th scope="col">RTX 5090</th>
             <th scope="col">1&times; DGX Spark</th>
@@ -1494,7 +1495,7 @@
           </tr>
 
           <tr>
-            <th scope="row">Decode loss at 32K depth<small>versus depth zero</small></th>
+            <th scope="row">Decode loss with 32K tokens of context<small>versus an empty context</small></th>
             <td><span class="num">~30%</span></td>
             <td><span class="num">~30%</span></td>
             <td><div class="cell"><span class="num">33%</span><span class="unit">measured: 60.6 → 40.6</span></div></td>
@@ -1504,7 +1505,7 @@
           </tr>
 
           <tr>
-            <th scope="row">Prefill loss at 32K depth</th>
+            <th scope="row">Prefill loss with 32K tokens of context</th>
             <td><span class="num">~40%</span></td>
             <td><span class="num">~40%</span></td>
             <td><div class="cell"><span class="num">47%</span><span class="unit">measured: 1,956 → 1,027</span></div></td>
@@ -1547,7 +1548,8 @@
       <p>
         gpt-oss-120b reads about 2.7&nbsp;GB of active weights per token. Only half of its layers use full
         attention (the other half keep a 128-token window), so its KV cache at 32K context is about
-        1.2&nbsp;GB. At that depth the model reads about 45% more memory per token than at depth zero,
+        1.2&nbsp;GB. With that much context, the model reads about 45% more memory per token than with an
+        empty context,
         which fits the 33% decode slowdown measured on the Spark. A dense 70B model reads about 36&nbsp;GB
         of weights per token. Its cache at 32K is about 10&nbsp;GB, which adds more than a quarter, so it
         slows down by about a fifth. The Spark is strongest on MoE models, and context erodes that strength fastest.
@@ -2272,9 +2274,9 @@
       (2 × layers × KV heads × head dim × bytes), not measured. They come to about 0.32&nbsp;MB per token
       for a Llama-class 70B and 0.26&nbsp;MB for a 32B. gpt-oss-120b needs only about 0.036&nbsp;MB per
       token, because it uses grouped-query attention and half of its layers keep only a 128-token window.
-      Time to first token is the context length divided by the prefill rate at that depth. The Spark's
-      depth curve is measured: decode falls from 60.57&nbsp;tok/s at depth 0 to 40.55 at 32K, and prefill
-      falls from 1,956&nbsp;tok/s to 1,027. The other columns apply the same shape, because the slowdown
+      Time to first token is the context length divided by the prefill rate at that context length. The
+      Spark's figures are measured: decode falls from 60.57&nbsp;tok/s with an empty context to 40.55 with
+      32K tokens of context, and prefill falls from 1,956&nbsp;tok/s to 1,027. The other columns apply the same shape, because the slowdown
       depends on the ratio of KV cache to weights rather than on the machine.
     </p>
     <p>
