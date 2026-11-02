@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bandwidth or Usable Memory</title>
+<meta name="author" content="Scott Cottrille, Claude">
 <meta name="description" content="Every M5 Ultra configuration costs about $52 per gigabyte of usable memory, versus $70 for a DGX Spark and $188 for an RTX 5090. Eleven ways to run large language models locally, compared on memory, speed, long-context behavior, software and price.">
 <link rel="canonical" href="https://scottrille.github.io/local-llm-rig-analysis/">
 <meta property="og:type" content="article">
@@ -106,6 +107,16 @@
   /* ---------- masthead ---------- */
 
   .masthead { display: flex; flex-direction: column; gap: 20px; }
+
+  /* author line under the title */
+  .byline {
+    margin: -8px 0 0;
+    font-size: .875rem;
+    color: var(--ink-3);
+  }
+  .byline a { color: inherit; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .byline a:hover { color: var(--accent); }
+
 
   .eyebrow {
     font-family: var(--f-mono);
@@ -680,6 +691,9 @@
       <span>Prices checked 1 Nov 2026</span>
     </div>
     <h1>Every rig is short of <em>bandwidth</em> or <em>usable memory</em></h1>
+    <p class="byline">
+      Author: Scott Cottrille, Claude - <a href="https://github.com/scottrille/local-llm-rig-analysis">https://github.com/scottrille/local-llm-rig-analysis</a>
+    </p>
     <p class="deck">
       <a class="def" href="#def-decode">Token generation</a> is memory-bandwidth-bound, and the size of the model sets the minimum memory you
       need. Those two numbers determine almost everything else, and none of the hardware options here offers
@@ -1776,9 +1790,9 @@
     <div class="tbl-head">
       <h3 id="tbl-macs">Two and four Macs, measured</h3>
       <p>
-        The table holds the hardware and the link fixed and varies only the model and the software, so the
-        rows can be compared directly. Two-Spark results come from different tests, so they are covered
-        separately below the table.
+        Every row uses the same machines: M3 Ultra Mac Studios connected by Thunderbolt 5 cables. Only the
+        model and the software change from row to row, so you can compare the rows directly. The two-Spark
+        results come from different tests, so they are covered separately below the table.
       </p>
     </div>
 
