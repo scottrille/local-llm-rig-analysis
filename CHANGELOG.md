@@ -7,6 +7,24 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
+## 1 Nov 2026: sortable cost table, plain wording, definitions
+
+The three cost columns in "What memory actually costs" can be sorted. The first
+click sorts from cheapest to most expensive, and a second click reverses it.
+
+Replaced the benchmark jargon "depth" and "depth zero" in the context section
+with "with an empty context" and "with 32K tokens of context". The methodology
+doc defines "depth" for readers who meet it in benchmark results.
+
+Added a "Terms used on this page" section at the end with 32 definitions,
+grouped by topic, including batch size, quantization levels such as Q4 and Q8,
+prefill, decode, KV cache and bin. The first uses of "batch size 1" and
+"Q4-class quantization" link to their definitions. Added a 4-node change column
+to the clustering table, and renamed the AMD section to "The AMD option,
+compared to other discrete cards".
+
+---
+
 ## 1 Nov 2026: general audience
 
 Removed the Windows 11 + WSL2 framing that came from the original question, and

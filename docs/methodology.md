@@ -49,10 +49,12 @@ capacity-rich, bandwidth-poor machines suit it.
 Note that `8x7B`-style naming is misleading: Mixtral 8x7B has 46.7B parameters,
 not 56B, because only the FFN is replicated and attention is shared.
 
-## Context depth
+## Context length
 
-Every headline tokens/sec figure is a depth-zero figure. Context imposes three
-separate costs:
+Every headline tokens/sec figure is measured with an empty context, meaning the
+model generates right after a very short prompt. Benchmark tools such as
+llama-bench call the amount of context already present the "depth". A longer
+context imposes three separate costs:
 
 1. **KV cache memory.** Computed from published architectures as
    `2 × layers × KV heads × head dim × bytes`. Roughly 0.32 MB/token for a
@@ -60,11 +62,12 @@ separate costs:
    0.036 MB/token: it uses grouped-query attention, and only half of its 36
    layers use full attention. The other half keep a 128-token sliding window,
    so their cache does not grow with context
-2. **Prefill time.** Context ÷ prefill rate at that depth
+2. **Prefill time.** Context length ÷ prefill rate at that context length
 3. **Decode decay.** Attention reads the entire cache on every token generated
 
-The Spark's depth curve is measured: 60.57 tok/s decode at depth 0 falling to
-40.55 at 32K, and 1,956 tok/s prefill falling to 1,027. Other columns apply the
+The Spark's figures are measured: 60.57 tok/s decode with an empty context,
+falling to 40.55 with 32K tokens of context, and 1,956 tok/s prefill falling to
+1,027. Other columns apply the
 same shape, because the decay is a property of the KV-to-weights ratio rather
 than of the machine.
 

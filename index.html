@@ -331,8 +331,6 @@
     width: 100%;
     font-size: .875rem;
   }
-  table.wide { min-width: 1160px; }
-  table.narrow { min-width: 760px; }
 
   caption { display: none; }
 
@@ -447,6 +445,26 @@
 
   .cell { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
 
+  button.sort {
+    all: unset;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    border-radius: 2px;
+  }
+  button.sort:hover { color: var(--accent); }
+  button.sort:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .sort-ind {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    width: 1ch;
+  }
+  .sort-ind::before { content: "\2195"; }
+  th[aria-sort="ascending"] .sort-ind::before { content: "\2191"; color: var(--accent); }
+  th[aria-sort="descending"] .sort-ind::before { content: "\2193"; color: var(--accent); }
+
   /* ---------- verdict ---------- */
 
   .verdicts {
@@ -512,6 +530,66 @@
     color: var(--ink);
   }
   .callout p + p { color: var(--ink-2); font-size: .9375rem; }
+
+  /* ---------- table titles ---------- */
+
+  .tbl-head { display: flex; flex-direction: column; gap: 4px; margin: 12px 0 -10px; }
+  .tbl-head h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -.012em;
+    margin: 0;
+  }
+  .tbl-head p { margin: 0; color: var(--ink-2); font-size: .9375rem; }
+
+  /* ---------- definitions ---------- */
+
+  a.def {
+    color: inherit;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+  }
+  a.def:hover { color: var(--accent); }
+
+  .defs {
+    columns: 3 300px;
+    column-gap: 14px;
+  }
+  .def-group {
+    break-inside: avoid;
+    margin-bottom: 14px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 18px 20px 6px;
+    box-shadow: var(--shadow);
+  }
+  .def-group h3 {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 12px;
+  }
+  .def-group dl { margin: 0; }
+  .def-group dt {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: .9375rem;
+    color: var(--ink);
+    scroll-margin-top: 24px;
+  }
+  .def-group dd {
+    margin: 2px 0 14px;
+    font-size: .875rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .def-group dt:target + dd,
+  .def-group dt:target { background: var(--accent-wash); }
 
   /* ---------- footer ---------- */
 
@@ -979,19 +1057,20 @@
         usable memory and dollars per gigabyte per second of bandwidth. All figures are delivered cost,
         including about 11% sales tax, so adjust them for your own rate. <strong>The DGX Spark costs
         $70/GB of memory, and every Apple configuration costs $52.</strong> The 512&nbsp;GB tier gives you
-        more memory in one box, but not cheaper memory.
+        more memory in one box, but not cheaper memory. Select a cost column's heading to sort by it, and
+        select it again to reverse the order.
       </p>
     </div>
 
     <div class="scroller">
-      <table class="narrow">
-        <caption>Cost efficiency by memory and by bandwidth</caption>
+      <table class="narrow" id="cost-table">
+        <caption>Cost efficiency by memory and by bandwidth. Numeric columns can be sorted.</caption>
         <thead>
           <tr>
             <th scope="col">Configuration</th>
-            <th scope="col">Delivered cost</th>
-            <th scope="col">Per GB of memory</th>
-            <th scope="col">Per GB/s of bandwidth</th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort">Delivered cost<span class="sort-ind" aria-hidden="true"></span></button></th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort">Per GB of memory<span class="sort-ind" aria-hidden="true"></span></button></th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort">Per GB/s of bandwidth<span class="sort-ind" aria-hidden="true"></span></button></th>
           </tr>
         </thead>
         <tbody>
@@ -1076,8 +1155,9 @@
     <div class="sec-head">
       <h2>Capability matrix</h2>
       <p class="sec-note">
-        Generation speed at batch size 1, with Q4-class quantization unless noted. The shaded rows are the
-        ones that matter most for the purchase. Scroll sideways for the Apple columns. The 64&nbsp;GB Spark is left
+        Generation speed at <a class="def" href="#def-batch">batch size 1</a>, with
+        <a class="def" href="#def-quant">Q4-class quantization</a> unless noted. The shaded rows are the
+        ones that matter most for the purchase. The 64&nbsp;GB Spark is left
         out because its ~55&nbsp;GB of usable memory will not hold the ~60&nbsp;GB that gpt-oss-120b needs.
         It loses the Spark's main strength and keeps all of its limitations.
       </p>
@@ -1276,7 +1356,7 @@
 
   <section>
     <div class="sec-head">
-      <h2>The AMD option, compared where it actually competes</h2>
+      <h2>The AMD option, compared to other discrete cards</h2>
       <p class="sec-note">
         The R9700 gets its own table rather than a column in the matrix above, because it competes with the
         other discrete cards, not with unified-memory machines. All figures here are for llama.cpp-class
@@ -1408,7 +1488,8 @@
     <div class="sec-head">
       <h2>Context, which changes all of the above</h2>
       <p class="sec-note">
-        Every number in the matrix is measured at depth zero, and you will almost never run at depth zero.
+        Every number in the matrix is measured with an empty context: the model generates right after a very
+        short prompt. Real use almost never looks like that.
         A chat re-sends the whole conversation with each message, and agents and document retrieval add
         long tool outputs and documents on top, so context adds three separate costs. You need memory to
         hold the KV cache, you wait for prefill before the first token, and decoding slows down, because
@@ -1418,10 +1499,10 @@
 
     <div class="scroller">
       <table class="wide">
-        <caption>How each configuration behaves at context depth</caption>
+        <caption>How each configuration behaves with a long context</caption>
         <thead>
           <tr>
-            <th scope="col">At depth</th>
+            <th scope="col">With context</th>
             <th scope="col">Dual RTX 3090</th>
             <th scope="col">RTX 5090</th>
             <th scope="col">1&times; DGX Spark</th>
@@ -1473,7 +1554,7 @@
           </tr>
 
           <tr>
-            <th scope="row">Decode loss at 32K depth<small>versus depth zero</small></th>
+            <th scope="row">Decode loss with 32K tokens of context<small>versus an empty context</small></th>
             <td><span class="num">~30%</span></td>
             <td><span class="num">~30%</span></td>
             <td><div class="cell"><span class="num">33%</span><span class="unit">measured: 60.6 → 40.6</span></div></td>
@@ -1483,7 +1564,7 @@
           </tr>
 
           <tr>
-            <th scope="row">Prefill loss at 32K depth</th>
+            <th scope="row">Prefill loss with 32K tokens of context</th>
             <td><span class="num">~40%</span></td>
             <td><span class="num">~40%</span></td>
             <td><div class="cell"><span class="num">47%</span><span class="unit">measured: 1,956 → 1,027</span></div></td>
@@ -1526,7 +1607,8 @@
       <p>
         gpt-oss-120b reads about 2.7&nbsp;GB of active weights per token. Only half of its layers use full
         attention (the other half keep a 128-token window), so its KV cache at 32K context is about
-        1.2&nbsp;GB. At that depth the model reads about 45% more memory per token than at depth zero,
+        1.2&nbsp;GB. With that much context, the model reads about 45% more memory per token than with an
+        empty context,
         which fits the 33% decode slowdown measured on the Spark. A dense 70B model reads about 36&nbsp;GB
         of weights per token. Its cache at 32K is about 10&nbsp;GB, which adds more than a quarter, so it
         slows down by about a fifth. The Spark is strongest on MoE models, and context erodes that strength fastest.
@@ -1578,6 +1660,7 @@
             <th scope="col">2 nodes</th>
             <th scope="col">4 nodes</th>
             <th scope="col">2-node change</th>
+            <th scope="col">4-node change</th>
           </tr>
         </thead>
         <tbody>
@@ -1587,6 +1670,7 @@
             <td><span class="num">26.2</span> <span class="unit">tok/s</span></td>
             <td><span class="num">31.9</span> <span class="unit">tok/s</span></td>
             <td><span class="flag yes">+34%</span></td>
+            <td><span class="flag yes">+64%</span></td>
           </tr>
           <tr class="band">
             <th scope="row">DeepSeek V3.1 671B<small>EXO, with RDMA</small></th>
@@ -1594,6 +1678,7 @@
             <td><span class="num">27.8</span> <span class="unit">tok/s</span></td>
             <td><span class="num">32.5</span> <span class="unit">tok/s</span></td>
             <td><span class="flag yes">+32%</span></td>
+            <td><span class="flag yes">+54%</span></td>
           </tr>
           <tr>
             <th scope="row">Qwen3 235B<small>llama.cpp, no RDMA</small></th>
@@ -1601,6 +1686,7 @@
             <td><span class="num">17.2</span> <span class="unit">tok/s</span></td>
             <td><span class="num">15.2</span> <span class="unit">tok/s</span></td>
             <td><span class="flag no">&minus;16%</span></td>
+            <td><span class="flag no">&minus;25%</span></td>
           </tr>
         </tbody>
       </table>
@@ -1660,9 +1746,14 @@
       </p>
     </div>
 
+    <div class="tbl-head">
+      <h3 id="tbl-engines">Which inference engines run on each platform</h3>
+      <p>
+        An inference engine is the program that loads a model and answers requests. Check that the engine you plan to use runs on the platform you are considering, because the engine determines most of the features in the next table.
+      </p>
+    </div>
     <div class="scroller">
-      <table class="wide">
-        <caption>Inference engine availability by platform</caption>
+      <table class="narrow" aria-labelledby="tbl-engines">
         <thead>
           <tr>
             <th scope="col">Engine</th>
@@ -1733,9 +1824,14 @@
       </table>
     </div>
 
+    <div class="tbl-head">
+      <h3 id="tbl-features">Features that come from the software, not the chip</h3>
+      <p>
+        These features determine how well a machine serves several users at once, how quickly it answers follow-up requests, and whether you can fine-tune models on it. The software provides them, so two machines with similar hardware can differ here.
+      </p>
+    </div>
     <div class="scroller">
-      <table class="wide">
-        <caption>Capabilities that follow from the stack, not the silicon</caption>
+      <table class="narrow" aria-labelledby="tbl-features">
         <thead>
           <tr>
             <th scope="col">Capability</th>
@@ -1792,9 +1888,14 @@
       </table>
     </div>
 
+    <div class="tbl-head">
+      <h3 id="tbl-models">Getting models onto the machine</h3>
+      <p>
+        How your applications reach the machine, how soon a newly released model runs on it, and which model file formats it can load.
+      </p>
+    </div>
     <div class="scroller">
-      <table class="narrow">
-        <caption>Model and format availability</caption>
+      <table class="narrow" aria-labelledby="tbl-models">
         <thead>
           <tr>
             <th scope="col">Concern</th>
@@ -2195,6 +2296,106 @@
     </div>
   </section>
 
+  <section id="definitions">
+    <div class="sec-head">
+      <h2>Terms used on this page</h2>
+      <p class="sec-note">
+        Definitions of the technical terms above, grouped by topic.
+      </p>
+    </div>
+    <div class="defs">
+      <div class="def-group">
+        <h3>Speed</h3>
+        <dl>
+          <dt>Token</dt>
+          <dd>A unit of text that a model reads and writes. An English word is about 1.3 tokens on average, so 1,000 tokens is roughly 750 words.</dd>
+          <dt>tok/s</dt>
+          <dd>Tokens per second. Unless a figure is labeled as prefill, it means generation speed: how fast the answer appears.</dd>
+          <dt id="def-batch">Batch size 1</dt>
+          <dd>One request handled at a time, as when one person chats with a model. Every speed on this page is for a single request at batch size 1. A server can also handle many requests together, as a larger batch. It then produces more tokens per second in total, because one read of the weights from memory serves every request in the batch. Each individual request runs a little slower.</dd>
+          <dt>Prefill</dt>
+          <dd>The first stage of answering, in which the model processes the whole prompt before it writes anything. Prefill is limited by compute, so it scales with GPU cores. It is also called prompt processing.</dd>
+          <dt>Decode</dt>
+          <dd>The second stage, in which the model writes the answer one token at a time. Each token requires reading the active weights from memory, so decode speed is limited by memory bandwidth. It is also called token generation.</dd>
+          <dt>Time to first token</dt>
+          <dd>How long you wait before the answer starts to appear. It is mostly prefill time, so it grows with the length of the prompt.</dd>
+        </dl>
+      </div>
+      <div class="def-group">
+        <h3>Context</h3>
+        <dl>
+          <dt>Context</dt>
+          <dd>Everything that the model works with for a request: the prompt, the earlier conversation, and any documents or tool output. "32K" means about 32,000 tokens of context (32,768 exactly).</dd>
+          <dt>KV cache</dt>
+          <dd>The memory that holds the model's processed version of the context, so that the model does not reprocess the whole context for every new token. It grows with the length of the context and competes with the model's weights for memory.</dd>
+          <dt>Prefix caching</dt>
+          <dd>Reusing the KV cache for the part of a prompt that has not changed since the last request, such as a long system prompt or the earlier part of a conversation. It cuts the time to first token on follow-up requests.</dd>
+          <dt>Continuous batching</dt>
+          <dd>A server feature that adds new requests to a running batch as soon as there is room, rather than waiting for the batch to finish. It matters when several people or programs share one machine.</dd>
+        </dl>
+      </div>
+      <div class="def-group">
+        <h3>Models and quantization</h3>
+        <dl>
+          <dt>Parameters, 70B</dt>
+          <dd>The learned numbers that make up a model, also called weights. "70B" means 70 billion parameters.</dd>
+          <dt>Dense model</dt>
+          <dd>A model that uses all of its parameters for every token.</dd>
+          <dt>MoE (mixture of experts)</dt>
+          <dd>A model that uses only part of its parameters for each token. gpt-oss-120b has 117 billion parameters but uses about 5.1 billion per token. All of them must fit in memory, but only the active ones are read for each token, so an MoE model generates much faster than a dense model of the same size.</dd>
+          <dt>Active parameters</dt>
+          <dd>The parameters that an MoE model actually uses for each token. Decode speed depends on these, not on the total.</dd>
+          <dt id="def-quant">Quantization</dt>
+          <dd>Storing each weight in fewer bits, so that the model takes less memory and generates faster, at some cost in quality. Open models are usually released at 16 bits per weight.</dd>
+          <dt>FP16, BF16</dt>
+          <dd>16-bit formats, the usual full size of an open model. A 70B model takes about 140&nbsp;GB.</dd>
+          <dt>Q8</dt>
+          <dd>About 8 bits per weight, half the size of FP16: about 70&nbsp;GB for a 70B model. Quality is very close to the original.</dd>
+          <dt>Q4</dt>
+          <dd>About 4 to 5 bits per weight, roughly a quarter of the size of FP16: about 40&nbsp;GB for a 70B model. It is the usual choice for local use, with a small loss in quality. "Q4-class" means any format of about 4 bits. Names such as Q4_K_M are specific llama.cpp formats in this class.</dd>
+          <dt>Q3, Q2</dt>
+          <dd>About 3 and 2 bits per weight. They let a larger model fit in less memory, but quality drops noticeably, especially at Q2.</dd>
+          <dt>FP8, MXFP4, NVFP4</dt>
+          <dd>8-bit and 4-bit floating-point formats. Newer NVIDIA GPUs can run some of them in hardware, which makes them faster. The RTX 3090 cannot. The gpt-oss models are released in MXFP4.</dd>
+          <dt>GGUF, AWQ, GPTQ</dt>
+          <dd>Formats for quantized models. GGUF is the llama.cpp format and the most widely available. AWQ and GPTQ are 4-bit methods used mainly with vLLM.</dd>
+        </dl>
+      </div>
+      <div class="def-group">
+        <h3>Hardware</h3>
+        <dl>
+          <dt>Usable memory</dt>
+          <dd>The memory available for the model and its KV cache. For a GPU it is the card's own memory (VRAM). For a unified-memory machine it is the total minus what the operating system needs.</dd>
+          <dt>Unified memory</dt>
+          <dd>A design in which the CPU and GPU share one pool of memory, as in the Mac Studio, the DGX Spark and AMD's Halo chips. It allows much more memory per machine than a GPU card, usually at lower bandwidth.</dd>
+          <dt>Memory bandwidth</dt>
+          <dd>How many gigabytes per second (GB/s) the chip can read from memory. It sets the ceiling on decode speed.</dd>
+          <dt>Effective bandwidth</dt>
+          <dd>For a pair of machines, the bandwidth that the pair delivers in practice, worked out from how much faster it runs than one machine.</dd>
+          <dt>Bin</dt>
+          <dd>One version of a chip, sorted by how many of its cores work. Apple sells the M5 Ultra with a 30-core CPU and 64-core GPU, or with a 36-core CPU and 80-core GPU ("36/80"). Both bins have the same memory bandwidth.</dd>
+          <dt>Delivered cost</dt>
+          <dd>Street price plus about 11% sales tax, plus a host PC for the GPU configurations.</dd>
+          <dt>Layer splitting, tensor parallelism</dt>
+          <dd>Two ways to split a model across GPUs. With layer splitting, each GPU holds some of the layers and the GPUs take turns, so you gain memory but not speed. With tensor parallelism, every layer is split across the GPUs so that they work at the same time, which is faster but harder to set up.</dd>
+          <dt>RDMA</dt>
+          <dd>Remote direct memory access. It lets one machine read another's memory directly over the cable that connects them, which cuts the delay when two machines share one model.</dd>
+        </dl>
+      </div>
+      <div class="def-group">
+        <h3>Software</h3>
+        <dl>
+          <dt>CUDA, ROCm, Metal, Vulkan</dt>
+          <dd>The programming platforms for NVIDIA GPUs, AMD GPUs, Apple silicon and (for Vulkan) GPUs from any vendor. Inference software has to support the platform that your hardware uses.</dd>
+          <dt>MLX</dt>
+          <dd>Apple's machine-learning framework for Apple silicon. mlx-lm is its tool for running language models.</dd>
+          <dt>Inference engine</dt>
+          <dd>The program that loads a model and answers requests. llama.cpp runs almost everywhere, and Ollama is an easy-to-use wrapper around it. vLLM and SGLang are built to serve many requests at once. EXO splits a model across several machines.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <h4>Method and confidence</h4>
     <p>
@@ -2251,9 +2452,9 @@
       (2 × layers × KV heads × head dim × bytes), not measured. They come to about 0.32&nbsp;MB per token
       for a Llama-class 70B and 0.26&nbsp;MB for a 32B. gpt-oss-120b needs only about 0.036&nbsp;MB per
       token, because it uses grouped-query attention and half of its layers keep only a 128-token window.
-      Time to first token is the context length divided by the prefill rate at that depth. The Spark's
-      depth curve is measured: decode falls from 60.57&nbsp;tok/s at depth 0 to 40.55 at 32K, and prefill
-      falls from 1,956&nbsp;tok/s to 1,027. The other columns apply the same shape, because the slowdown
+      Time to first token is the context length divided by the prefill rate at that context length. The
+      Spark's figures are measured: decode falls from 60.57&nbsp;tok/s with an empty context to 40.55 with
+      32K tokens of context, and prefill falls from 1,956&nbsp;tok/s to 1,027. The other columns apply the same shape, because the slowdown
       depends on the ratio of KV cache to weights rather than on the machine.
     </p>
     <p>
@@ -2300,6 +2501,39 @@
       el.addEventListener('mouseleave', hide);
       el.addEventListener('focus', function () { show(el); });
       el.addEventListener('blur', hide);
+    });
+  })();
+
+  (function () {
+    var table = document.getElementById('cost-table');
+    if (!table) return;
+    var body = table.tBodies[0];
+    var heads = table.tHead.rows[0].cells;
+
+    // Read the first number in a cell: "~$3,660" -> 3660, "$3.91" -> 3.91
+    function value(row, col) {
+      var cell = row.cells[col];
+      var num = cell && cell.querySelector('.num');
+      return num ? parseFloat(num.textContent.replace(/[^0-9.]/g, '')) : NaN;
+    }
+
+    Array.prototype.forEach.call(heads, function (th, col) {
+      var btn = th.querySelector('button.sort');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        // first click sorts low to high, since lower cost is better
+        var dir = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+        Array.prototype.forEach.call(heads, function (h) {
+          if (h.hasAttribute('aria-sort')) h.setAttribute('aria-sort', 'none');
+        });
+        th.setAttribute('aria-sort', dir);
+        var rows = Array.prototype.slice.call(body.rows);
+        rows.sort(function (a, b) {
+          var d = value(a, col) - value(b, col);
+          return dir === 'ascending' ? d : -d;
+        });
+        rows.forEach(function (r) { body.appendChild(r); });
+      });
     });
   })();
 </script>
