@@ -81,7 +81,7 @@ analysis and will be wrong again. Check them again before you buy anything.
 
 - **Add a LICENSE.** Nothing here picks one for you. The prose and page are the
   author's; the benchmark figures belong to the sources credited in
-  `docs/sources.md` and are cited rather than reproduced wholesale.
+  `docs/sources.md` and are cited rather than reproduced wholesale
 - **Check the attribution** in `docs/sources.md` if you plan to quote figures
-  rather than link to them.
-- The page contains no personal data, credentials, or private information.
+  rather than link to them
+- The page contains no personal data, credentials, or private information

@@ -42,26 +42,26 @@ Fixed figures that contradicted the page's own inputs:
 
 - RTX 5090 price change: +64% became about +13% (street floor) and +12%
   (delivered configuration). The page's own August street price was
-  $4,288–$4,381 and the current floor is $4,921.
+  $4,288–$4,381 and the current floor is $4,921
 - Two-Spark price change: +40% became +48%, matching the single Spark. The
   August comparison figures built on it ($50/GB, "$1,000 cheaper than the Mac")
-  were $47/GB and about $1,600.
+  were $47/GB and about $1,600
 - Dual RTX 3090 price change: +5% became +15%, consistent with the 23% rise in
-  used 3090 prices.
+  used 3090 prices
 - gpt-oss-120b KV cache: 0.072 MB/token became 0.036 MB/token, because only
   half of its layers use full attention. At 32K the cache is ~1.2 GB, not
-  ~2.4 GB, and that fits the measured 33% decode loss better.
-- Dense 70B decode at 32K: "barely notices" became "loses about a fifth".
+  ~2.4 GB, and that fits the measured 33% decode loss better
+- Dense 70B decode at 32K: "barely notices" became "loses about a fifth"
 - "Best model at ≥50 tok/s" for the M5 Ultra columns: 235B-class and 671B
   became gpt-oss-120b at Q8, since the page's own figures put the larger
-  models at ~29 and ~31 tok/s.
+  models at ~29 and ~31 tok/s
 - M5 Ultra "concurrent serving" and "software stack" rows now reflect
-  vllm-mlx, as the stack section already did.
+  vllm-mlx, as the stack section already did
 - Dual 3090 is "the only NVIDIA option under $5,000", not "the only option",
   since both R9700 configurations are cheaper. Removed a claim that the RTX
-  5090 costs more than a 128 GB Spark ($6,000 versus $7,700).
+  5090 costs more than a 128 GB Spark ($6,000 versus $7,700)
 - Memory bars for the RTX 3090 and RTX 5090 cards were scaled to an old
-  maximum. They now match the 960 GB scale.
+  maximum. They now match the 960 GB scale
 
 Documented that GPU configurations include a host PC (about $500 to $1,500
 before tax). Applied plain-language editing throughout.
@@ -98,10 +98,10 @@ and was low by $6,300.
 
 - The 512 GB tier offers no better memory value than the 256 GB. Both are
   $52/GB, so it buys more memory in one box rather than cheaper memory. It lost
-  the "best memory value" badge.
+  the "best memory value" badge
 - Two 256 GB machines (~$24,000) became $750 *cheaper* than one 512 GB machine,
   with 34% more throughput. The previous "hard to justify" verdict on the pair
-  was an artifact of the estimate.
+  was an artifact of the estimate
 
 ---
 
@@ -114,12 +114,12 @@ $5,880, above new. RTX 3090 used rose 23%. Apple changed nothing.
 **Three verdicts reversed:**
 
 - Apple went from losing on memory value to winning it. The Spark was $47/GB
-  versus the Mac's $52 in August. It became $70 versus $52.
+  versus the Mac's $52 in August. It became $70 versus $52
 - Two Sparks went from about $1,600 cheaper than a 256 GB M5 Ultra to $3,400 more
   expensive, for a quarter of the bandwidth. Moved from "hard to justify" to
-  "avoid".
+  "avoid"
 - The new 64 GB Spark was flagged as a trap for this use case: it costs more than
-  the 128 GB did in August and ~55 GB usable will not hold gpt-oss-120b.
+  the 128 GB did in August and ~55 GB usable will not hold gpt-oss-120b
 
 ---
 
