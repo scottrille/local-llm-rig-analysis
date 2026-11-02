@@ -561,11 +561,11 @@
     </div>
     <h1>Every rig is short of <em>bandwidth</em> or short of <em>room</em>.</h1>
     <p class="deck">
-      Token generation is memory-bandwidth-bound, and model size sets the floor on memory. Those two
-      numbers decide almost everything else, and nothing here is generous with both at a sane price, so
-      <strong>what you are really buying is memory.</strong> Seven weeks after the August pass, the
-      conclusions have moved: NVIDIA raised the DGX Spark 48% and the RTX 5090 trades 60% higher, while
-      Apple has not changed a price. The machine that looked expensive in August is now the value option.
+      Token generation is memory-bandwidth-bound, and the size of the model sets the minimum memory you
+      need. Those two numbers determine almost everything else, and nothing here offers plenty of both at a
+      reasonable price. <strong>What you are really buying is memory.</strong> At current prices, every
+      M5 Ultra configuration costs about $52 per gigabyte of usable memory, against $70 for a DGX Spark
+      and $188 for an RTX 5090.
     </p>
   </header>
 
@@ -574,8 +574,8 @@
       <h2>The eleven configurations</h2>
       <p class="sec-note">
         Bars are scaled to the largest value in this comparison: 960&nbsp;GB of usable memory and
-        1,792&nbsp;GB/s of bandwidth. Prices are delivered cost at October street rates, including about
-        11% sales tax. Arrows mark what moved since the August pass.
+        1,792&nbsp;GB/s of bandwidth. Prices are delivered cost at current street rates, including about
+        11% sales tax and, for the GPU builds, a host PC.
       </p>
     </div>
 
@@ -584,12 +584,12 @@
       <article class="card">
         <div class="card-top">
           <h3>Dual RTX 3090</h3>
-          <span class="price">~$3,660 delivered &middot; &uarr;5%</span>
+          <span class="price">~$3,660 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
             <div class="meter-row"><span>Usable memory</span><b>48 GB</b></div>
-            <div class="track"><div class="fill" style="width:10%"></div></div>
+            <div class="track"><div class="fill" style="width:5%"></div></div>
           </div>
           <div class="meter">
             <div class="meter-row"><span>Bandwidth</span><b>936 GB/s</b></div>
@@ -597,20 +597,20 @@
           </div>
         </div>
         <p class="card-char">
-          The only genuinely cheap option left. Room for a 70B dense model, no FP4 or FP8 hardware,
-          700&nbsp;W and a lot of heat in the room.
+          The cheapest CUDA option here. It has room for a 70B dense model, but no FP4 or FP8 hardware, and
+          it puts 700&nbsp;W of heat into the room.
         </p>
       </article>
 
       <article class="card">
         <div class="card-top">
           <h3>Single RTX 5090</h3>
-          <span class="price">~$6,000 delivered &middot; &uarr;64%</span>
+          <span class="price">~$6,000 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
             <div class="meter-row"><span>Usable memory</span><b>32 GB</b></div>
-            <div class="track"><div class="fill" style="width:6.7%"></div></div>
+            <div class="track"><div class="fill" style="width:3.3%"></div></div>
           </div>
           <div class="meter">
             <div class="meter-row"><span>Bandwidth</span><b>1,792 GB/s</b></div>
@@ -618,8 +618,8 @@
           </div>
         </div>
         <p class="card-char">
-          Fastest silicon here, hardest ceiling, and the most damaged by October. New floor $4,921, used
-          floor $5,880: used now trades <em>above</em> new, which is what thin stock looks like.
+          The fastest card here, with the lowest memory ceiling. New cards start at $4,921 and used ones at
+          $5,880. Used cards selling <em>above</em> new ones is a sign of thin stock.
         </p>
       </article>
 
@@ -639,8 +639,8 @@
           </div>
         </div>
         <p class="card-char">
-          The cheapest 32&nbsp;GB on this page, at 42% of a 5090's cost for the same capacity. You pay with
-          36% of its bandwidth, a third of its prefill, and ROCm.
+          The cheapest 32&nbsp;GB on this page, at 42% of a 5090's cost for the same capacity. In exchange
+          you get 36% of its bandwidth, a third of its prefill speed, and ROCm.
         </p>
       </article>
 
@@ -660,15 +660,15 @@
           </div>
         </div>
         <p class="card-char">
-          64&nbsp;GB for $1,000 more than dual 3090s, which is the only way to fit a 70B Q4 on AMD. Like
-          the Spark pair, the second card adds room and no single-stream speed.
+          64&nbsp;GB for $1,000 more than dual 3090s, and the only way to fit a 70B Q4 model on AMD GPUs.
+          As with the Spark pair, the second card adds room but no single-stream speed.
         </p>
       </article>
 
       <article class="card">
         <div class="card-top">
           <h3>DGX Spark 64GB</h3>
-          <span class="price">~$5,550 delivered &middot; new SKU</span>
+          <span class="price">~$5,550 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
@@ -681,15 +681,15 @@
           </div>
         </div>
         <p class="card-char">
-          Announced 3 Oct, partners ship 23 Oct. Costs more than the 128GB did in August and
-          <strong>cannot hold gpt-oss-120b</strong>, which was the Spark's whole argument.
+          $2,150 cheaper than the 128GB model, but it costs more per gigabyte ($101 against $70). It
+          also <strong>cannot hold gpt-oss-120b</strong>, which is the main reason to buy a Spark.
         </p>
       </article>
 
       <article class="card">
         <div class="card-top">
           <h3>DGX Spark 128GB</h3>
-          <span class="price">~$7,700 delivered &middot; &uarr;48%</span>
+          <span class="price">~$7,700 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
@@ -702,15 +702,15 @@
           </div>
         </div>
         <p class="card-char">
-          Still the only box architecturally identical to a GB200 target, but $4,699 became $6,950 in
-          October. The memory-value argument is gone.
+          The only box here with the same architecture as a GB200 deployment target. At $70/GB it is not
+          a memory-value buy.
         </p>
       </article>
 
       <article class="card">
         <div class="card-top">
           <h3>2&times; DGX Spark 128GB</h3>
-          <span class="price">~$15,400 delivered &middot; &uarr;40%</span>
+          <span class="price">~$15,400 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
@@ -723,15 +723,15 @@
           </div>
         </div>
         <p class="card-char">
-          Now costs more than a 256GB M5 Ultra and nearly as much as a 512GB one, for a quarter of the
-          bandwidth. Indefensible outside a hard CUDA requirement.
+          Costs $3,400 more than a 256GB M5 Ultra for about the same memory and less than a quarter of the
+          bandwidth. Hard to justify unless you need CUDA.
         </p>
       </article>
 
       <article class="card fresh">
         <div class="card-top">
           <h3>M5 Ultra 256GB</h3>
-          <span class="price">~$12,000 delivered &middot; unchanged</span>
+          <span class="price">~$12,000 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
@@ -744,15 +744,15 @@
           </div>
         </div>
         <p class="card-char">
-          Shipping since 22 Sep at the same price as August. Twice the memory of a 128GB Spark, 4.4&times;
-          the bandwidth, for $4,300 more. In August that gap was $5,000 the other way.
+          Twice the memory of a 128GB Spark and 4.4&times; the bandwidth, for $4,300 more. Ties with the
+          other Apple configurations for the lowest cost per gigabyte on the page.
         </p>
       </article>
 
       <article class="card fresh">
         <div class="card-top">
           <h3>M5 Ultra 512GB</h3>
-          <span class="price">~$24,750 delivered &middot; now priced</span>
+          <span class="price">~$24,750 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
@@ -765,15 +765,15 @@
           </div>
         </div>
         <p class="card-char">
-          Orderable since 28 Oct at $22,299. The memory alone is $15,500, so the second 256&nbsp;GB costs
-          $45/GB against $25/GB for the first. Holds DeepSeek V3.2 at Q4 with room to spare.
+          $22,299 before tax. The memory option alone is $15,500, because Apple charges $45/GB for the
+          top 256&nbsp;GB against $25/GB below it. Holds DeepSeek V3.2 at Q4 with room to spare.
         </p>
       </article>
 
       <article class="card fresh">
         <div class="card-top">
           <h3>2&times; M5 Ultra 256GB</h3>
-          <span class="price">~$24,000 delivered &middot; unchanged</span>
+          <span class="price">~$24,000 delivered</span>
         </div>
         <div class="meters">
           <div class="meter">
@@ -786,8 +786,8 @@
           </div>
         </div>
         <p class="card-char">
-          Unlike a Spark cluster, this gains throughput as well as room. RDMA over Thunderbolt 5 measured
-          about 34% faster on two nodes than one, with EXO.
+          Unlike a Spark cluster, this pair gains throughput as well as room. With EXO and RDMA over
+          Thunderbolt 5, two nodes measured about 34% faster than one.
         </p>
       </article>
 
@@ -807,8 +807,8 @@
           </div>
         </div>
         <p class="card-char">
-          Runs Kimi K2.5 at a trillion parameters, or DeepSeek V3.2 at Q8. Still the only path here to
-          frontier open weights at frontier quality, now at a confirmed $49,500 rather than an estimate.
+          Runs Kimi K2.5 at a trillion parameters, or DeepSeek V3.2 at Q8. The only configuration here
+          that runs frontier open weights at full quality.
         </p>
       </article>
 
@@ -819,10 +819,10 @@
     <div class="sec-head">
       <h2>The trade space</h2>
       <p class="sec-note">
-        Up and to the right is better. The memory axis is logarithmic because the range now spans 32&nbsp;GB
+        Up and to the right is better. The memory axis is logarithmic because the range spans 32&nbsp;GB
         to nearly a terabyte. For clustered configurations the vertical axis shows <em>effective</em>
-        bandwidth, which is what the second box actually delivers: a second Spark moves you right and
-        nowhere else, while a second Mac moves you up and right.
+        bandwidth, meaning what the second box actually adds. A second Spark moves you right and nowhere
+        else. A second Mac moves you up and right.
       </p>
     </div>
 
@@ -931,25 +931,25 @@
         <text class="pt-label" x="668" y="142" text-anchor="end">2&times; M5U 512GB</text>
         <text class="pt-sub" x="668" y="157" text-anchor="end">960 GB &middot; ~1,600</text>
 
-        <circle class="hit" cx="182" cy="121" r="19" tabindex="0" data-n="RTX 5090"          data-s="32 GB · 1,792 GB/s · ~$6,000 delivered · ↑64%"></circle>
+        <circle class="hit" cx="182" cy="121" r="19" tabindex="0" data-n="RTX 5090"          data-s="32 GB · 1,792 GB/s · ~$6,000 delivered"></circle>
         <circle class="hit" cx="343" cy="121" r="19" tabindex="0" data-n="RTX PRO 6000"      data-s="96 GB · 1,792 GB/s · ~$19,400 delivered"></circle>
-        <circle class="hit" cx="241" cy="230" r="19" tabindex="0" data-n="Dual RTX 3090"     data-s="48 GB · 936 GB/s · ~$3,660 delivered · ↑5%"></circle>
+        <circle class="hit" cx="241" cy="230" r="19" tabindex="0" data-n="Dual RTX 3090"     data-s="48 GB · 936 GB/s · ~$3,660 delivered"></circle>
         <circle class="hit" cx="182" cy="268" r="19" tabindex="0" data-n="Radeon AI PRO R9700" data-s="32 GB · 640 GB/s · ~$2,550 delivered · ROCm"></circle>
         <circle class="hit" cx="283" cy="268" r="19" tabindex="0" data-n="2× Radeon AI PRO R9700" data-s="64 GB · 640 GB/s · ~$4,660 delivered · ROCm"></circle>
-        <circle class="hit" cx="261" cy="315" r="19" tabindex="0" data-n="DGX Spark 64GB"    data-s="55 GB · 273 GB/s · ~$5,550 delivered · new SKU"></circle>
-        <circle class="hit" cx="363" cy="315" r="19" tabindex="0" data-n="DGX Spark 128GB"   data-s="110 GB · 273 GB/s · ~$7,700 delivered · ↑48%"></circle>
-        <circle class="hit" cx="464" cy="315" r="19" tabindex="0" data-n="2× DGX Spark"      data-s="220 GB · 273 GB/s effective · ~$15,400 delivered · ↑40%"></circle>
-        <circle class="hit" cx="471" cy="196" r="19" tabindex="0" data-n="M5 Ultra 256GB"    data-s="230 GB · 1,200 GB/s · ~$12,000 delivered · unchanged"></circle>
+        <circle class="hit" cx="261" cy="315" r="19" tabindex="0" data-n="DGX Spark 64GB"    data-s="55 GB · 273 GB/s · ~$5,550 delivered"></circle>
+        <circle class="hit" cx="363" cy="315" r="19" tabindex="0" data-n="DGX Spark 128GB"   data-s="110 GB · 273 GB/s · ~$7,700 delivered"></circle>
+        <circle class="hit" cx="464" cy="315" r="19" tabindex="0" data-n="2× DGX Spark"      data-s="220 GB · 273 GB/s effective · ~$15,400 delivered"></circle>
+        <circle class="hit" cx="471" cy="196" r="19" tabindex="0" data-n="M5 Ultra 256GB"    data-s="230 GB · 1,200 GB/s · ~$12,000 delivered"></circle>
         <circle class="hit" cx="573" cy="145" r="19" tabindex="0" data-n="2× M5 Ultra 256GB" data-s="460 GB · ~1,600 GB/s effective · ~$24,000 delivered"></circle>
-        <circle class="hit" cx="579" cy="196" r="19" tabindex="0" data-n="M5 Ultra 512GB"    data-s="480 GB · 1,200 GB/s · ~$24,750 delivered · now priced"></circle>
+        <circle class="hit" cx="579" cy="196" r="19" tabindex="0" data-n="M5 Ultra 512GB"    data-s="480 GB · 1,200 GB/s · ~$24,750 delivered"></circle>
         <circle class="hit" cx="680" cy="145" r="19" tabindex="0" data-n="2× M5 Ultra 512GB" data-s="960 GB · ~1,600 GB/s effective · ~$49,500 delivered"></circle>
       </svg>
       <div class="tip" id="tip" role="status" aria-live="polite"></div>
       <p class="fig-caption">
-        The RTX PRO 6000 is drawn as a dashed reference, not an option. The chart does not plot price, which
-        is where the interesting comparisons now live: the R9700 sits directly below the RTX 5090 at
-        identical memory, and costs 42% as much for 36% of the bandwidth. Hover any point for its delivered
-        cost.
+        The RTX PRO 6000 is drawn as a dashed reference, not an option. The chart does not plot price, and
+        price is where the interesting comparisons are. For example, the R9700 sits directly below the RTX
+        5090 with the same memory, and costs 42% as much for 36% of the bandwidth. Hover over any point to
+        see its delivered cost.
       </p>
     </div>
   </section>
@@ -958,12 +958,11 @@
     <div class="sec-head">
       <h2>What memory actually costs</h2>
       <p class="sec-note">
-        With DRAM driving every price here, the two honest value metrics are dollars per gigabyte of usable
-        memory and dollars per gigabyte per second of bandwidth. All figures are delivered cost including
-        about 11% sales tax, applied consistently; adjust for your own rate. <strong>In August
-        the Spark beat the M5 Ultra on memory value, $50/GB against $52. It now loses, $70 against
-        $52.</strong> Note also that every Apple configuration lands at the same $52/GB: the 512&nbsp;GB
-        tier, priced on 28 October, buys more memory in one box but no better value per gigabyte.
+        Since memory sets most of the price, the two fair value measures are dollars per gigabyte of
+        usable memory and dollars per gigabyte per second of bandwidth. All figures are delivered cost,
+        including about 11% sales tax, so adjust them for your own rate. <strong>The DGX Spark costs
+        $70/GB of memory, and every Apple configuration costs $52.</strong> The 512&nbsp;GB tier gives you
+        more memory in one box, but not cheaper memory.
       </p>
     </div>
 
@@ -974,7 +973,6 @@
           <tr>
             <th scope="col">Configuration</th>
             <th scope="col">Delivered cost</th>
-            <th scope="col">Since Aug</th>
             <th scope="col">Per GB of memory</th>
             <th scope="col">Per GB/s of bandwidth</th>
           </tr>
@@ -983,84 +981,72 @@
           <tr>
             <th scope="row">Dual RTX 3090<small>used pair, $1,350 each</small></th>
             <td><span class="num">~$3,660</span></td>
-            <td><span class="num">+5%</span></td>
             <td><span class="num">$76</span></td>
             <td><span class="num">$3.91</span></td>
           </tr>
           <tr>
             <th scope="row">Single RTX 5090</th>
             <td><span class="num">~$6,000</span></td>
-            <td><span class="num">+64%</span> <span class="flag no">Worst move</span></td>
             <td><span class="num">$188</span></td>
             <td><span class="num">$3.35</span> <span class="flag yes">Best</span></td>
           </tr>
           <tr class="band">
             <th scope="row">1&times; Radeon AI PRO R9700<small>$1,299 MSRP, ~$1,800 street</small></th>
             <td><span class="num">~$2,550</span></td>
-            <td><span class="unit">new entry</span></td>
             <td><span class="num">$80</span></td>
             <td><span class="num">$3.98</span></td>
           </tr>
           <tr class="band">
             <th scope="row">2&times; Radeon AI PRO R9700</th>
             <td><span class="num">~$4,660</span></td>
-            <td><span class="unit">new entry</span></td>
             <td><span class="num">$73</span></td>
             <td><span class="num">$7.28</span></td>
           </tr>
           <tr>
             <th scope="row">DGX Spark 64GB<small>new SKU, 3 Oct</small></th>
             <td><span class="num">~$5,550</span></td>
-            <td><span class="unit">new</span></td>
             <td><span class="num">$101</span></td>
             <td><span class="num">$20.33</span></td>
           </tr>
           <tr>
             <th scope="row">DGX Spark 128GB</th>
             <td><span class="num">~$7,700</span></td>
-            <td><span class="num">+48%</span></td>
             <td><span class="num">$70</span></td>
             <td><span class="num">$28.21</span></td>
           </tr>
           <tr>
             <th scope="row">2&times; DGX Spark 128GB</th>
             <td><span class="num">~$15,400</span></td>
-            <td><span class="num">+40%</span></td>
             <td><span class="num">$70</span></td>
             <td><span class="num">$56.41</span> <span class="flag no">Worst</span></td>
           </tr>
           <tr class="band">
             <th scope="row">M5 Ultra 256GB<small>36/80 bin, 1TB SSD</small></th>
             <td><span class="num">~$12,000</span></td>
-            <td><span class="flag yes">Unchanged</span></td>
-            <td><span class="num">$52</span> <span class="flag yes">Best</span></td>
+            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
             <td><span class="num">$10.00</span></td>
           </tr>
           <tr class="band">
             <th scope="row">M5 Ultra 512GB<small>36/80 bin, 1TB SSD</small></th>
             <td><span class="num">~$24,750</span></td>
-            <td><span class="flag mid">Now priced</span></td>
-            <td><span class="num">$52</span></td>
+            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
             <td><span class="num">$20.63</span></td>
           </tr>
           <tr class="band">
             <th scope="row">2&times; M5 Ultra 256GB<small>Thunderbolt 5 RDMA cluster</small></th>
             <td><span class="num">~$24,000</span></td>
-            <td><span class="flag yes">Unchanged</span></td>
-            <td><span class="num">$52</span></td>
+            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
             <td><span class="num">$15.00</span></td>
           </tr>
           <tr class="band">
             <th scope="row">2&times; M5 Ultra 512GB<small>Thunderbolt 5 RDMA cluster</small></th>
             <td><span class="num">~$49,500</span></td>
-            <td><span class="flag mid">Now priced</span></td>
-            <td><span class="num">$52</span></td>
+            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
             <td><span class="num">$30.94</span></td>
           </tr>
           <tr>
             <th scope="row">RTX PRO 6000<small>reference, not an option</small></th>
             <td><span class="num">~$19,400</span></td>
-            <td><span class="num">+7%</span></td>
             <td><span class="num">$202</span> <span class="flag no">Worst</span></td>
             <td><span class="num">$10.83</span></td>
           </tr>
@@ -1073,10 +1059,10 @@
     <div class="sec-head">
       <h2>Capability matrix</h2>
       <p class="sec-note">
-        Generation speed at batch size 1, Q4-class quantization unless noted. Shaded rows are the ones that
-        decide the purchase. Scroll sideways for the Apple columns. The new 64&nbsp;GB Spark is absent
-        because one line settles it: ~55&nbsp;GB usable will not hold gpt-oss-120b's ~60&nbsp;GB, so it
-        loses the capability that made the Spark interesting and inherits every other limitation.
+        Generation speed at batch size 1, with Q4-class quantization unless noted. The shaded rows are the
+        ones that matter most for the purchase. Scroll sideways for the Apple columns. The 64&nbsp;GB Spark is left
+        out because its ~55&nbsp;GB of usable memory will not hold the ~60&nbsp;GB that gpt-oss-120b needs.
+        It loses the Spark's main strength and keeps all of its limitations.
       </p>
     </div>
 
@@ -1172,8 +1158,8 @@
             <td>32B dense</td>
             <td>gpt-oss-120b</td>
             <td>gpt-oss-120b</td>
-            <td><strong style="color:var(--ink)">235B-class MoE</strong></td>
-            <td><strong style="color:var(--ink)">671B at Q4</strong></td>
+            <td>gpt-oss-120b at Q8</td>
+            <td>gpt-oss-120b at Q8</td>
           </tr>
 
           <tr>
@@ -1212,8 +1198,8 @@
             <td><div class="cell"><span class="flag yes">CUDA, x86</span><span class="unit">everything works</span></div></td>
             <td><div class="cell"><span class="flag mid">CUDA, aarch64</span><span class="unit">container-first, sm_121</span></div></td>
             <td><div class="cell"><span class="flag mid">CUDA, aarch64</span><span class="unit">plus cluster config</span></div></td>
-            <td><div class="cell"><span class="flag no">Metal / MLX</span><span class="unit">no CUDA, no vLLM</span></div></td>
-            <td><div class="cell"><span class="flag no">Metal / MLX</span><span class="unit">no CUDA, no vLLM</span></div></td>
+            <td><div class="cell"><span class="flag no">Metal / MLX</span><span class="unit">no CUDA, no upstream vLLM</span></div></td>
+            <td><div class="cell"><span class="flag no">Metal / MLX</span><span class="unit">no CUDA, no upstream vLLM</span></div></td>
           </tr>
 
           <tr>
@@ -1222,8 +1208,8 @@
             <td><span class="flag yes">vLLM</span></td>
             <td><span class="flag yes">vLLM</span></td>
             <td><span class="flag yes">vLLM</span></td>
-            <td><span class="flag no">Single-user</span></td>
-            <td><span class="flag no">Single-user</span></td>
+            <td><div class="cell"><span class="flag mid">vllm-mlx</span><span class="unit">community project</span></div></td>
+            <td><div class="cell"><span class="flag mid">vllm-mlx</span><span class="unit">community project</span></div></td>
           </tr>
 
           <tr>
@@ -1275,9 +1261,9 @@
     <div class="sec-head">
       <h2>The AMD option, compared where it actually competes</h2>
       <p class="sec-note">
-        The R9700 gets its own table rather than a column in the matrix above, because the honest comparison
-        is against the other discrete cards, not against unified-memory appliances. Everything here is
-        llama.cpp-class, batch size 1, Q4.
+        The R9700 gets its own table rather than a column in the matrix above, because it competes with the
+        other discrete cards, not with unified-memory machines. All figures here are for llama.cpp-class
+        engines at batch size 1 and Q4.
       </p>
     </div>
 
@@ -1376,27 +1362,26 @@
     </div>
 
     <div class="callout">
-      <span class="cond">A correction, and then the catch</span>
+      <span class="cond">Software support, and the catch</span>
       <p>
-        <strong>AMD's software story is better than this page said.</strong> The earlier verdict here came
-        from Strix Halo (gfx1151), where Vulkan beat AMD's own ROCm by 2.5&times; and PyTorch needed
-        community wheels. The discrete R9700 is gfx1201, and <strong>ROCm 7.2 lists it as officially
-        supported on Linux and Windows</strong> with precompiled kernels and no HSA_OVERRIDE workaround.
-        That is a real improvement and the earlier blanket dismissal of AMD does not transfer to this card.
+        <strong>The R9700 is better supported than AMD's integrated chips.</strong> AMD's software problems
+        are worst on Strix Halo (gfx1151), where Vulkan beats AMD's own ROCm by 2.5&times; and PyTorch
+        needs community wheels. The discrete R9700 is gfx1201, and <strong>AMD lists it as officially
+        supported by ROCm 7.2 on Linux and Windows</strong>, with precompiled kernels and no HSA_OVERRIDE workaround.
       </p>
       <p>
-        Official support is still not the same as parity. The fastest measured llama.cpp result on this card
-        was on <em>Vulkan</em>, not ROCm (127&nbsp;tok/s, rising to 156 with AMDVLK plus a patch), and Ollama
-        ships ROCm 6.x libraries with no gfx1201 kernels, so discovery times out and falls back to CPU until
-        you set <code>OLLAMA_VULKAN=1</code>. You are still choosing your backend per model rather than
-        installing one thing that works.
+        Official support still does not mean parity with CUDA. The fastest measured llama.cpp result on this
+        card was on <em>Vulkan</em>, not ROCm (127&nbsp;tok/s, or 156 with AMDVLK and a patch). Ollama ships
+        ROCm 6.x libraries that have no gfx1201 kernels, so its GPU discovery times out and it falls back to
+        the CPU until you set <code>OLLAMA_VULKAN=1</code>. You still have to choose a backend for each
+        model, rather than install one thing that works.
       </p>
       <p>
-        <strong>And prefill is the disqualifier for agentic work.</strong> 2,713&nbsp;tok/s against the
-        5090's 7,026 at a 512-token prompt, widening to <strong>3.44&times; slower at 32K</strong>. An agent
-        loop re-sends its whole context every turn, so prefill is the number you feel most and the one where
-        this card is weakest. It is an excellent cheap-VRAM card for batch work and a poor one for the job
-        on this page.
+        <strong>Prefill rules it out for agentic work.</strong> The R9700 processes a 512-token prompt at
+        2,713&nbsp;tok/s against the 5090's 7,026, and the gap widens to <strong>3.44&times; at 32K</strong>.
+        An agent loop re-sends its whole context every turn, so prefill is the speed that you notice most,
+        and it is where this card is weakest. It is a good low-cost card for batch work and a poor one for
+        driving a coding agent.
       </p>
     </div>
   </section>
@@ -1405,10 +1390,10 @@
     <div class="sec-head">
       <h2>Context, which changes all of the above</h2>
       <p class="sec-note">
-        Every number in the matrix is a depth-zero number, and you will almost never run at depth zero. An
-        agentic loop re-sends its whole conversation each turn, so context imposes three separate costs:
-        memory to hold the KV cache, seconds of prefill before the first token, and a permanent decode
-        slowdown because attention reads the entire cache on every token generated.
+        Every number in the matrix is measured at depth zero, and you will almost never run at depth zero.
+        An agent loop re-sends its whole conversation each turn, so context adds three separate costs. You
+        need memory to hold the KV cache, you wait for prefill before the first token, and decoding slows
+        down, because attention reads the entire cache for every new token.
       </p>
     </div>
 
@@ -1515,39 +1500,39 @@
     <div class="callout">
       <span class="cond">The non-obvious part</span>
       <p>
-        MoE models decay faster with context than dense ones, because the KV cache is compared against
-        <em>active</em> parameters rather than total.
+        MoE models slow down more with context than dense models do. The KV cache adds to the memory read
+        for each token, and an MoE model reads very little else, because only its <em>active</em>
+        parameters are read.
       </p>
       <p>
-        gpt-oss-120b reads about 2.7&nbsp;GB of active weights per token. Its KV cache at 32K context is
-        roughly 2.4&nbsp;GB. So at that depth the model is reading nearly twice as much memory per token as
-        it was at depth zero, which is exactly the 33% slowdown the Spark benchmarks show. A dense 70B model
-        reads 40&nbsp;GB of weights against the same few GB of cache and barely notices. The Spark's whole
-        advantage lives in MoE models, and that advantage is the thing context erodes fastest.
+        gpt-oss-120b reads about 2.7&nbsp;GB of active weights per token. Only half of its layers use full
+        attention (the other half keep a 128-token window), so its KV cache at 32K context is about
+        1.2&nbsp;GB. At that depth the model reads about 45% more memory per token than at depth zero,
+        which fits the 33% decode slowdown measured on the Spark. A dense 70B model reads about 36&nbsp;GB
+        of weights per token. Its cache at 32K is about 10&nbsp;GB, which adds more than a quarter, so it
+        slows down by about a fifth. The Spark is strongest on MoE models, and context erodes that strength fastest.
       </p>
     </div>
   </section>
 
   <section>
     <div class="callout">
-      <span class="cond">Seven weeks changed the answer</span>
+      <span class="cond">Two Sparks or one Mac</span>
       <p>
-        In August, two Sparks (~$11,000) and one 256GB M5 Ultra (~$12,000) held the same memory for roughly
-        the same money, and the Mac's 4.4&times; bandwidth made it the better buy by a nose. Today two Sparks
-        cost <strong>~$15,400</strong> and the Mac still costs ~$12,000. The Mac is now
-        <strong>$3,400 cheaper</strong> with the same memory and four times the bandwidth.
+        Two Sparks cost <strong>~$15,400</strong> and give you about 220&nbsp;GB of usable memory at
+        273&nbsp;GB/s. A 256&nbsp;GB M5 Ultra costs ~$12,000 and gives you about 230&nbsp;GB at
+        1,200&nbsp;GB/s. The Mac is <strong>$3,400 cheaper</strong>, with slightly more memory and
+        4.4&times; the bandwidth.
       </p>
       <p>
-        The cleaner comparison at that budget is now a 256&nbsp;GB Mac, not a 512&nbsp;GB one. Apple priced
-        the 512&nbsp;GB tier at $22,299 on 28 October, well above the ~$16,000 this page had extrapolated,
-        so two Sparks at ~$15,400 are no longer within reach of it. Against the 256&nbsp;GB machine at
-        ~$12,000 they lose outright on every axis; against the 512&nbsp;GB machine at ~$24,750 they are
-        simply a different budget.
+        The 512&nbsp;GB Mac, at ~$24,750, is in a different budget. At the Spark pair's price, the fair
+        comparison is the 256&nbsp;GB machine, and the pair loses to it on every hardware measure in the
+        tables above.
       </p>
       <p>
-        CUDA remains the one real defence: the Mac has no upstream vLLM, no NVIDIA container stack, and a
-        much thinner fine-tuning ecosystem. If the purchase exists to develop against the stack you deploy
-        to, a single Spark still earns its place. Two of them no longer do at any price on this page.
+        CUDA is the one real argument for the Spark. The Mac has no upstream vLLM, no NVIDIA container
+        stack, and a much smaller fine-tuning ecosystem. If you need to develop against the same stack that
+        you deploy to, a single Spark is still worth buying. A second one is not.
       </p>
     </div>
   </section>
@@ -1556,11 +1541,11 @@
     <div class="sec-head">
       <h2>Clustering: does a second box buy speed, or only room?</h2>
       <p class="sec-note">
-        macOS Tahoe 26.2 added an RDMA driver for Thunderbolt 5, letting one Mac read another's memory
-        directly. Paired with EXO, that turns two Macs into a cluster that gains throughput and not just
-        room. The table below holds hardware and interconnect fixed and varies only the model and the
-        runtime, so the rows are directly comparable to each other. The Spark cluster is handled separately
-        underneath, because no equivalent measurement exists for it.
+        macOS Tahoe 26.2 added an RDMA driver for Thunderbolt 5, which lets one Mac read another's memory
+        directly. With EXO as the runtime, two Macs gain throughput as well as room. The table below holds
+        the hardware and interconnect fixed and varies only the model and the runtime, so the rows can be
+        compared directly. The Spark cluster is covered separately below the table, because nobody has
+        published an equivalent measurement for it.
       </p>
     </div>
 
@@ -1603,48 +1588,43 @@
     </div>
 
     <div class="callout">
-      <span class="cond">The Spark side, stated honestly</span>
+      <span class="cond">The Spark cluster: no measurement</span>
       <p>
-        There is no equivalent measurement for a two-Spark cluster, so it does not belong in the table above.
+        Nobody has published an equivalent measurement for a two-Spark cluster, so it does not belong in
+        the table above.
       </p>
       <p>
-        What is known: the two Sparks are joined by a 200GbE ConnectX-7 link, and under pipeline parallelism
-        each layer still executes once, which yields capacity without throughput. That is the basis for the
-        flat figure used elsewhere on this page, and it is <strong>inference from the interconnect, not a
-        benchmark</strong>. NVIDIA has published nothing comparable to Apple's four-node numbers. Given that
-        EXO gains on Macs specifically by distributing expert weights so each node reads less memory per
-        token, a Spark cluster running a comparable expert-parallel setup over RDMA could plausibly do the
-        same. Treat the two-Spark throughput number as a conservative assumption that has not been tested,
-        and if that configuration is on your shortlist, go looking for a benchmark before believing this page.
+        Here is what is known. The two Sparks are joined by a 200GbE ConnectX-7 link. Under pipeline
+        parallelism each layer still runs once, so the second box adds capacity but not throughput. The
+        flat two-Spark figure on this page comes from that reasoning, and it is <strong>an inference from
+        the interconnect, not a benchmark</strong>. NVIDIA has published nothing comparable to Apple's
+        four-node numbers. EXO gains speed on Macs by spreading the expert weights so that each node reads
+        less memory per token. A Spark cluster might gain in the same way if it ran a similar
+        expert-parallel setup over RDMA. Treat the two-Spark throughput figure as a conservative, untested assumption.
+        If that configuration is on your shortlist, look for a benchmark first.
       </p>
     </div>
 
     <div class="callout">
-      <span class="cond">Two findings, one of which corrects this page</span>
+      <span class="cond">What the measurements show</span>
       <p>
-        <strong>The runtime decides whether clustering helps at all.</strong> Compare rows one and three:
-        same model, same hardware, same interconnect, and EXO with RDMA gains 34% on two nodes while
-        llama.cpp <em>loses</em> 16%. Adding a second Mac and running the wrong software makes your setup
-        slower than a single machine. This is not a hardware property you can buy; it is a configuration you
-        have to get right.
+        <strong>The runtime determines whether clustering helps at all.</strong> Compare rows one and three.
+        With the same model, hardware and interconnect, EXO with RDMA gains 34% on two nodes, while
+        llama.cpp <em>loses</em> 16%. If you add a second Mac and run the wrong software, the pair is
+        slower than one machine. You cannot buy this as a hardware feature. You have to configure it.
       </p>
       <p>
-        <strong>These measurements say my single-node Mac estimates were optimistic.</strong> The figures
-        above are M3 Ultra at 819&nbsp;GB/s. Scaling by bandwidth puts a single M5 Ultra at roughly
-        31&nbsp;tok/s on DeepSeek 671B and 29 on Qwen3 235B, not the 48 and 50–80 this page previously
-        derived from bandwidth arithmetic alone. Very large MoE models evidently run at well under the
-        efficiency that mid-size models achieve, most likely because expert routing scatters memory access.
-        The matrix now uses the measurement-derived figures.
+        <strong>Very large MoE models run slower than the bandwidth formula predicts.</strong> The figures
+        above are from M3 Ultra machines at 819&nbsp;GB/s. Scaled by bandwidth, they put a single M5 Ultra
+        at about 31&nbsp;tok/s on DeepSeek 671B and 29 on Qwen3 235B. The formula alone would predict about
+        48 and 50–80. These models reach well below the efficiency of mid-size models, most likely because
+        expert routing scatters the memory reads. The matrix uses the measured figures.
       </p>
       <p>
-        <strong>And the pair now wins, which is a reversal.</strong> This page previously said two
-        256&nbsp;GB machines cost $6,400 more than one 512&nbsp;GB machine for less memory. That rested on
-        an estimated 512&nbsp;GB price of ~$17,600. Apple published the real number on 28 October: $22,299,
-        or <strong>~$24,750 delivered</strong>. Two 256&nbsp;GB machines come to ~$24,000. So the pair is
-        now <strong>$750 cheaper</strong>, with 20&nbsp;GB less memory and about 34% more throughput. The
-        single box still wins on simplicity, one machine rather than two, and no dependency on EXO or the
-        RDMA path. But it is no longer the cheaper option, and the earlier conclusion was an artifact of my
-        estimate rather than of Apple's pricing.
+        <strong>Two 256&nbsp;GB Macs cost less than one 512&nbsp;GB Mac.</strong> The pair comes to
+        ~$24,000 delivered and the single machine to <strong>~$24,750</strong>. The pair is
+        <strong>$750 cheaper</strong>, with 20&nbsp;GB less memory and about 34% more throughput. The
+        single machine is simpler: one box instead of two, and no dependence on EXO or the RDMA link.
       </p>
     </div>
   </section>
@@ -1653,10 +1633,11 @@
     <div class="sec-head">
       <h2>The software stack, which is half the purchase</h2>
       <p class="sec-note">
-        These machines run four different software worlds, and the differences decide what you can run, how
-        soon after release, and what you can do besides inference. One reassuring constant first: every stack
-        below exposes an OpenAI-compatible HTTP endpoint, so from your WSL2 shell the client side looks
-        identical no matter what you buy. The stack determines what happens on the box, not how you reach it.
+        These machines use four different software stacks. The stack determines what you can run, how soon
+        after a model's release you can run it, and what else you can do besides inference. One thing is
+        the same everywhere: every stack below exposes an OpenAI-compatible HTTP endpoint, so the client
+        side in your WSL2 shell looks identical whatever you buy. The stack affects what happens on the
+        box, not how you reach it.
       </p>
     </div>
 
@@ -1815,7 +1796,7 @@
             <th scope="row">Client access from WSL2<small>how you actually reach the box</small></th>
             <td colspan="3" style="color:var(--ink)">
               Identical for all three. The engine runs on the server and exposes an OpenAI-compatible HTTP
-              endpoint; from WSL2 you use the <code>openai</code> SDK, LiteLLM, LangChain or curl against
+              endpoint. From WSL2 you point the <code>openai</code> SDK, LiteLLM, LangChain or curl at
               <code>http://host:port/v1</code>. You never install MLX, CUDA or ROCm on the client.
             </td>
           </tr>
@@ -1842,32 +1823,32 @@
     </div>
 
     <div class="callout">
-      <span class="cond">Three conclusions that change the ranking</span>
+      <span class="cond">Three conclusions about the stacks</span>
       <p>
-        <strong>The Spark's CUDA advantage is narrower than "it runs CUDA" implies.</strong> It is aarch64
-        CUDA on compute capability sm_121, which means NGC containers work but many pip wheels do not, you
-        meet compute-capability-specific bugs like the FP4-to-Marlin fallback before anyone else does, and
-        the user population finding those bugs is small. It is not a drop-in Linux CUDA box, and the weekends
-        it costs are real.
+        <strong>The Spark's CUDA advantage is narrower than "it runs CUDA" suggests.</strong> It runs
+        aarch64 CUDA on compute capability sm_121. NGC containers work, but many pip wheels do not. You will
+        hit bugs that are specific to this compute capability, such as the fallback from FP4 to Marlin
+        kernels, before most other users do, because few people own one. It is not a drop-in Linux CUDA
+        box, and working around these problems takes real time.
       </p>
       <p>
-        <strong>The Mac is an inference appliance, not a development platform, and it is very good at being
-        one.</strong> MLX runs 20–40% faster than llama.cpp on the same silicon, which means the M5 Ultra
-        estimates here may be conservative rather than optimistic. Upstream vLLM does not run on Metal, but
-        the community <em>vllm-mlx</em> project reimplements the important parts: continuous batching, a
-        paged KV cache, prefix caching, and an Anthropic <code>/v1/messages</code> endpoint that Claude Code
-        can be pointed at directly. What genuinely does not exist is the fine-tuning toolchain: PEFT, TRL,
-        Unsloth and Axolotl are CUDA projects, and MLX's own LoRA is a separate ecosystem. If the job is
-        serving models, the Mac is fine. If it includes fine-tuning conventionally or running arbitrary
-        research code, it is not.
+        <strong>The Mac is a very good inference machine and a poor development platform.</strong> MLX runs
+        20–40% faster than llama.cpp on the same chip, so the M5 Ultra estimates here may be low. Upstream
+        vLLM does not run on Metal, but the community <em>vllm-mlx</em> project reimplements the important
+        parts: continuous batching, a paged KV cache, prefix caching, and an Anthropic
+        <code>/v1/messages</code> endpoint that you can point Claude Code at directly. What the Mac lacks is
+        the fine-tuning toolchain. PEFT, TRL, Unsloth and Axolotl are CUDA projects, and MLX's own LoRA
+        tools are a separate ecosystem. If the job is serving models, the Mac is fine. If it includes
+        conventional fine-tuning or running research code as published, it is not.
       </p>
       <p>
-        <strong>AMD's memory advantage does not survive contact with its software.</strong> On Strix-class
-        hardware the Vulkan backend beats AMD's own ROCm on llama.cpp prompt processing by roughly 2.5&times;
-        (880 versus 350 tok/s on Llama-2-7B Q4_0), the HIP path barely beats CPU for prefill, gfx1151 rocBLAS
-        kernels run several times less efficiently than their discrete-GPU equivalents, and PyTorch needs
-        community wheels because official ones do not exist. Gorgon Halo's 160&nbsp;GB at $3,999 is the best
-        capacity-per-dollar on this page and I still would not buy it.
+        <strong>On AMD's integrated chips, the software cancels out the memory.</strong> On Strix-class
+        hardware (gfx1151), the Vulkan backend beats AMD's own ROCm on llama.cpp prompt processing by about
+        2.5&times; (880 against 350 tok/s on Llama-2-7B Q4_0). The HIP path is barely faster than the CPU
+        for prefill, and the gfx1151 rocBLAS kernels are several times less efficient than the
+        discrete-GPU versions. PyTorch needs community wheels, because there are no official ones. Gorgon Halo offers
+        160&nbsp;GB for $3,999, the most memory per dollar of anything mentioned here, and I still would not
+        buy it.
       </p>
     </div>
   </section>
@@ -1876,9 +1857,9 @@
     <div class="sec-head">
       <h2>What's on the horizon</h2>
       <p class="sec-note">
-        Purchase timing is part of the decision, so here is what is actually coming and how firm each item
-        is. The short version: <strong>nothing meaningfully better arrives in the next twelve months</strong>,
-        while memory prices keep climbing.
+        When to buy is part of the decision, so here is what is coming and how certain each item is. In
+        short, <strong>nothing much better arrives in the next twelve months</strong>, and memory prices are
+        still rising.
       </p>
     </div>
 
@@ -1920,7 +1901,7 @@
             <td><span class="flag no">Not announced</span></td>
             <td>—</td>
             <td>—</td>
-            <td>GB10 is the same silicon as N1/N1X, now heading into laptops. A refresh most plausibly rides N2.</td>
+            <td>GB10 is the same silicon as N1/N1X, which is going into laptops. A refresh would most likely use N2.</td>
             <td><span class="flag no">No signal</span></td>
           </tr>
 
@@ -1976,15 +1957,15 @@
     <div class="callout">
       <span class="cond">What this means for timing</span>
       <p>
-        The usual reason to wait is that something better is close. Right now nothing is.
+        The usual reason to wait is that something better is close. Nothing is.
       </p>
       <p>
-        Apple's next Studio is 2028. NVIDIA has announced no Spark successor and has moved GB10 into laptops.
-        AMD's Gorgon Halo is a memory bump on 2025 silicon, and its real successor is 2027 at the earliest.
-        Meanwhile DRAM prices are rising, not falling, so waiting costs money rather than saving it. The one
-        genuinely interesting item on the horizon is LPDDR6: if Medusa Halo lands at 691&nbsp;GB/s with a
-        large memory pool, it breaks the capacity-versus-bandwidth trade this whole page is built on. That is
-        two years away and unconfirmed, which is not a plan you can buy against today.
+        Apple's next Studio is expected in 2028. NVIDIA has announced no Spark successor and is putting the
+        GB10 chip into laptops. AMD's Gorgon Halo adds memory to 2025 silicon, and its real successor
+        arrives in 2027 at the earliest. DRAM prices are rising, so waiting is likely to cost money rather
+        than save it. The one interesting item on the horizon is LPDDR6. If Medusa Halo ships at
+        691&nbsp;GB/s with a large memory pool, it breaks the trade between capacity and bandwidth that this
+        whole page is about. But it is two years away and unconfirmed, so you cannot plan a purchase around it.
       </p>
     </div>
   </section>
@@ -1993,8 +1974,8 @@
     <div class="sec-head">
       <h2>Configuring the Mac, if it's the Mac</h2>
       <p class="sec-note">
-        Apple sells the M5 Ultra in two bins. The one that matters for LLM work is the one that costs less,
-        because <strong>both run at the same 1,200&nbsp;GB/s</strong> and decode is bandwidth-bound.
+        Apple sells the M5 Ultra in two bins. For LLM work the cheaper bin would be the better buy, because
+        <strong>both run at the same 1,200&nbsp;GB/s</strong> and decode is bandwidth-bound.
       </p>
     </div>
 
@@ -2065,23 +2046,24 @@
     <div class="callout">
       <span class="cond">Where the $1,300 goes</span>
       <p>
-        The upgrade buys 25% more GPU cores and 20% more CPU cores. It buys <strong>zero</strong> extra
-        memory bandwidth, which is the only thing decode speed depends on.
+        The upgrade buys 25% more GPU cores and 20% more CPU cores. It buys <strong>no</strong> extra memory
+        bandwidth, and bandwidth is the only thing that decode speed depends on.
       </p>
       <p>
-        In an agentic turn you prefill once and decode thousands of times, so decode dominates wall-clock and
-        decode is identical across the bins. For inference alone the 64-core bin would be the better buy.
-        <strong>But the configurator appears to pair 256&nbsp;GB only with the 36/80 bin</strong>, in which
-        case the choice does not exist and the delivered price is ~$12,000 rather than the $9,499 a base-bin
-        machine would cost. Every price on this page assumes the 36/80 bin. Verify in the configurator before
-        budgeting against the lower figure.
+        In an agent turn you prefill once and then decode thousands of tokens, so decode takes most of the
+        time, and decode speed is the same in both bins. For inference alone, the 64-core bin would be the
+        better buy. <strong>But Apple's configurator appears to offer 256&nbsp;GB only with the 36/80
+        bin.</strong> If so, there is no choice to make, and the delivered price is ~$12,000 rather than
+        the $9,499 that the base bin would cost before tax. Every price on this page is for the 36/80 bin.
+        Check the configurator before you budget against the lower figure.
       </p>
       <p>
-        Same logic on storage: Apple charges $500 to go from 1&nbsp;TB to 2&nbsp;TB, which is $500/TB. A
-        Thunderbolt 5 NVMe enclosure is about $250 once, plus Gen&nbsp;4 drives at roughly $100–130/TB in the
-        current NAND shortage, so a 4&nbsp;TB external lands near $175/TB all-in and streams weights at about
-        6,000&nbsp;MB/s. That is roughly 80% of the Mac's internal SSD, and it turns a 60&nbsp;GB model load
-        into a ten-second wait. Take the 1&nbsp;TB internal and put the difference toward the memory tier.
+        The same logic applies to storage. Apple charges $500 to go from 1&nbsp;TB to 2&nbsp;TB, which is
+        $500/TB. A Thunderbolt 5 NVMe enclosure costs about $250, and Gen&nbsp;4 drives cost about
+        $100–130/TB during the NAND shortage. A 4&nbsp;TB external drive therefore comes to about $175/TB.
+        It reads at about 6,000&nbsp;MB/s, roughly 80% of the speed of the Mac's internal SSD, so a
+        60&nbsp;GB model loads in about ten seconds. Take the 1&nbsp;TB internal drive and put the savings
+        toward more memory.
       </p>
     </div>
   </section>
@@ -2096,9 +2078,9 @@
         <span class="cond">If value rules &middot; ~$3,660</span>
         <h3>Dual RTX 3090</h3>
         <p>
-          Used 3090s rose 23% while 5090s rose 60%, so this is now the only option under $5,000 and its
-          relative position improved. Memory at $76/GB against the 5090's $188. Runs a 70B dense model on
-          GPU, which the 5090 cannot. You still pay in 700&nbsp;W and a build you have to engineer.
+          The only NVIDIA option under $5,000. Memory costs $76/GB against the 5090's $188, and it runs a
+          70B dense model entirely on the GPUs, which the 5090 cannot. You pay for that with 700&nbsp;W and
+          a build that you have to design yourself.
         </p>
       </article>
 
@@ -2106,9 +2088,9 @@
         <span class="cond">If VRAM per dollar rules &middot; ~$2,550</span>
         <h3>Radeon AI PRO R9700</h3>
         <p>
-          32&nbsp;GB for 42% of a 5090's price, at $80/GB against $188. ROCm 7.2 supports it officially now,
-          which is more than AMD's integrated parts can say. But prefill runs 3.44&times; slower than a 5090
-          at 32K context, so it is the wrong card for an agent loop and a good one for batch work.
+          32&nbsp;GB for 42% of a 5090's price, at $80/GB against $188. ROCm 7.2 supports it officially,
+          unlike AMD's integrated chips. But prefill runs 3.44&times; slower than on a 5090 at 32K context,
+          so it is the wrong card for an agent loop and a good one for batch work.
         </p>
       </article>
 
@@ -2116,9 +2098,9 @@
         <span class="cond">If latency rules &middot; ~$6,000</span>
         <h3>Single RTX 5090</h3>
         <p>
-          Still the lowest latency per dollar on models that fit in 32&nbsp;GB. But it is now the worst
-          memory value here outside the PRO 6000, supply is reportedly thin enough that used trades above
-          new, and it costs more than a 128&nbsp;GB Spark. Buy only if 32&nbsp;GB genuinely covers you.
+          The lowest latency per dollar on models that fit in 32&nbsp;GB. But it is the worst memory value
+          here apart from the PRO 6000, and supply is thin enough that used cards sell above new ones. Buy
+          it only if 32&nbsp;GB really covers what you run.
         </p>
       </article>
 
@@ -2126,9 +2108,9 @@
         <span class="cond">If CUDA parity rules &middot; ~$7,700</span>
         <h3>DGX Spark 128GB</h3>
         <p>
-          Still the only machine here that is the same architecture as a GB200 target, and still the cheapest
-          CUDA path to a 120B MoE. But $4,699 became $6,950, so the value case that justified it is gone.
-          Buy it for stack parity now, not for the memory.
+          The only machine here with the same architecture as a GB200 deployment target, and the cheapest
+          CUDA machine that holds a 120B MoE model. At $70/GB it is not a memory-value buy. Buy it to match
+          your deployment stack, not for the memory.
         </p>
       </article>
 
@@ -2136,9 +2118,9 @@
         <span class="cond">Avoid &middot; ~$5,550</span>
         <h3>DGX Spark 64GB</h3>
         <p>
-          Costs more than the 128&nbsp;GB model did in August, has worse memory value than the 128&nbsp;GB
-          does now ($101/GB against $70), and ~55&nbsp;GB usable will not hold gpt-oss-120b. It is a cheaper
-          Spark that cannot do the thing Sparks are for.
+          Worse memory value than the 128&nbsp;GB model ($101/GB against $70), and its ~55&nbsp;GB of usable
+          memory will not hold gpt-oss-120b. It is a cheaper Spark that cannot do the job that people buy
+          Sparks for.
         </p>
       </article>
 
@@ -2146,9 +2128,9 @@
         <span class="cond">Best all-round &middot; ~$12,000</span>
         <h3>M5 Ultra 256GB</h3>
         <p>
-          230&nbsp;GB at 1,200&nbsp;GB/s, unchanged in price while everything NVIDIA sells rose. Now
-          $3,400 <em>cheaper</em> than two Sparks with the same memory and four times the bandwidth, and
-          the best memory value on the page outside the unpriced 512. Costs you CUDA and fine-tuning.
+          230&nbsp;GB at 1,200&nbsp;GB/s. It costs $3,400 <em>less</em> than two Sparks, with slightly
+          more memory and 4.4&times; the bandwidth, and it ties for the best memory value on the page. You
+          give up CUDA and the fine-tuning toolchain.
         </p>
       </article>
 
@@ -2156,9 +2138,9 @@
         <span class="cond">If one box matters &middot; ~$24,750</span>
         <h3>M5 Ultra 512GB</h3>
         <p>
-          480&nbsp;GB in a single machine, running DeepSeek V3.2 at Q4 around 31&nbsp;tok/s. At $52/GB it
-          offers no better memory value than the 256&nbsp;GB model, and two of those cost $750 less with
-          more throughput. Buy this for operational simplicity, not economics.
+          480&nbsp;GB in a single machine, running DeepSeek V3.2 at Q4 at about 31&nbsp;tok/s. At $52/GB its
+          memory is no cheaper than the 256&nbsp;GB model's, and two of those cost $750 less with more
+          throughput. Buy this because one machine is simpler to run, not to save money.
         </p>
       </article>
 
@@ -2166,9 +2148,9 @@
         <span class="cond">If frontier weights rule &middot; ~$49,500</span>
         <h3>2&times; M5 Ultra 512GB</h3>
         <p>
-          ~960&nbsp;GB, enough for Kimi K2.5 at a trillion parameters or DeepSeek V3.2 at Q8, and still the
-          only entry here that runs frontier open weights at frontier quality. At a confirmed $49,500 this
-          is now a capital decision, not a hardware purchase. Requires EXO and macOS Tahoe 26.2.
+          ~960&nbsp;GB, enough for Kimi K2.5 at a trillion parameters or DeepSeek V3.2 at Q8. It is the
+          only option here that runs frontier open weights at full quality. At $49,500 this is a capital
+          decision, not a hardware purchase. Requires EXO and macOS Tahoe 26.2.
         </p>
       </article>
 
@@ -2176,9 +2158,9 @@
         <span class="cond">Better than the 512 &middot; ~$24,000</span>
         <h3>2&times; M5 Ultra 256GB</h3>
         <p>
-          ~460&nbsp;GB at roughly 34% more throughput than a single box, and now <strong>$750 cheaper</strong>
-          than one 512&nbsp;GB machine once Apple's real 512 price landed. You give up 20&nbsp;GB and take on
-          cluster ops. For anything but a hard single-box requirement, this is the better $24k.
+          ~460&nbsp;GB, with about 34% more throughput than a single machine, for <strong>$750 less</strong>
+          than one 512&nbsp;GB machine. You give up 20&nbsp;GB and take on the work of running a cluster.
+          Unless you need everything in one box, this is the better way to spend $24,000.
         </p>
       </article>
 
@@ -2186,9 +2168,9 @@
         <span class="cond">Avoid &middot; ~$15,400</span>
         <h3>2&times; DGX Spark 128GB</h3>
         <p>
-          October's 48% increase finished this one off. It now costs $3,400 <em>more</em> than a 256&nbsp;GB
-          M5 Ultra with the same memory and a quarter of the bandwidth, and the worst bandwidth-per-dollar on
-          the page at $56.41. Only a hard 200&nbsp;GB-of-CUDA requirement justifies it.
+          It costs $3,400 <em>more</em> than a 256&nbsp;GB M5 Ultra, for about the same memory and less
+          than a quarter of the bandwidth. At $56.41 per GB/s it is the worst bandwidth value on the page.
+          Buy it only if you need more than 200&nbsp;GB of memory on CUDA.
         </p>
       </article>
 
@@ -2198,65 +2180,75 @@
   <footer>
     <h4>Method and confidence</h4>
     <p>
-      <strong>Prices are delivered cost</strong>, meaning street price plus about 11% sales tax (a US West Coast metro rate),
-      applied uniformly so the comparison holds; substitute your own rate. Underlying pre-tax street rates as
-      of <strong>19 October 2026</strong>, with the August figures shown for contrast. RTX 3090 used $1,350
-      (was $1,095–$1,181, +23%), new $1,550–$1,950; RTX 5090 new floor $4,921 and used floor $5,880 against
-      a $1,999 MSRP (was $4,288–$4,381, +64% new and +60% used, with used now above new on thin stock, and
-      an unconfirmed Tom's Hardware report that NVIDIA has halted GB202 production for consumer cards);
-      DGX Spark 128GB <strong>$6,950</strong>, raised 3 October from $4,699 and from $3,999 at launch, with
-      a new 64GB SKU at $4,999 shipping from partners 23 October; RTX PRO 6000 $15,999–$16,000 retail
-      (was $13,998–$15,499). <strong>Radeon AI PRO R9700</strong> carries a $1,299 MSRP that nobody pays:
-      the working figure here is $1,800 a card, from a lowest tracked US price of $1,827 on 26 October,
-      Amazon listings near $1,700 in mid-October, a 12-month median of $1,460, and used listings starting
-      about $1,907. Asking prices, not completed sales. M5 Ultra Mac Studio starts at
-      $5,499 for the 30-core CPU / 64-core GPU bin with 96&nbsp;GB and 1&nbsp;TB. The ladder from there:
-      +$1,300 for the 36/80 bin, +$4,000 for 256&nbsp;GB, +$500 for 2&nbsp;TB. The configurator appears to
-      pair 256&nbsp;GB only with the 36/80 bin, so the working figure is $10,799 pre-tax, about $12,000
-      delivered, confirmed against a real configurator session. <strong>Apple has not changed its existing
-      prices since 25 August</strong>, which is why every Apple row reads "unchanged" and why the relative
-      conclusions moved without Apple doing anything. <strong>The 512&nbsp;GB tier went on sale 28 October
-      at $22,299</strong> for the 36/80 bin with 1&nbsp;TB, about $24,750 delivered. The memory option alone
-      is $15,500. Note what that implies: the first 160&nbsp;GB above the 96&nbsp;GB base costs $25/GB, and
-      the next 256&nbsp;GB costs $45/GB. This page previously estimated $16,000 by extrapolating Apple's
-      96→256 rate linearly, and was low by $6,300. Apple's memory ladder escalates at the top tier; do not
-      extrapolate it straight.
+      <strong>Prices are delivered cost:</strong> street price plus about 11% sales tax (a US West Coast
+      metro rate), applied to every configuration so that they compare fairly. Substitute your own rate.
+      The GPU configurations also include a host PC, at about $500 before tax for a single-card build,
+      $600 for a dual-card build and $1,500 for the RTX PRO 6000 workstation. Street prices were checked
+      between 19 October and 1 November 2026. They are asking prices, not completed sales.
     </p>
     <p>
-      <strong>Performance.</strong> R9700 figures are measured llama.cpp results on a single card: 127.4
-      tok/s on Vulkan for Qwen3.5-35B-A3B rising to 156.3 tuned, 29–33 tok/s on Qwen3.5-27B dense, ~99 tok/s
-      on Qwen2.5-Coder-7B with a tuned ROCm build, and ~2,713 tok/s prefill at 512 tokens. Its dual-card
-      figures assume layer splitting, so decode matches a single card and only capacity grows; the 70B
-      estimate there is derived, not measured. Measured: DGX Spark gpt-oss figures from the llama.cpp
-      benchmark thread;
-      RTX 3090 and RTX PRO 6000 figures from published llama.cpp and Ollama runs; M5 Max figures at
-      614&nbsp;GB/s from hardware-corner's benchmark set, including gpt-oss-120b Q8 at 87.9&nbsp;tok/s decode
-      and 1,325&nbsp;tok/s prefill. <strong>All M5 Ultra numbers here are derived, not measured</strong> —
-      scaled from those M5 Max results by the 1.95× bandwidth ratio, since the Ultra is two Max dies. Apple's
-      claimed 4.3× AI compute over M3 Ultra suggests prefill could beat this estimate. RTX 5090 speeds come
-      from RTX PRO 6000 measurements, since both use the GB202 die at the full 1,792&nbsp;GB/s. Other derived
-      figures use tok/s ≈ bandwidth × efficiency ÷ bytes read per token. Treat everything as ±20%.
+      <strong>Pre-tax street prices.</strong> RTX 3090 used $1,350, new $1,550–$1,950. RTX 5090 new from
+      $4,921 and used from $5,880, against a $1,999 MSRP. Tom's Hardware has reported, without
+      confirmation, that NVIDIA has stopped GB202 production for consumer cards. DGX Spark 128GB
+      <strong>$6,950</strong> and 64GB $4,999. RTX PRO 6000 $15,999–$16,000. <strong>Radeon AI PRO
+      R9700</strong> $1,800 a card, against a $1,299 MSRP that no retailer charges. The lowest tracked US
+      price was $1,827 on 26 October, and Amazon listings were near $1,700 in mid-October. The 12-month
+      median is $1,460, and used listings start at about $1,907.
     </p>
     <p>
-      <strong>Context figures.</strong> KV cache sizes are computed from published model architectures
-      (2 × layers × KV heads × head dim × bytes), not measured: about 0.32&nbsp;MB per token for Llama-class
-      70B, 0.26&nbsp;MB for a 32B, and 0.072&nbsp;MB for gpt-oss-120b, whose grouped-query attention and
-      sliding-window layers make it unusually cheap. Time-to-first-token is context ÷ prefill rate at that
-      depth. The Spark's depth curve is measured (60.57&nbsp;tok/s decode at depth 0 falling to 40.55 at
-      32K; 1,956&nbsp;tok/s prefill falling to 1,027); the other columns apply the same shape, since the
-      decay is a property of the KV-to-weights ratio rather than of the machine.
+      <strong>Mac Studio with M5 Ultra.</strong> It starts at $5,499 for the 30-core CPU / 64-core GPU bin
+      with 96&nbsp;GB and 1&nbsp;TB. Upgrades cost $1,300 for the 36/80 bin, $4,000 for 256&nbsp;GB and
+      $500 for 2&nbsp;TB. The configurator appears to offer 256&nbsp;GB only with the 36/80 bin, so the
+      working figure is $10,799 before tax, about $12,000 delivered, as confirmed in a real configurator
+      session. <strong>The 512&nbsp;GB model costs $22,299</strong> with the 36/80 bin and 1&nbsp;TB, about
+      $24,750 delivered. Its memory option alone is $15,500. The first 160&nbsp;GB above the 96&nbsp;GB
+      base cost $25/GB, and the next 256&nbsp;GB cost $45/GB, so do not extrapolate Apple's memory prices
+      in a straight line.
     </p>
     <p>
-      <strong>Structural caveats.</strong> Dual-3090 speeds assume llama.cpp layer splitting, where cards
-      work sequentially and effective bandwidth stays at 936&nbsp;GB/s; vLLM tensor parallelism reaches
-      roughly 1.4–1.6× that with a more fragile setup. Two-Spark figures assume pipeline parallelism over the
-      200GbE ConnectX-7 link, which adds capacity but not throughput; NVIDIA has not published cluster-scaling
-      figures comparable to Apple's, so that flat number is inference from the interconnect rather than a
-      measurement, and a tensor-parallel Spark cluster with RDMA might do better than shown. Multi-Mac numbers
-      come from four M3 Ultra Studios at 819&nbsp;GB/s, scaled by bandwidth to the M5 Ultra; they require
-      macOS Tahoe 26.2 for the Thunderbolt 5 RDMA driver and EXO as the runtime, and do not apply to
-      llama.cpp, which scales negatively across nodes. Apple-silicon batching and prefix caching assume the
-      community vllm-mlx server rather than mlx-lm or llama.cpp.
+      <strong>Prices are moving fast.</strong> Between late August and October 2026, NVIDIA raised the
+      DGX Spark 128GB from $4,699 to $6,950, an increase of 48%. Used RTX 3090s rose 23% from
+      $1,095–$1,181. The lowest new RTX 5090 price rose about 13% from $4,288–$4,381, and the RTX PRO 6000
+      rose from $13,998–$15,499. Apple has not changed its prices since the M5 Ultra launched on 25 August. Check
+      current prices before you buy.
+    </p>
+    <p>
+      <strong>Performance.</strong> R9700 figures are measured llama.cpp results on a single card. It runs
+      Qwen3.5-35B-A3B at 127.4 tok/s on Vulkan, or 156.3 when tuned, and Qwen3.5-27B dense at 29–33 tok/s.
+      With a tuned ROCm build it runs Qwen2.5-Coder-7B at ~99 tok/s, and it prefills a 512-token prompt
+      at ~2,713 tok/s. The dual-card figures are based on layer splitting, so decode speed matches a
+      single card and only capacity grows. The dual-card 70B figure is derived, not measured. The DGX
+      Spark gpt-oss results are measured, and come from the llama.cpp benchmark thread. The RTX 3090 and
+      RTX PRO 6000 results are measured, and come from published llama.cpp and Ollama runs. The M5 Max
+      results at 614&nbsp;GB/s come from hardware-corner's benchmark set, including gpt-oss-120b Q8 at
+      87.9&nbsp;tok/s decode and 1,325&nbsp;tok/s prefill.
+      <strong>All M5 Ultra figures are derived, not measured.</strong> They are scaled from the M5 Max
+      results by the 1.95&times; bandwidth ratio, since the Ultra is two Max dies. Apple claims 4.3&times;
+      the AI compute of the M3 Ultra, so prefill may beat these estimates. RTX 5090 speeds come from RTX
+      PRO 6000 measurements, since both use the GB202 die at the full 1,792&nbsp;GB/s. Other derived
+      figures use tok/s ≈ bandwidth × efficiency ÷ bytes read per token. Treat every figure as ±20%.
+    </p>
+    <p>
+      <strong>Context figures.</strong> KV cache sizes are calculated from published model architectures
+      (2 × layers × KV heads × head dim × bytes), not measured. They come to about 0.32&nbsp;MB per token
+      for a Llama-class 70B and 0.26&nbsp;MB for a 32B. gpt-oss-120b needs only about 0.036&nbsp;MB per
+      token, because it uses grouped-query attention and half of its layers keep only a 128-token window.
+      Time to first token is the context length divided by the prefill rate at that depth. The Spark's
+      depth curve is measured: decode falls from 60.57&nbsp;tok/s at depth 0 to 40.55 at 32K, and prefill
+      falls from 1,956&nbsp;tok/s to 1,027. The other columns apply the same shape, because the slowdown
+      depends on the ratio of KV cache to weights rather than on the machine.
+    </p>
+    <p>
+      <strong>Structural caveats.</strong> Dual-3090 speeds are based on llama.cpp layer splitting, where the
+      cards work in turn and effective bandwidth stays at 936&nbsp;GB/s. vLLM tensor parallelism reaches
+      about 1.4–1.6× that, with a more fragile setup. Two-Spark figures are based on pipeline parallelism
+      over the 200GbE ConnectX-7 link, which adds capacity but not throughput. NVIDIA has not published
+      cluster-scaling figures comparable to Apple's, so that flat figure is an inference from the
+      interconnect. An expert-parallel Spark cluster with RDMA might do better. Multi-Mac figures come
+      from four M3 Ultra Studios at 819&nbsp;GB/s, scaled by bandwidth to the M5 Ultra. They require macOS
+      Tahoe 26.2 for the Thunderbolt 5 RDMA driver and EXO as the runtime. They do not apply to llama.cpp,
+      which gets slower as you add nodes. Batching and prefix caching on Apple silicon require the
+      community vllm-mlx server, not mlx-lm or llama.cpp.
     </p>
   </footer>
 

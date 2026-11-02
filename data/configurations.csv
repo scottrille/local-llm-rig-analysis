@@ -1,13 +1,13 @@
 config,usable_memory_gb,bandwidth_gb_s,effective_bandwidth_gb_s,delivered_cost_usd,change_since_aug_pct,usd_per_gb,usd_per_gb_s,stack,peak_power_w,notes
-Dual RTX 3090,48,936,936,3660,5,76,3.91,CUDA x86,700,used pair at ~$1350 each; layer-split so no bandwidth gain from the second card
-Single RTX 5090,32,1792,1792,6000,64,188,3.35,CUDA x86,575,new floor $4921 / used floor $5880; used trades above new on thin stock
+Dual RTX 3090,48,936,936,3660,15,76,3.91,CUDA x86,700,used pair at ~$1350 each; layer-split so no bandwidth gain from the second card
+Single RTX 5090,32,1792,1792,6000,12,188,3.35,CUDA x86,575,new floor $4921 / used floor $5880; used trades above new on thin stock
 1x Radeon AI PRO R9700,32,640,640,2550,,80,3.98,ROCm 7.2 / Vulkan,300,$1299 MSRP but ~$1800 street; gfx1201 officially supported
 2x Radeon AI PRO R9700,64,640,640,4660,,73,7.28,ROCm 7.2 / Vulkan,600,only AMD path to 70B Q4 on GPU; second card adds room not speed
 DGX Spark 64GB,55,273,273,5550,,101,20.33,CUDA aarch64,140,new SKU 3 Oct; cannot hold gpt-oss-120b (~60GB needed)
 DGX Spark 128GB,110,273,273,7700,48,70,28.21,CUDA aarch64,140,raised from $4699 to $6950 on 3 Oct
-2x DGX Spark 128GB,220,273,273,15400,40,70,56.41,CUDA aarch64,280,throughput figure is inferred from interconnect not measured
+2x DGX Spark 128GB,220,273,273,15400,48,70,56.41,CUDA aarch64,280,throughput figure is inferred from interconnect not measured; $3400 more than one M5 Ultra 256GB
 M5 Ultra 256GB,230,1200,1200,12000,0,52,10.00,Metal / MLX,270,36/80 bin with 1TB; price unchanged since 25 Aug
 M5 Ultra 512GB,480,1200,1200,24750,,52,20.63,Metal / MLX,270,$22299 list from 28 Oct; memory option alone is $15500
 2x M5 Ultra 256GB,460,1200,1600,24000,0,52,15.00,Metal / MLX,540,+34% throughput with EXO and RDMA; $750 cheaper than one 512GB
 2x M5 Ultra 512GB,960,1200,1600,49500,,52,30.94,Metal / MLX,540,only config here that runs frontier open weights at frontier quality
-RTX PRO 6000 (reference),96,1792,1792,19400,7,202,10.83,CUDA x86,600,reference point only; MSRP went from $8435 at launch to $16000
+RTX PRO 6000 (reference),96,1792,1792,19400,8,202,10.83,CUDA x86,600,reference point only; MSRP went from $8435 at launch to $16000
