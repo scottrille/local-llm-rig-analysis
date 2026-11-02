@@ -4,8 +4,9 @@ A comparison of eleven hardware configurations for running large language models
 locally, built between August and November 2026 during a severe DRAM and NAND
 shortage that repriced the entire category mid-analysis.
 
-**The page:** open `index.html` in any browser. It is a single self-contained
-file, with no build step and no dependencies beyond three Google Fonts families.
+**[View the page](https://scottrille.github.io/local-llm-rig-analysis/)**, or
+open `index.html` in any browser. It is a single self-contained file, with no
+build step and no dependencies beyond three Google Fonts families.
 
 ## The thesis
 
