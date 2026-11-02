@@ -7,6 +7,21 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
+## 1 Nov 2026: general audience
+
+Removed the Windows 11 + WSL2 framing that came from the original question, and
+the Claude Code-specific content (the Anthropic-format endpoint row and
+references to pointing Claude Code at a server). The page now answers the
+general question of how to choose hardware for local inference.
+
+Long-context costs are now described for chat, agents and document retrieval
+in general, rather than for coding agents only. The Mac bin advice now says
+that the faster bin's prefill gain matters for long prompts, which replaces a
+claim that decode always dominates. Added a sentence to the opening on what
+the page covers, and a short decision method at the top of the recommendations.
+
+---
+
 ## 1 Nov 2026: cost per GB on the chart
 
 Renamed "The trade space" to "Memory versus bandwidth". Bubble area on that

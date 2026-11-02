@@ -556,9 +556,7 @@
     <div class="eyebrow">
       <span>Local inference hardware</span>
       <span class="sep">/</span>
-      <span>Prices rechecked 1 Nov 2026</span>
-      <span class="sep">/</span>
-      <span>Windows 11 + WSL2 workstation</span>
+      <span>Prices checked 1 Nov 2026</span>
     </div>
     <h1>Every rig is short of <em>bandwidth</em> or short of <em>room</em>.</h1>
     <p class="deck">
@@ -566,7 +564,8 @@
       need. Those two numbers determine almost everything else, and nothing here offers plenty of both at a
       reasonable price. <strong>What you are really buying is memory.</strong> At current prices, every
       M5 Ultra configuration costs about $52 per gigabyte of usable memory, versus $70 for a DGX Spark
-      and $188 for an RTX 5090.
+      and $188 for an RTX 5090. This page compares eleven ways to run models locally on memory, speed,
+      long-context behavior, software and price, and ends with a recommendation for each priority.
     </p>
   </header>
 
@@ -1400,11 +1399,12 @@
         model, rather than install one thing that works.
       </p>
       <p>
-        <strong>Prefill rules it out for agentic work.</strong> The R9700 processes a 512-token prompt at
-        2,713&nbsp;tok/s versus the 5090's 7,026, and the gap widens to <strong>3.44&times; at 32K</strong>.
-        An agent loop re-sends its whole context every turn, so prefill is the speed that you notice most,
-        and it is where this card is weakest. It is a good low-cost card for batch work and a poor one for
-        driving a coding agent.
+        <strong>Prefill rules it out for long-context work.</strong> The R9700 processes a 512-token prompt
+        at 2,713&nbsp;tok/s versus the 5090's 7,026, and the gap widens to <strong>3.44&times; at
+        32K</strong>. Agents, retrieval over documents and long chats all send a long context with every
+        request, so for them prefill is the speed that you notice most, and it is where this card is
+        weakest. It is a good low-cost card for short prompts and batch jobs, and a poor one for
+        long-context work.
       </p>
     </div>
   </section>
@@ -1414,9 +1414,10 @@
       <h2>Context, which changes all of the above</h2>
       <p class="sec-note">
         Every number in the matrix is measured at depth zero, and you will almost never run at depth zero.
-        An agent loop re-sends its whole conversation each turn, so context adds three separate costs. You
-        need memory to hold the KV cache, you wait for prefill before the first token, and decoding slows
-        down, because attention reads the entire cache for every new token.
+        A chat re-sends the whole conversation with each message, and agents and document retrieval add
+        long tool outputs and documents on top, so context adds three separate costs. You need memory to
+        hold the KV cache, you wait for prefill before the first token, and decoding slows down, because
+        attention reads the entire cache for every new token.
       </p>
     </div>
 
@@ -1658,9 +1659,9 @@
       <p class="sec-note">
         These machines use four different software stacks. The stack determines what you can run, how soon
         after a model's release you can run it, and what else you can do besides inference. One thing is
-        the same everywhere: every stack below exposes an OpenAI-compatible HTTP endpoint, so the client
-        side in your WSL2 shell looks identical whatever you buy. The stack affects what happens on the
-        box, not how you reach it.
+        the same everywhere: every stack below exposes an OpenAI-compatible HTTP endpoint, so your
+        applications talk to the machine the same way whatever you buy. The stack affects what happens on
+        the box, not how you reach it.
       </p>
     </div>
 
@@ -1702,7 +1703,7 @@
             <th scope="row">vllm-mlx<small>community reimplementation</small></th>
             <td>—</td>
             <td>—</td>
-            <td><div class="cell"><span class="flag yes">Yes</span><span class="unit">batching, paged KV, prefix cache, /v1/messages</span></div></td>
+            <td><div class="cell"><span class="flag yes">Yes</span><span class="unit">batching, paged KV, prefix cache</span></div></td>
             <td>—</td>
           </tr>
           <tr>
@@ -1751,7 +1752,7 @@
         </thead>
         <tbody>
           <tr class="band">
-            <th scope="row">Prefix caching<small>the agentic-loop multiplier</small></th>
+            <th scope="row">Prefix caching<small>skips re-processing a repeated prompt</small></th>
             <td><span class="flag yes">vLLM APC</span></td>
             <td><span class="flag yes">vLLM APC</span></td>
             <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">slot reuse in llama.cpp / mlx-lm</span></div></td>
@@ -1763,13 +1764,6 @@
             <td><span class="flag yes">Yes</span></td>
             <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">community project</span></div></td>
             <td><span class="flag no">No</span></td>
-          </tr>
-          <tr>
-            <th scope="row">Anthropic-format endpoint<small>drives Claude Code directly</small></th>
-            <td><span class="flag mid">Via LiteLLM</span></td>
-            <td><span class="flag mid">Via LiteLLM</span></td>
-            <td><div class="cell"><span class="flag yes">Native</span><span class="unit">vllm-mlx serves /v1/messages</span></div></td>
-            <td><span class="flag mid">Via LiteLLM</span></td>
           </tr>
           <tr>
             <th scope="row">Speculative decoding</th>
@@ -1816,11 +1810,12 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Client access from WSL2<small>how you actually reach the box</small></th>
+            <th scope="row">Client access<small>how your applications reach the box</small></th>
             <td colspan="3" style="color:var(--ink)">
-              Identical for all three. The engine runs on the server and exposes an OpenAI-compatible HTTP
-              endpoint. From WSL2 you point the <code>openai</code> SDK, LiteLLM, LangChain or curl at
-              <code>http://host:port/v1</code>. You never install MLX, CUDA or ROCm on the client.
+              Identical for all three. The engine runs on the machine and exposes an OpenAI-compatible HTTP
+              endpoint. Any client, on the same machine or elsewhere on the network, points the
+              <code>openai</code> SDK, LiteLLM, LangChain or curl at <code>http://host:port/v1</code>. Client
+              machines never need MLX, CUDA or ROCm installed.
             </td>
           </tr>
           <tr class="band">
@@ -1858,9 +1853,8 @@
         <strong>The Mac is a very good inference machine and a poor development platform.</strong> MLX runs
         20–40% faster than llama.cpp on the same chip, so the M5 Ultra estimates here may be low. Upstream
         vLLM does not run on Metal, but the community <em>vllm-mlx</em> project reimplements the important
-        parts: continuous batching, a paged KV cache, prefix caching, and an Anthropic
-        <code>/v1/messages</code> endpoint that you can point Claude Code at directly. What the Mac lacks is
-        the fine-tuning toolchain. PEFT, TRL, Unsloth and Axolotl are CUDA projects, and MLX's own LoRA
+        parts: continuous batching, a paged KV cache and prefix caching. What the Mac lacks is the
+        fine-tuning toolchain. PEFT, TRL, Unsloth and Axolotl are CUDA projects, and MLX's own LoRA
         tools are a separate ecosystem. If the job is serving models, the Mac is fine. If it includes
         conventional fine-tuning or running research code as published, it is not.
       </p>
@@ -1870,8 +1864,8 @@
         2.5&times; (880 versus 350 tok/s on Llama-2-7B Q4_0). The HIP path is barely faster than the CPU
         for prefill, and the gfx1151 rocBLAS kernels are several times less efficient than the
         discrete-GPU versions. PyTorch needs community wheels, because there are no official ones. Gorgon Halo offers
-        160&nbsp;GB for $3,999, the most memory per dollar of anything mentioned here, and I still would not
-        buy it.
+        160&nbsp;GB for $3,999, the most memory per dollar of anything mentioned here, and it is still hard
+        to recommend.
       </p>
     </div>
   </section>
@@ -2036,7 +2030,7 @@
             <th scope="row">Time to first token @ 32K</th>
             <td><span class="num">~16</span> <span class="unit">s</span></td>
             <td><span class="num">~13</span> <span class="unit">s</span></td>
-            <td><span class="num">~3</span> <span class="unit">s per turn</span></td>
+            <td><span class="num">~3</span> <span class="unit">s per request</span></td>
           </tr>
           <tr>
             <th scope="row">Neural Engine</th>
@@ -2073,10 +2067,10 @@
         bandwidth, and bandwidth is the only thing that decode speed depends on.
       </p>
       <p>
-        In an agent turn you prefill once and then decode thousands of tokens, so decode takes most of the
-        time, and decode speed is the same in both bins. For inference alone, the 64-core bin would be the
-        better buy. <strong>But Apple's configurator appears to offer 256&nbsp;GB only with the 36/80
-        bin.</strong> If so, there is no choice to make, and the delivered price is ~$12,000 rather than
+        Decode speed is the same in both bins. The 36/80 bin prefills about 25% faster, which saves about
+        3 seconds on a 32K-token prompt. That matters if most of your work uses long prompts, and hardly
+        at all if your prompts are short. For short-prompt work the 64-core bin would be the better buy.
+        <strong>But Apple's configurator appears to offer 256&nbsp;GB only with the 36/80 bin.</strong> If so, there is no choice to make, and the delivered price is ~$12,000 rather than
         the $9,499 that the base bin would cost before tax. Every price on this page is for the 36/80 bin.
         Check the configurator before you budget against the lower figure.
       </p>
@@ -2094,6 +2088,12 @@
   <section>
     <div class="sec-head">
       <h2>Which one, and when</h2>
+      <p class="sec-note">
+        Start with the largest model that you need to run, because its size sets the minimum memory.
+        Above that floor, more bandwidth means faster generation, and more compute means faster prefill
+        on long prompts. Then check that the software stack runs what you need. Each recommendation
+        below names the priority that it serves.
+      </p>
     </div>
     <div class="verdicts">
 
@@ -2113,7 +2113,7 @@
         <p>
           32&nbsp;GB for 42% of a 5090's price, at $80/GB versus $188. ROCm 7.2 supports it officially,
           unlike AMD's integrated chips. But prefill runs 3.44&times; slower than on a 5090 at 32K context,
-          so it is the wrong card for an agent loop and a good one for batch work.
+          so it suits short prompts and batch jobs, not long-context work.
         </p>
       </article>
 
