@@ -159,7 +159,7 @@
 
   .card {
     background: var(--surface);
-    border: 1px solid var(--rule);
+    border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--rule));
     border-radius: 3px;
     padding: 18px 18px 20px;
     display: flex;
@@ -167,7 +167,6 @@
     gap: 14px;
     box-shadow: var(--shadow);
   }
-  .card.fresh { border-color: color-mix(in srgb, var(--accent) 42%, var(--rule)); }
 
   .card-top { display: flex; flex-direction: column; gap: 3px; }
 
@@ -484,7 +483,9 @@
     gap: 8px;
     box-shadow: var(--shadow);
   }
-  .verdict.pick { border-left-color: var(--accent-fill); }
+  .verdict.pick { border-left-color: var(--pos); }
+  .verdict.pick .cond { color: var(--pos); }
+  .verdict.avoid .cond { color: var(--neg); }
   .verdict.avoid { border-left-color: var(--neg); }
 
   .verdict .cond {
@@ -530,6 +531,16 @@
     color: var(--ink);
   }
   .callout p + p { color: var(--ink-2); font-size: .9375rem; }
+  .callout ul {
+    margin: 0;
+    padding-left: 1.25em;
+    color: var(--ink-2);
+    font-size: .9375rem;
+    line-height: 1.55;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
   /* ---------- table titles ---------- */
 
@@ -633,10 +644,10 @@
     </div>
     <h1>Every rig is short of <em>bandwidth</em> or <em>usable memory</em></h1>
     <p class="deck">
-      Token generation is memory-bandwidth-bound, and the size of the model sets the minimum memory you
-      need. Those two numbers determine almost everything else, and nothing here offers plenty of both at a
-      reasonable price. <strong>What you are really buying is memory.</strong> At current prices, every
-      M5 Ultra configuration costs about $52 per gigabyte of usable memory, versus $70 for a DGX Spark
+      <a class="def" href="#def-decode">Token generation</a> is memory-bandwidth-bound, and the size of the model sets the minimum memory you
+      need. Those two numbers determine almost everything else, and none of the hardware options here offers
+      plenty of both at a reasonable price. <strong>What you are really buying is memory.</strong> At current prices, every
+      M5 Ultra configuration costs about $52 per gigabyte of <a class="def" href="#def-usable">usable memory</a>, versus $70 for a DGX Spark
       and $188 for an RTX 5090. This page compares eleven ways to run models locally on memory, speed,
       long-context behavior, software and price, and ends with a recommendation for each priority.
     </p>
@@ -646,8 +657,8 @@
     <div class="sec-head">
       <h2>The eleven configurations</h2>
       <p class="sec-note">
-        Bars are scaled to the largest value in this comparison: 960&nbsp;GB of usable memory and
-        1,792&nbsp;GB/s of bandwidth. Prices are delivered cost at current street rates, including about
+        Bars are scaled to the largest value in this comparison: 960&nbsp;GB of <a class="def" href="#def-usable">usable memory</a> and
+        1,792&nbsp;GB/s of <a class="def" href="#def-bandwidth">bandwidth</a>. Prices are <a class="def" href="#def-delivered">delivered cost</a> at current street rates, including about
         11% sales tax and, for the GPU builds, a host PC.
       </p>
     </div>
@@ -670,7 +681,7 @@
           </div>
         </div>
         <p class="card-char">
-          The cheapest CUDA option here. It has room for a 70B dense model, but no FP4 or FP8 hardware, and
+          The cheapest <a class="def" href="#def-platforms">CUDA</a> option here. It has room for a 70B <a class="def" href="#def-dense">dense</a> model, but no <a class="def" href="#def-fp8">FP4</a> or FP8 hardware, and
           it puts 700&nbsp;W of heat into the room.
         </p>
       </article>
@@ -696,7 +707,7 @@
         </p>
       </article>
 
-      <article class="card fresh">
+      <article class="card">
         <div class="card-top">
           <h3>1&times; Radeon AI PRO R9700</h3>
           <span class="price">~$2,550 delivered</span>
@@ -713,11 +724,11 @@
         </div>
         <p class="card-char">
           The cheapest 32&nbsp;GB on this page, at 42% of a 5090's cost for the same memory. In exchange
-          you get 36% of its bandwidth, a third of its prefill speed, and ROCm.
+          you get 36% of its bandwidth, a third of its <a class="def" href="#def-prefill">prefill</a> speed, and <a class="def" href="#def-platforms">ROCm</a>.
         </p>
       </article>
 
-      <article class="card fresh">
+      <article class="card">
         <div class="card-top">
           <h3>2&times; Radeon AI PRO R9700</h3>
           <span class="price">~$4,660 delivered</span>
@@ -733,8 +744,8 @@
           </div>
         </div>
         <p class="card-char">
-          64&nbsp;GB for $1,000 more than dual 3090s, and the only way to fit a 70B Q4 model on AMD GPUs.
-          As with the Spark pair, the second card adds memory but no single-stream speed.
+          64&nbsp;GB for $1,000 more than dual 3090s, and the only way to fit a 70B <a class="def" href="#def-q4">Q4</a> model on AMD GPUs.
+          With <a class="def" href="#def-engine">llama.cpp</a>'s <a class="def" href="#def-split">layer splitting</a>, the second card adds memory but no single-stream speed.
         </p>
       </article>
 
@@ -791,17 +802,17 @@
             <div class="track"><div class="fill" style="width:22.9%"></div></div>
           </div>
           <div class="meter">
-            <div class="meter-row"><span>Bandwidth</span><b>273 GB/s</b></div>
-            <div class="track"><div class="fill dim" style="width:15.2%"></div></div>
+            <div class="meter-row"><span>Effective bandwidth</span><b>~365 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:20.4%"></div></div>
           </div>
         </div>
         <p class="card-char">
-          Costs $3,400 more than a 256GB M5 Ultra for about the same memory and less than a quarter of the
-          bandwidth. Hard to justify unless you need CUDA.
+          Costs $3,400 more than a 256GB M5 Ultra for about the same memory and less than a third of the
+          bandwidth, even with both boxes working on every layer. Hard to justify unless you need CUDA.
         </p>
       </article>
 
-      <article class="card fresh">
+      <article class="card">
         <div class="card-top">
           <h3>M5 Ultra 256GB</h3>
           <span class="price">~$12,000 delivered</span>
@@ -822,7 +833,7 @@
         </p>
       </article>
 
-      <article class="card fresh">
+      <article class="card">
         <div class="card-top">
           <h3>M5 Ultra 512GB</h3>
           <span class="price">~$24,750 delivered</span>
@@ -843,7 +854,7 @@
         </p>
       </article>
 
-      <article class="card fresh">
+      <article class="card">
         <div class="card-top">
           <h3>2&times; M5 Ultra 256GB</h3>
           <span class="price">~$24,000 delivered</span>
@@ -859,12 +870,12 @@
           </div>
         </div>
         <p class="card-char">
-          Unlike a Spark cluster, this pair gains throughput as well as memory. With EXO and RDMA over
-          Thunderbolt 5, two nodes measured about 34% faster than one.
+          Unlike a Spark cluster, this pair gains throughput as well as memory. With <a class="def" href="#def-exo">EXO</a> and <a class="def" href="#def-rdma">RDMA</a> over
+          <a class="def" href="#def-links">Thunderbolt 5</a>, two nodes measured about 34% faster than one.
         </p>
       </article>
 
-      <article class="card fresh">
+      <article class="card">
         <div class="card-top">
           <h3>2&times; M5 Ultra 512GB</h3>
           <span class="price">~$49,500 delivered</span>
@@ -880,7 +891,7 @@
           </div>
         </div>
         <p class="card-char">
-          Runs Kimi K2.5 at a trillion parameters, or DeepSeek V3.2 at Q8. The only configuration here
+          Runs Kimi K2.5 at a trillion <a class="def" href="#def-params">parameters</a>, or DeepSeek V3.2 at <a class="def" href="#def-q8">Q8</a>. The only configuration here
           that runs frontier open weights at full quality.
         </p>
       </article>
@@ -894,16 +905,16 @@
       <p class="sec-note">
         Up and to the right is better. The memory axis is logarithmic because the range spans 32&nbsp;GB
         to nearly a terabyte. For clustered configurations the vertical axis shows <em>effective</em>
-        bandwidth, meaning what the second box actually adds. A second Spark moves you right and nowhere
-        else. A second Mac moves you up and right. Bubble area shows the cost per gigabyte of usable
-        memory, so a smaller bubble means cheaper memory.
+        <a class="def" href="#def-bandwidth">bandwidth</a>, meaning what the second box actually adds. A second Spark or a second Mac moves you
+        right, because memory doubles, and up by about a third, because both boxes work on every layer. Bubble area shows the cost per gigabyte of <a class="def" href="#def-usable">usable
+        memory</a>, so a smaller bubble means cheaper memory.
       </p>
     </div>
 
     <div class="figure" id="fig">
       <svg viewBox="0 0 720 440" role="img" aria-labelledby="fig-t fig-d">
         <title id="fig-t">Usable memory versus effective bandwidth for twelve configurations, with bubble area showing cost per gigabyte of memory</title>
-        <desc id="fig-d">Logarithmic memory axis, linear bandwidth axis. Bubble area is proportional to delivered cost per gigabyte of usable memory. RTX 5090: 32 GB, 1,792 GB/s, $188 per GB; RTX PRO 6000: 96 GB, 1,792 GB/s, $202 per GB; Dual RTX 3090: 48 GB, 936 GB/s, $76 per GB; Radeon AI PRO R9700: 32 GB, 640 GB/s, $80 per GB; 2× Radeon AI PRO R9700: 64 GB, 640 GB/s, $73 per GB; DGX Spark 64GB: 55 GB, 273 GB/s, $101 per GB; DGX Spark 128GB: 110 GB, 273 GB/s, $70 per GB; 2× DGX Spark 128GB: 220 GB, 273 GB/s, $70 per GB; M5 Ultra 256GB: 230 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 256GB: 460 GB, 1,600 GB/s, $52 per GB; M5 Ultra 512GB: 480 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 512GB: 960 GB, 1,600 GB/s, $52 per GB.</desc>
+        <desc id="fig-d">Logarithmic memory axis, linear bandwidth axis. Bubble area is proportional to delivered cost per gigabyte of usable memory. RTX 5090: 32 GB, 1,792 GB/s, $188 per GB; RTX PRO 6000: 96 GB, 1,792 GB/s, $202 per GB; Dual RTX 3090: 48 GB, 936 GB/s, $76 per GB; Radeon AI PRO R9700: 32 GB, 640 GB/s, $80 per GB; 2× Radeon AI PRO R9700: 64 GB, 640 GB/s, $73 per GB; DGX Spark 64GB: 55 GB, 273 GB/s, $101 per GB; DGX Spark 128GB: 110 GB, 273 GB/s, $70 per GB; 2× DGX Spark 128GB: 220 GB, 365 GB/s, $70 per GB; M5 Ultra 256GB: 230 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 256GB: 460 GB, 1,600 GB/s, $52 per GB; M5 Ultra 512GB: 480 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 512GB: 960 GB, 1,600 GB/s, $52 per GB.</desc>
 
         <line class="grid-line" x1="80" y1="286" x2="690" y2="286"></line>
         <line class="grid-line" x1="80" y1="222" x2="690" y2="222"></line>
@@ -925,9 +936,9 @@
         <text class="axis-title" x="80" y="390">Usable memory (GB, log scale)</text>
         <text class="axis-title" x="-6" y="0" transform="translate(22,196) rotate(-90)">Effective bandwidth (GB/s)</text>
 
-        <!-- one Spark to two: purely horizontal, no throughput gain -->
-        <line class="link-line" x1="381" y1="315" x2="447" y2="315"></line>
-        <text class="cmp-txt" x="414" y="333" text-anchor="middle">no gain</text>
+        <!-- one Spark to two: up and right with tensor parallelism -->
+        <line class="link-line" x1="381" y1="313" x2="447" y2="305"></line>
+        <text class="cmp-txt" x="414" y="331" text-anchor="middle">+33%</text>
         <!-- one Mac to two: up and right -->
         <line class="link-line" x1="486" y1="189" x2="559" y2="152"></line>
         <line class="link-line" x1="594" y1="189" x2="666" y2="152"></line>
@@ -954,8 +965,8 @@
         <circle class="bubble" cx="363.1" cy="315.1" r="14.1"></circle>
         <circle class="bubble-c" cx="363.1" cy="315.1" r="2.5"></circle>
         <!-- 2× DGX Spark 128GB -->
-        <circle class="bubble" cx="464.8" cy="315.1" r="14.1"></circle>
-        <circle class="bubble-c" cx="464.8" cy="315.1" r="2.5"></circle>
+        <circle class="bubble" cx="464.8" cy="303.3" r="14.1"></circle>
+        <circle class="bubble-c" cx="464.8" cy="303.3" r="2.5"></circle>
         <!-- M5 Ultra 256GB -->
         <circle class="bubble" cx="471.3" cy="196.4" r="12.2"></circle>
         <circle class="bubble-c" cx="471.3" cy="196.4" r="2.5"></circle>
@@ -997,8 +1008,8 @@
           <text class="pt-sub" x="363" y="294" text-anchor="middle">$70/GB</text>
         </g>
         <g class="lbl" data-for="2× DGX Spark 128GB">
-          <text class="pt-label" x="486" y="313" text-anchor="start">2× Spark</text>
-          <text class="pt-sub" x="486" y="327" text-anchor="start">$70/GB</text>
+          <text class="pt-label" x="486" y="301" text-anchor="start">2× Spark</text>
+          <text class="pt-sub" x="486" y="315" text-anchor="start">$70/GB</text>
         </g>
         <g class="lbl" data-for="M5 Ultra 256GB">
           <text class="pt-label" x="452" y="194" text-anchor="end">M5U 256GB</text>
@@ -1024,7 +1035,7 @@
         <circle class="hit" cx="283.7" cy="268.1" r="18.4" tabindex="0" data-n="2× Radeon AI PRO R9700" data-s="64 GB · 640 GB/s · $73/GB · ~$4,660 delivered"></circle>
         <circle class="hit" cx="261.4" cy="315.1" r="21.0" tabindex="0" data-n="DGX Spark 64GB" data-s="55 GB · 273 GB/s · $101/GB · ~$5,550 delivered"></circle>
         <circle class="hit" cx="363.1" cy="315.1" r="18.1" tabindex="0" data-n="DGX Spark 128GB" data-s="110 GB · 273 GB/s · $70/GB · ~$7,700 delivered"></circle>
-        <circle class="hit" cx="464.8" cy="315.1" r="18.1" tabindex="0" data-n="2× DGX Spark 128GB" data-s="220 GB · ~273 GB/s effective · $70/GB · ~$15,400 delivered"></circle>
+        <circle class="hit" cx="464.8" cy="303.3" r="18.1" tabindex="0" data-n="2× DGX Spark 128GB" data-s="220 GB · ~365 GB/s effective · $70/GB · ~$15,400 delivered"></circle>
         <circle class="hit" cx="471.3" cy="196.4" r="16.2" tabindex="0" data-n="M5 Ultra 256GB" data-s="230 GB · 1,200 GB/s · $52/GB · ~$12,000 delivered"></circle>
         <circle class="hit" cx="573.0" cy="145.2" r="16.2" tabindex="0" data-n="2× M5 Ultra 256GB" data-s="460 GB · ~1,600 GB/s effective · $52/GB · ~$24,000 delivered"></circle>
         <circle class="hit" cx="579.2" cy="196.4" r="16.2" tabindex="0" data-n="M5 Ultra 512GB" data-s="480 GB · 1,200 GB/s · $52/GB · ~$24,750 delivered"></circle>
@@ -1044,7 +1055,7 @@
         The RTX PRO 6000 is drawn as a dashed reference, not an option. The four Apple bubbles are the
         smallest on the chart, at $52/GB, and the RTX 5090 and PRO 6000 are the largest, at $188 and $202.
         The R9700 sits directly below the RTX 5090 with the same memory, at $80/GB versus $188, and with
-        36% of the bandwidth. Hover over any bubble to see its delivered cost.
+        36% of the bandwidth. Hover over any bubble to see its <a class="def" href="#def-delivered">delivered cost</a>.
       </p>
     </div>
   </section>
@@ -1054,10 +1065,10 @@
       <h2>What memory actually costs</h2>
       <p class="sec-note">
         Since memory sets most of the price, the two fair value measures are dollars per gigabyte of
-        usable memory and dollars per gigabyte per second of bandwidth. All figures are delivered cost,
+        <a class="def" href="#def-usable">usable memory</a> and dollars per gigabyte per second of <a class="def" href="#def-bandwidth">bandwidth</a>. All figures are <a class="def" href="#def-delivered">delivered cost</a>,
         including about 11% sales tax, so adjust them for your own rate. <strong>The DGX Spark costs
-        $70/GB of memory, and every Apple configuration costs $52.</strong> The 512&nbsp;GB tier gives you
-        more memory in one box, but not cheaper memory. Select a cost column's heading to sort by it, and
+        $70/GB for memory, and every Apple configuration costs $52/GB.</strong> The 512&nbsp;GB tier gives
+        you more memory in one box, but not cheaper per GB/s of bandwidth. Select a cost column's heading to sort by it, and
         select it again to reverse the order.
       </p>
     </div>
@@ -1114,10 +1125,10 @@
             <th scope="row">2&times; DGX Spark 128GB</th>
             <td><span class="num">~$15,400</span></td>
             <td><span class="num">$70</span></td>
-            <td><span class="num">$56.41</span> <span class="flag no">Worst</span></td>
+            <td><span class="num">$42.19</span> <span class="flag no">Worst</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">M5 Ultra 256GB<small>36/80 bin, 1TB SSD</small></th>
+            <th scope="row">M5 Ultra 256GB<small>36/80 <a class="def" href="#def-bin">bin</a>, 1TB SSD</small></th>
             <td><span class="num">~$12,000</span></td>
             <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
             <td><span class="num">$10.00</span></td>
@@ -1129,7 +1140,7 @@
             <td><span class="num">$20.63</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">2&times; M5 Ultra 256GB<small>Thunderbolt 5 RDMA cluster</small></th>
+            <th scope="row">2&times; M5 Ultra 256GB<small><a class="def" href="#def-links">Thunderbolt 5</a> <a class="def" href="#def-rdma">RDMA</a> cluster</small></th>
             <td><span class="num">~$24,000</span></td>
             <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
             <td><span class="num">$15.00</span></td>
@@ -1153,12 +1164,14 @@
 
   <section>
     <div class="sec-head">
-      <h2>Capability matrix</h2>
+      <h2>Model capability matrix</h2>
       <p class="sec-note">
-        Generation speed at <a class="def" href="#def-batch">batch size 1</a>, with
-        <a class="def" href="#def-quant">Q4-class quantization</a> unless noted. The shaded rows are the
-        ones that matter most for the purchase. The 64&nbsp;GB Spark is left
-        out because its ~55&nbsp;GB of usable memory will not hold the ~60&nbsp;GB that gpt-oss-120b needs.
+        Expected performance characteristics of the hardware platforms across different model <a class="def" href="#def-params">parameters</a>.
+        Generation speed is at <a class="def" href="#def-batch">batch size 1</a>, with <a class="def" href="#def-q4">Q4-class</a> <a class="def" href="#def-quant">quantization</a> unless noted. The shaded rows are
+        the ones that matter most for the purchase. For models that need both machines, the two-Spark
+        column is based on <a class="def" href="#def-split">tensor parallelism</a>, which makes the pair about a third faster than one Spark. Models
+        that fit on one Spark are shown at one Spark's speed. The 64&nbsp;GB Spark is left
+        out because its ~55&nbsp;GB of <a class="def" href="#def-usable">usable memory</a> will not hold the ~60&nbsp;GB that gpt-oss-120b needs.
         It loses the Spark's main strength and keeps all of its limitations.
       </p>
     </div>
@@ -1172,7 +1185,7 @@
             <th scope="col">Dual RTX 3090<small>48 GB &middot; 936 GB/s</small></th>
             <th scope="col">RTX 5090<small>32 GB &middot; 1,792 GB/s</small></th>
             <th scope="col">1&times; DGX Spark<small>110 GB &middot; 273 GB/s</small></th>
-            <th scope="col">2&times; DGX Spark<small>220 GB &middot; 273 GB/s</small></th>
+            <th scope="col">2&times; DGX Spark<small>220 GB &middot; ~365 GB/s effective</small></th>
             <th scope="col">M5 Ultra 256GB<small>230 GB &middot; 1,200 GB/s</small></th>
             <th scope="col">M5 Ultra 512GB<small>480 GB &middot; 1,200 GB/s</small></th>
           </tr>
@@ -1180,13 +1193,13 @@
         <tbody>
 
           <tr>
-            <th scope="row">Small dense<small>8–14B, Q4</small></th>
+            <th scope="row">Small <a class="def" href="#def-dense">dense</a><small>8–14B, Q4</small></th>
             <td><span class="num">55–95</span> <span class="unit">tok/s</span></td>
             <td><span class="num">120–160</span> <span class="unit">tok/s</span></td>
             <td><span class="num">15–30</span> <span class="unit">tok/s</span></td>
             <td><span class="num">15–30</span> <span class="unit">tok/s</span></td>
-            <td><span class="num">~120</span> <span class="unit">tok/s</span></td>
-            <td><span class="num">~120</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">110–165</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">110–165</span> <span class="unit">tok/s</span></td>
           </tr>
 
           <tr>
@@ -1194,7 +1207,7 @@
             <td><span class="num">~28</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~56</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~8</span> <span class="unit">tok/s</span></td>
-            <td><span class="num">~8</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~11</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~50</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~50</span> <span class="unit">tok/s</span></td>
           </tr>
@@ -1204,19 +1217,19 @@
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
             <td><span class="flag no">Will not fit</span></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">2.7–5</span> <span class="unit">tok/s</span></span></div></td>
-            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">2.7–5</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">3.6–6.7</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~25</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~25</span> <span class="unit">tok/s</span></span></div></td>
           </tr>
 
           <tr>
-            <th scope="row">Small MoE<small>gpt-oss-20b &middot; ~12 GB</small></th>
+            <th scope="row">Small <a class="def" href="#def-moe">MoE</a><small>gpt-oss-20b &middot; ~12 GB</small></th>
             <td><span class="num">70–90</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~200</span> <span class="unit">tok/s</span></td>
             <td><span class="num">86</span> <span class="unit">tok/s</span></td>
             <td><span class="num">86</span> <span class="unit">tok/s</span></td>
-            <td><span class="num">~200</span> <span class="unit">tok/s</span></td>
-            <td><span class="num">~200</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">184</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">184</span> <span class="unit">tok/s</span></td>
           </tr>
 
           <tr class="band">
@@ -1224,9 +1237,9 @@
             <td><div class="cell"><span class="flag mid">CPU offload</span><span><span class="num">10–20</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag no">Will not fit</span><span><span class="num">5–15</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">60.6</span> <span class="unit">tok/s</span></span></div></td>
-            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">60.6</span> <span class="unit">tok/s</span></span></div></td>
-            <td><div class="cell"><span class="flag yes">Fits at Q8</span><span><span class="num">~170</span> <span class="unit">tok/s</span></span></div></td>
-            <td><div class="cell"><span class="flag yes">Fits at Q8</span><span><span class="num">~170</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">81</span> <span class="unit">tok/s, vLLM</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">110–120</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">110–120</span> <span class="unit">tok/s</span></span></div></td>
           </tr>
 
           <tr>
@@ -1234,7 +1247,7 @@
             <td><span class="flag no">Will not fit</span></td>
             <td><span class="flag no">Will not fit</span></td>
             <td><div class="cell"><span class="flag mid">Q3 only</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
-            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">11.7</span> <span class="unit">tok/s, NVFP4</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~29</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~29</span> <span class="unit">tok/s</span></span></div></td>
           </tr>
@@ -1250,17 +1263,17 @@
           </tr>
 
           <tr class="band">
-            <th scope="row">Best model at ≥50 tok/s<small>the interactive threshold</small></th>
+            <th scope="row">Best model at ≥50 <a class="def" href="#def-toks">tok/s</a><small>the interactive threshold</small></th>
             <td>13B dense</td>
             <td>32B dense</td>
             <td>gpt-oss-120b</td>
             <td>gpt-oss-120b</td>
-            <td>gpt-oss-120b at Q8</td>
-            <td>gpt-oss-120b at Q8</td>
+            <td>gpt-oss-120b</td>
+            <td>gpt-oss-120b</td>
           </tr>
 
           <tr>
-            <th scope="row">Prefill<small>prompt processing</small></th>
+            <th scope="row"><a class="def" href="#def-prefill">Prefill</a><small>prompt processing</small></th>
             <td><span class="num">2,000–4,000</span> <span class="unit">tok/s</span></td>
             <td><span class="num">2,600–8,000</span> <span class="unit">tok/s</span></td>
             <td><span class="num">1,027–1,956</span> <span class="unit">tok/s</span></td>
@@ -1270,7 +1283,7 @@
           </tr>
 
           <tr class="band">
-            <th scope="row">Max context, 32B dense<small>after Q4 weights, FP16 KV</small></th>
+            <th scope="row">Max <a class="def" href="#def-context">context</a>, 32B dense<small>after Q4 weights, <a class="def" href="#def-fp16">FP16</a> <a class="def" href="#def-kv">KV</a></small></th>
             <td><span class="num">~107K</span> <span class="unit">tok</span></td>
             <td><span class="num">~46K</span> <span class="unit">tok</span></td>
             <td><span class="flag yes">Model limit</span></td>
@@ -1300,7 +1313,7 @@
           </tr>
 
           <tr>
-            <th scope="row">Concurrent serving<small>continuous batching</small></th>
+            <th scope="row">Concurrent serving<small><a class="def" href="#def-cb">continuous batching</a></small></th>
             <td><span class="flag yes">vLLM</span></td>
             <td><span class="flag yes">vLLM</span></td>
             <td><span class="flag yes">vLLM</span></td>
@@ -1311,11 +1324,11 @@
 
           <tr>
             <th scope="row">Fine-tuning reach</th>
-            <td>QLoRA to 70B</td>
+            <td><a class="def" href="#def-ft">QLoRA</a> to 70B</td>
             <td>LoRA to ~32B</td>
             <td>QLoRA past 70B</td>
-            <td>Largest CUDA reach</td>
-            <td>MLX LoRA only</td>
+            <td>Largest <a class="def" href="#def-platforms">CUDA</a> reach</td>
+            <td><a class="def" href="#def-mlx">MLX</a> LoRA only</td>
             <td>MLX LoRA only</td>
           </tr>
 
@@ -1359,8 +1372,8 @@
       <h2>The AMD option, compared to other discrete cards</h2>
       <p class="sec-note">
         The R9700 gets its own table rather than a column in the matrix above, because it competes with the
-        other discrete cards, not with unified-memory machines. All figures here are for llama.cpp-class
-        engines at batch size 1 and Q4.
+        other discrete cards, not with <a class="def" href="#def-unified">unified-memory</a> machines. All figures here are for llama.cpp-class
+        engines at <a class="def" href="#def-batch">batch size 1</a> and <a class="def" href="#def-q4">Q4</a>.
       </p>
     </div>
 
@@ -1385,14 +1398,14 @@
             <td><span class="num">64</span> <span class="unit">GB GDDR6</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">Bandwidth</th>
+            <th scope="row"><a class="def" href="#def-bandwidth">Bandwidth</a></th>
             <td><span class="num">640</span> <span class="unit">GB/s</span></td>
             <td><span class="num">1,792</span> <span class="unit">GB/s</span></td>
             <td><span class="num">936</span> <span class="unit">GB/s</span></td>
             <td><span class="num">640</span> <span class="unit">GB/s</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">Delivered cost</th>
+            <th scope="row"><a class="def" href="#def-delivered">Delivered cost</a></th>
             <td><span class="num">~$2,550</span></td>
             <td><span class="num">~$6,000</span></td>
             <td><span class="num">~$3,660</span></td>
@@ -1406,21 +1419,21 @@
             <td><span class="num">$73</span> <span class="flag yes">Best here</span></td>
           </tr>
           <tr>
-            <th scope="row">27–32B dense, Q4</th>
+            <th scope="row">27–32B <a class="def" href="#def-dense">dense</a>, Q4</th>
             <td><span class="num">29–33</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~56</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~28</span> <span class="unit">tok/s</span></td>
             <td><span class="num">29–33</span> <span class="unit">tok/s</span></td>
           </tr>
           <tr>
-            <th scope="row">35B MoE, Q4<small>Qwen3.5-35B-A3B</small></th>
+            <th scope="row">35B <a class="def" href="#def-moe">MoE</a>, Q4<small>Qwen3.5-35B-A3B</small></th>
             <td><div class="cell"><span class="num">127</span> <span class="unit">tok/s Vulkan</span><span class="unit">156 tuned</span></div></td>
             <td><span class="num">194</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~90</span> <span class="unit">tok/s est</span></td>
             <td><span class="num">127–156</span> <span class="unit">tok/s</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">Prefill, 512-token prompt</th>
+            <th scope="row"><a class="def" href="#def-prefill">Prefill</a>, 512-token prompt</th>
             <td><span class="num">2,713</span> <span class="unit">tok/s</span></td>
             <td><span class="num">7,026</span> <span class="unit">tok/s</span></td>
             <td><span class="num">2,000–4,000</span> <span class="unit">tok/s</span></td>
@@ -1461,14 +1474,17 @@
     <div class="callout">
       <span class="cond">Software support, and the catch</span>
       <p>
-        <strong>The R9700 is better supported than AMD's integrated chips.</strong> AMD's software problems
-        are worst on Strix Halo (gfx1151), where Vulkan beats AMD's own ROCm by 2.5&times; and PyTorch
-        needs community wheels. The discrete R9700 is gfx1201, and <strong>AMD lists it as officially
-        supported by ROCm 7.2 on Linux and Windows</strong>, with precompiled kernels and no HSA_OVERRIDE workaround.
+        <strong>The R9700 is better supported than AMD's integrated chips.</strong> AMD defines <a class="def" href="#def-platforms">ROCm</a>
+        support one GPU design at a time, and gives each design a code name. The integrated GPU in <a class="def" href="#def-halo">Strix Halo</a> is
+        <a class="def" href="#def-gfx">gfx1151</a>, and AMD's software problems are worst there: <a class="def" href="#def-platforms">Vulkan</a> beats AMD's own ROCm by 2.5&times;,
+        and <a class="def" href="#def-pytorch">PyTorch</a> needs community support. The R9700 uses a different design, gfx1201, and <strong>AMD
+        lists it as officially supported by ROCm 7.2 on Linux and Windows</strong>. ROCm ships ready-made
+        GPU code for it, so you do not need the HSA_OVERRIDE setting that makes ROCm treat an unsupported
+        chip as a supported one.
       </p>
       <p>
-        Official support still does not mean parity with CUDA. The fastest measured llama.cpp result on this
-        card was on <em>Vulkan</em>, not ROCm (127&nbsp;tok/s, or 156 with AMDVLK and a patch). Ollama ships
+        Official support still does not mean parity with <a class="def" href="#def-platforms">CUDA</a>. The fastest measured <a class="def" href="#def-engine">llama.cpp</a> result on this
+        card was on <em>Vulkan</em>, not ROCm (127&nbsp;<a class="def" href="#def-toks">tok/s</a>, or 156 with AMDVLK and a patch). <a class="def" href="#def-engine">Ollama</a> ships
         ROCm 6.x libraries that have no gfx1201 kernels, so its GPU discovery times out and it falls back to
         the CPU until you set <code>OLLAMA_VULKAN=1</code>. You still have to choose a backend for each
         model, rather than install one thing that works.
@@ -1476,7 +1492,7 @@
       <p>
         <strong>Prefill rules it out for long-context work.</strong> The R9700 processes a 512-token prompt
         at 2,713&nbsp;tok/s versus the 5090's 7,026, and the gap widens to <strong>3.44&times; at
-        32K</strong>. Agents, retrieval over documents and long chats all send a long context with every
+        32K</strong>. Agents, retrieval over documents and long chats all send a long <a class="def" href="#def-context">context</a> with every
         request, so for them prefill is the speed that you notice most, and it is where this card is
         weakest. It is a good low-cost card for short prompts and batch jobs, and a poor one for
         long-context work.
@@ -1488,11 +1504,13 @@
     <div class="sec-head">
       <h2>Context, which changes all of the above</h2>
       <p class="sec-note">
-        Every number in the matrix is measured with an empty context: the model generates right after a very
-        short prompt. Real use almost never looks like that.
+        Every number in the matrix is measured starting with an empty <a class="def" href="#def-context">context</a>: the model generates right
+        after a very short prompt. That keeps the <a class="def" href="#def-kv">KV cache</a> from adding to the memory that each <a class="def" href="#def-token">token</a> reads,
+        so the differences between columns come from the hardware alone, which makes it the fairest
+        comparison across machines. Real use almost never looks like that.
         A chat re-sends the whole conversation with each message, and agents and document retrieval add
         long tool outputs and documents on top, so context adds three separate costs. You need memory to
-        hold the KV cache, you wait for prefill before the first token, and decoding slows down, because
+        hold the KV cache, you wait for <a class="def" href="#def-prefill">prefill</a> before the first token, and <a class="def" href="#def-decode">decoding</a> slows down, because
         attention reads the entire cache for every new token.
       </p>
     </div>
@@ -1514,7 +1532,7 @@
         <tbody>
 
           <tr>
-            <th scope="row">KV free after 70B Q4<small>weights ~40 GB</small></th>
+            <th scope="row">KV free after 70B <a class="def" href="#def-q4">Q4</a><small>weights ~40 GB</small></th>
             <td><span class="num">~6</span> <span class="unit">GB</span></td>
             <td><span class="flag no">No fit</span></td>
             <td><span class="num">~68</span> <span class="unit">GB</span></td>
@@ -1524,7 +1542,7 @@
           </tr>
 
           <tr>
-            <th scope="row">KV free after gpt-oss-120b<small>weights ~60 GB at MXFP4</small></th>
+            <th scope="row">KV free after gpt-oss-120b<small>weights ~60 GB at <a class="def" href="#def-mxfp4">MXFP4</a></small></th>
             <td><span class="flag no">No fit</span></td>
             <td><span class="flag no">No fit</span></td>
             <td><span class="num">~48</span> <span class="unit">GB</span></td>
@@ -1534,7 +1552,7 @@
           </tr>
 
           <tr class="band">
-            <th scope="row">Time to first token @ 32K<small>prefill only</small></th>
+            <th scope="row"><a class="def" href="#def-ttft">Time to first token</a> @ 32K<small>prefill only</small></th>
             <td><span class="num">~11</span> <span class="unit">s</span></td>
             <td><span class="num">~6</span> <span class="unit">s</span></td>
             <td><span class="num">~31</span> <span class="unit">s</span></td>
@@ -1559,8 +1577,8 @@
             <td><span class="num">~30%</span></td>
             <td><div class="cell"><span class="num">33%</span><span class="unit">measured: 60.6 → 40.6</span></div></td>
             <td><span class="num">33%</span></td>
-            <td><span class="num">~30%</span></td>
-            <td><span class="num">~30%</span></td>
+            <td><div class="cell"><span class="num">20%</span><span class="unit">measured: 120 → 96</span></div></td>
+            <td><span class="num">20%</span></td>
           </tr>
 
           <tr>
@@ -1574,7 +1592,7 @@
           </tr>
 
           <tr class="band">
-            <th scope="row">Prefix caching<small>reuse of the unchanged prefix</small></th>
+            <th scope="row"><a class="def" href="#def-prefix">Prefix caching</a><small>reuse of the unchanged prefix</small></th>
             <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
             <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
             <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
@@ -1584,7 +1602,7 @@
           </tr>
 
           <tr>
-            <th scope="row">KV quantization</th>
+            <th scope="row">KV <a class="def" href="#def-quant">quantization</a></th>
             <td><span class="flag yes">Q8 / Q4 KV</span></td>
             <td><span class="flag yes">Q8 / Q4 KV</span></td>
             <td><span class="flag yes">Q8 / Q4 KV</span></td>
@@ -1600,18 +1618,28 @@
     <div class="callout">
       <span class="cond">The non-obvious part</span>
       <p>
-        MoE models slow down more with context than dense models do. The KV cache adds to the memory read
-        for each token, and an MoE model reads very little else, because only its <em>active</em>
-        parameters are read.
+        <a class="def" href="#def-moe">MoE</a> models slow down more with growing context than <a class="def" href="#def-dense">dense</a> models do.
       </p>
       <p>
-        gpt-oss-120b reads about 2.7&nbsp;GB of active weights per token. Only half of its layers use full
-        attention (the other half keep a 128-token window), so its KV cache at 32K context is about
-        1.2&nbsp;GB. With that much context, the model reads about 45% more memory per token than with an
-        empty context,
-        which fits the 33% decode slowdown measured on the Spark. A dense 70B model reads about 36&nbsp;GB
-        of weights per token. Its cache at 32K is about 10&nbsp;GB, which adds more than a quarter, so it
-        slows down by about a fifth. The Spark is strongest on MoE models, and context erodes that strength fastest.
+        To write each token, a model reads two things from memory: the weights that it uses for that token,
+        and the KV cache for the context so far. The weights are the same size for every token, but the
+        cache grows with the context. A dense model reads all of its weights for every token, so the cache
+        adds only a small share to each read. An MoE model reads only its <em>active</em> <a class="def" href="#def-params">parameters</a>, so
+        the same cache adds a much larger share. Decode speed depends on how much is read, so reading 44%
+        more per token makes each token take 1.44 times as long, and speed falls by 31% (1 &divide; 1.44 =
+        0.69). At 32K tokens of context:
+      </p>
+      <ul>
+        <li><strong>gpt-oss-120b (MoE)</strong> reads about 2.7&nbsp;GB of <a class="def" href="#def-active">active weights</a> per token, plus
+          about 1.2&nbsp;GB of cache. That is 44% more reading, so the arithmetic predicts a 31% drop. The
+          Spark measured 33%</li>
+        <li><strong>A dense 70B model at Q4</strong> reads about 40&nbsp;GB of weights per token, plus about
+          10.5&nbsp;GB of cache. That is 26% more reading, so the arithmetic predicts a 21% drop</li>
+      </ul>
+      <p>
+        The M5 Ultra lost less than the arithmetic predicts on gpt-oss-120b, 20% in a measured run, so treat
+        these figures as a guide. The Spark is strongest on MoE models, and growing context erodes that
+        strength fastest.
       </p>
     </div>
   </section>
@@ -1620,10 +1648,10 @@
     <div class="callout">
       <span class="cond">Two Sparks or one Mac</span>
       <p>
-        Two Sparks cost <strong>~$15,400</strong> and give you about 220&nbsp;GB of usable memory at
-        273&nbsp;GB/s. A 256&nbsp;GB M5 Ultra costs ~$12,000 and gives you about 230&nbsp;GB at
-        1,200&nbsp;GB/s. The Mac is <strong>$3,400 cheaper</strong>, with slightly more memory and
-        4.4&times; the bandwidth.
+        Two Sparks cost <strong>~$15,400</strong> and give you about 220&nbsp;GB of <a class="def" href="#def-usable">usable memory</a> at about
+        365&nbsp;GB/s of <a class="def" href="#def-effbw">effective bandwidth</a>. A 256&nbsp;GB M5 Ultra costs ~$12,000 and gives you about
+        230&nbsp;GB at 1,200&nbsp;GB/s. The Mac is <strong>$3,400 cheaper</strong>, with slightly more
+        memory and 3.3&times; the <a class="def" href="#def-bandwidth">bandwidth</a>.
       </p>
       <p>
         The 512&nbsp;GB Mac, at ~$24,750, is in a different budget. At the Spark pair's price, the fair
@@ -1631,8 +1659,8 @@
         tables above.
       </p>
       <p>
-        CUDA is the one real argument for the Spark. The Mac has no upstream vLLM, no NVIDIA container
-        stack, and a much smaller fine-tuning ecosystem. If you need to develop against the same stack that
+        <a class="def" href="#def-platforms">CUDA</a> is the one real argument for the Spark. The Mac has no upstream <a class="def" href="#def-engine">vLLM</a>, no NVIDIA container
+        stack, and a much smaller <a class="def" href="#def-ft">fine-tuning</a> ecosystem. If you need to develop against the same stack that
         you deploy to, a single Spark is still worth buying. A second one is not.
       </p>
     </div>
@@ -1642,17 +1670,83 @@
     <div class="sec-head">
       <h2>Clustering: does a second box buy speed, or only memory?</h2>
       <p class="sec-note">
-        macOS Tahoe 26.2 added an RDMA driver for Thunderbolt 5, which lets one Mac read another's memory
-        directly. With EXO as the runtime, two Macs gain throughput as well as memory. The table below holds
-        the hardware and interconnect fixed and varies only the model and the runtime, so the rows can be
-        compared directly. The Spark cluster is covered separately below the table, because nobody has
-        published an equivalent measurement for it.
+        macOS Tahoe 26.2 added an <a class="def" href="#def-rdma">RDMA</a> driver for <a class="def" href="#def-links">Thunderbolt 5</a>, which lets one Mac read another's memory
+        directly (Thunderbolt 5 is rated at 80&nbsp;Gb/s, and RDMA traffic between Macs reaches about
+        50–60&nbsp;Gb/s, or 6 to 7.5&nbsp;GB/s, with under 50&nbsp;microseconds of delay). That is far
+        slower than each Mac's own memory, so a cluster only helps if the software sends little data across
+        the link. Whether a second box adds speed, or only memory, depends on that software.
+      </p>
+    </div>
+
+    <div class="tbl-head">
+      <h3 id="tbl-runtimes">Software that runs one model across several machines</h3>
+      <p>
+        You need one of these to use two machines as one. They differ in who maintains them, what hardware
+        they run on, and how they split the model. The way that the software splits the model determines whether the second machine adds speed.
+      </p>
+    </div>
+    <div class="scroller">
+      <table aria-labelledby="tbl-runtimes">
+        <thead>
+          <tr>
+            <th scope="col">Software</th>
+            <th scope="col">Who maintains it</th>
+            <th scope="col">Runs on</th>
+            <th scope="col">How it splits the model</th>
+            <th scope="col">What a second machine adds</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="band">
+            <th scope="row"><a class="def" href="#def-exo">EXO</a><small>exo-explore/exo</small></th>
+            <td>EXO Labs, a startup. Open source (Apache 2.0)</td>
+            <td>Macs. Linux runs on the CPU only</td>
+            <td><a class="def" href="#def-split">Tensor parallelism</a> over RDMA, built on <a class="def" href="#def-mlx">MLX</a>. It sets up the cluster automatically</td>
+            <td><div class="cell"><span class="flag yes">Memory and speed</span><span class="unit">+34% on two Macs</span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">MLX distributed<small>with the JACCL backend</small></th>
+            <td>Apple. Open source</td>
+            <td>Macs</td>
+            <td>A toolkit for programmers, not a finished server. EXO uses it to talk over RDMA</td>
+            <td><span class="flag mid">Depends on your code</span></td>
+          </tr>
+          <tr>
+            <th scope="row"><a class="def" href="#def-engine">llama.cpp</a> RPC</th>
+            <td>The llama.cpp open-source community</td>
+            <td>Any platform</td>
+            <td>Layer splitting over an ordinary network connection. The machines take turns</td>
+            <td><div class="cell"><span class="flag no">Memory only</span><span class="unit">&minus;16% on two Macs</span></div></td>
+          </tr>
+          <tr class="band">
+            <th scope="row"><a class="def" href="#def-engine">vLLM</a>, multi-node</th>
+            <td>An open-source project under the <a class="def" href="#def-pytorch">PyTorch</a> Foundation, with many company contributors</td>
+            <td>NVIDIA GPUs, including two Sparks</td>
+            <td>Tensor parallelism or layer splitting, over RDMA when the network supports it</td>
+            <td><div class="cell"><span class="flag yes">Memory and speed</span><span class="unit">about +33% on two Sparks</span></div></td>
+          </tr>
+          <tr>
+            <th scope="row"><a class="def" href="#def-engine">TensorRT-LLM</a></th>
+            <td>NVIDIA. Open source</td>
+            <td>NVIDIA GPUs</td>
+            <td>Tensor parallelism</td>
+            <td><div class="cell"><span class="flag yes">Memory and speed</span><span class="unit">NVIDIA's own two-Spark figures</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tbl-head">
+      <h3 id="tbl-macs">Two and four Macs, measured</h3>
+      <p>
+        The table holds the hardware and the link fixed and varies only the model and the software, so the
+        rows can be compared directly. Two-Spark results come from different tests, so they are covered
+        separately below the table.
       </p>
     </div>
 
     <div class="scroller">
-      <table class="narrow">
-        <caption>Mac cluster scaling, measured</caption>
+      <table class="narrow" aria-labelledby="tbl-macs">
         <thead>
           <tr>
             <th scope="col">Model &amp; runtime<small>all: M3 Ultra Studios, Thunderbolt 5</small></th>
@@ -1693,20 +1787,25 @@
     </div>
 
     <div class="callout">
-      <span class="cond">The Spark cluster: no measurement</span>
+      <span class="cond">Two Sparks: the same rule applies</span>
       <p>
-        Nobody has published an equivalent measurement for a two-Spark cluster, so it does not belong in
-        the table above.
+        <strong>Two Sparks gain speed too, if the software splits every layer across both.</strong> The
+        Sparks connect through their ConnectX-7 ports at 200&nbsp;Gb/s, with RDMA built in. With layer
+        splitting, as in llama.cpp, each layer still runs on one machine at a time, so the second Spark adds
+        memory but no speed. With tensor parallelism in vLLM or TensorRT-LLM, both Sparks work on every
+        layer at once and each reads half of the weights, so the pair is faster. These are the published
+        single-request results:
       </p>
+      <ul>
+        <li>gpt-oss-120b in vLLM: about 38&nbsp;<a class="def" href="#def-toks">tok/s</a> on one Spark and 52 on two with the standard release
+          (+35%). Community-patched builds reach about 60 on one Spark and 81 on two (+33%)</li>
+        <li>Qwen3 235B at <a class="def" href="#def-mxfp4">NVFP4</a> in TensorRT-LLM: 11.7&nbsp;tok/s on two Sparks, measured by NVIDIA. The model
+          does not fit on one Spark at this <a class="def" href="#def-quant">quantization</a></li>
+      </ul>
       <p>
-        Here is what is known. The two Sparks are joined by a 200GbE ConnectX-7 link. Under pipeline
-        parallelism each layer still runs once, so the second box adds memory but not throughput. The
-        flat two-Spark figure on this page comes from that reasoning, and it is <strong>an inference from
-        the interconnect, not a benchmark</strong>. NVIDIA has published nothing comparable to Apple's
-        four-node numbers. EXO gains speed on Macs by spreading the expert weights so that each node reads
-        less memory per token. A Spark cluster might gain in the same way if it ran a similar
-        expert-parallel setup over RDMA. Treat the two-Spark throughput figure as a conservative, untested assumption.
-        If that configuration is on your shortlist, look for a benchmark first.
+        The two-Spark column in the matrix uses these results. Where no measurement exists, it applies the
+        +33% from gpt-oss-120b, which puts the pair at about 365&nbsp;GB/s of <a class="def" href="#def-effbw">effective bandwidth</a>. That is
+        close to the +34% that two Macs gain with EXO.
       </p>
     </div>
 
@@ -1716,18 +1815,20 @@
         <strong>The runtime determines whether clustering helps at all.</strong> Compare rows one and three.
         With the same model, hardware and interconnect, EXO with RDMA gains 34% on two nodes, while
         llama.cpp <em>loses</em> 16%. If you add a second Mac and run the wrong software, the pair is
-        slower than one machine. You cannot buy this as a hardware feature. You have to configure it.
+        slower than one machine. You cannot buy this as a hardware feature, you have to deploy it.
       </p>
       <p>
-        <strong>Very large MoE models run slower than the bandwidth formula predicts.</strong> The figures
-        above are from M3 Ultra machines at 819&nbsp;GB/s. Scaled by bandwidth, they put a single M5 Ultra
-        at about 31&nbsp;tok/s on DeepSeek 671B and 29 on Qwen3 235B. The formula alone would predict about
-        48 and 50–80. These models reach well below the efficiency of mid-size models, most likely because
-        expert routing scatters the memory reads. The matrix uses the measured figures.
+        <strong>Very large <a class="def" href="#def-moe">MoE</a> models run slower than the <a class="def" href="#def-bandwidth">bandwidth</a> formula predicts.</strong> The figures
+        above are from M3 Ultra machines at 819&nbsp;GB/s. Owners have published M5 Ultra measurements
+        since it shipped, but none yet for these two models. Scaled by bandwidth, the M3 Ultra figures put a
+        single M5 Ultra at about 31&nbsp;tok/s on DeepSeek 671B and 29 on Qwen3 235B. The formula alone
+        would predict about 48 and 50–80. These models reach well below the efficiency of mid-size models,
+        most likely because expert routing scatters the memory reads. The matrix uses the scaled
+        measurements.
       </p>
       <p>
         <strong>Two 256&nbsp;GB Macs cost less than one 512&nbsp;GB Mac.</strong> The pair comes to
-        ~$24,000 delivered and the single machine to <strong>~$24,750</strong>. The pair is
+        ~$24,000 <a class="def" href="#def-delivered">delivered</a> and the single machine to <strong>~$24,750</strong>. The pair is
         <strong>$750 cheaper</strong>, with 20&nbsp;GB less memory and about 34% more throughput. The
         single machine is simpler: one box instead of two, and no dependence on EXO or the RDMA link.
       </p>
@@ -1736,7 +1837,7 @@
 
   <section>
     <div class="sec-head">
-      <h2>The software stack, which is half the purchase</h2>
+      <h2>The software each platform runs</h2>
       <p class="sec-note">
         These machines use four different software stacks. The stack determines what you can run, how soon
         after a model's release you can run it, and what else you can do besides inference. One thing is
@@ -1749,7 +1850,7 @@
     <div class="tbl-head">
       <h3 id="tbl-engines">Which inference engines run on each platform</h3>
       <p>
-        An inference engine is the program that loads a model and answers requests. Check that the engine you plan to use runs on the platform you are considering, because the engine determines most of the features in the next table.
+        An <a class="def" href="#def-engine">inference engine</a> is the program that loads a model and answers requests. Check that the engine you plan to use runs on the platform you are considering, because the engine determines most of the features in the next table.
       </p>
     </div>
     <div class="scroller">
@@ -1765,60 +1866,60 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">llama.cpp<small>GGUF, universal</small></th>
+            <th scope="row"><a class="def" href="#def-engine">llama.cpp</a><small><a class="def" href="#def-gguf">GGUF</a>, universal</small></th>
             <td><span class="flag yes">Native</span></td>
             <td><span class="flag yes">Native</span></td>
             <td><div class="cell"><span class="flag yes">Metal</span><span class="unit">n_gpu_layers = -1</span></div></td>
             <td><div class="cell"><span class="flag mid">Vulkan</span><span class="unit">not ROCm, see below</span></div></td>
           </tr>
           <tr>
-            <th scope="row">Ollama<small>llama.cpp wrapper</small></th>
+            <th scope="row"><a class="def" href="#def-engine">Ollama</a><small>llama.cpp wrapper</small></th>
             <td><span class="flag yes">Yes</span></td>
             <td><span class="flag yes">Yes</span></td>
             <td><span class="flag yes">Yes</span></td>
             <td><span class="flag yes">Yes</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">vLLM<small>batching, PagedAttention</small></th>
+            <th scope="row"><a class="def" href="#def-engine">vLLM</a><small>batching, PagedAttention</small></th>
             <td><span class="flag yes">Native, day 0</span></td>
             <td><div class="cell"><span class="flag mid">Containers only</span><span class="unit">NGC images</span></div></td>
             <td><div class="cell"><span class="flag no">Upstream: no</span><span class="unit">MPS is experimental</span></div></td>
             <td><span class="flag no">Painful</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">vllm-mlx<small>community reimplementation</small></th>
+            <th scope="row"><a class="def" href="#def-engine">vllm-mlx</a><small>community reimplementation</small></th>
             <td>—</td>
             <td>—</td>
             <td><div class="cell"><span class="flag yes">Yes</span><span class="unit">batching, paged KV, prefix cache</span></div></td>
             <td>—</td>
           </tr>
           <tr>
-            <th scope="row">SGLang</th>
+            <th scope="row"><a class="def" href="#def-engine">SGLang</a></th>
             <td><span class="flag yes">Yes</span></td>
             <td><span class="flag mid">Partial</span></td>
             <td><span class="flag no">No</span></td>
             <td><span class="flag no">No</span></td>
           </tr>
           <tr>
-            <th scope="row">TensorRT-LLM<small>NVIDIA's own</small></th>
+            <th scope="row"><a class="def" href="#def-engine">TensorRT-LLM</a><small>NVIDIA's own</small></th>
             <td><span class="flag yes">Yes</span></td>
             <td><span class="flag yes">Yes</span></td>
             <td><span class="flag no">No</span></td>
             <td><span class="flag no">No</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">MLX / mlx-lm<small>Apple's framework</small></th>
+            <th scope="row"><a class="def" href="#def-mlx">MLX</a> / mlx-lm<small>Apple's framework</small></th>
             <td><span class="flag no">No</span></td>
             <td><span class="flag no">No</span></td>
             <td><div class="cell"><span class="flag yes">Fastest here</span><span class="unit">20–40% over llama.cpp</span></div></td>
             <td><span class="flag no">No</span></td>
           </tr>
           <tr>
-            <th scope="row">PyTorch / transformers<small>run a paper's code</small></th>
+            <th scope="row"><a class="def" href="#def-pytorch">PyTorch</a> / transformers<small>run a paper's code</small></th>
             <td><span class="flag yes">Official wheels</span></td>
             <td><div class="cell"><span class="flag mid">aarch64 gaps</span><span class="unit">containers fill them</span></div></td>
             <td><div class="cell"><span class="flag mid">MPS backend</span><span class="unit">incomplete op coverage</span></div></td>
-            <td><div class="cell"><span class="flag no">Community wheels</span><span class="unit">no official gfx1151</span></div></td>
+            <td><div class="cell"><span class="flag no">Community support</span><span class="unit">no official gfx1151 build</span></div></td>
           </tr>
         </tbody>
       </table>
@@ -1827,7 +1928,7 @@
     <div class="tbl-head">
       <h3 id="tbl-features">Features that come from the software, not the chip</h3>
       <p>
-        These features determine how well a machine serves several users at once, how quickly it answers follow-up requests, and whether you can fine-tune models on it. The software provides them, so two machines with similar hardware can differ here.
+        These features determine how well a machine serves several users at once, how quickly it answers follow-up requests, and whether you can <a class="def" href="#def-ft">fine-tune</a> models on it. The software provides them, so two machines with similar hardware can differ here.
       </p>
     </div>
     <div class="scroller">
@@ -1843,21 +1944,21 @@
         </thead>
         <tbody>
           <tr class="band">
-            <th scope="row">Prefix caching<small>skips re-processing a repeated prompt</small></th>
+            <th scope="row"><a class="def" href="#def-prefix">Prefix caching</a><small>skips re-processing a repeated prompt</small></th>
             <td><span class="flag yes">vLLM APC</span></td>
             <td><span class="flag yes">vLLM APC</span></td>
             <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">slot reuse in llama.cpp / mlx-lm</span></div></td>
             <td><span class="flag mid">Slot reuse only</span></td>
           </tr>
           <tr>
-            <th scope="row">Continuous batching</th>
+            <th scope="row"><a class="def" href="#def-cb">Continuous batching</a></th>
             <td><span class="flag yes">Yes</span></td>
             <td><span class="flag yes">Yes</span></td>
             <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">community project</span></div></td>
             <td><span class="flag no">No</span></td>
           </tr>
           <tr>
-            <th scope="row">Speculative decoding</th>
+            <th scope="row"><a class="def" href="#def-spec">Speculative decoding</a></th>
             <td><span class="flag yes">Mature</span></td>
             <td><span class="flag yes">Mature</span></td>
             <td><span class="flag mid">MLX draft models</span></td>
@@ -1911,7 +2012,7 @@
               Identical for all three. The engine runs on the machine and exposes an OpenAI-compatible HTTP
               endpoint. Any client, on the same machine or elsewhere on the network, points the
               <code>openai</code> SDK, LiteLLM, LangChain or curl at <code>http://host:port/v1</code>. Client
-              machines never need MLX, CUDA or ROCm installed.
+              machines never need MLX, <a class="def" href="#def-platforms">CUDA</a> or <a class="def" href="#def-platforms">ROCm</a> installed.
             </td>
           </tr>
           <tr class="band">
@@ -1921,8 +2022,8 @@
             <td><div class="cell"><span class="flag mid">Days</span><span class="unit">GGUF only in practice</span></div></td>
           </tr>
           <tr>
-            <th scope="row">Quantization formats</th>
-            <td>GGUF, AWQ, GPTQ, FP8, NVFP4, MXFP4, compressed-tensors</td>
+            <th scope="row"><a class="def" href="#def-quant">Quantization</a> formats</th>
+            <td>GGUF, AWQ, GPTQ, <a class="def" href="#def-fp8">FP8</a>, <a class="def" href="#def-mxfp4">NVFP4</a>, MXFP4, compressed-tensors</td>
             <td>GGUF, plus MLX 4-bit and 8-bit after conversion</td>
             <td>GGUF, effectively</td>
           </tr>
@@ -1940,26 +2041,27 @@
       <span class="cond">Three conclusions about the stacks</span>
       <p>
         <strong>The Spark's CUDA advantage is narrower than "it runs CUDA" suggests.</strong> It runs
-        aarch64 CUDA on compute capability sm_121. NGC containers work, but many pip wheels do not. You will
-        hit bugs that are specific to this compute capability, such as the fallback from FP4 to Marlin
-        kernels, before most other users do, because few people own one. It is not a drop-in Linux CUDA
+        <a class="def" href="#def-aarch64">aarch64</a> CUDA on <a class="def" href="#def-sm">compute capability</a> sm_121. NGC containers work, but many pip wheels do not. You will
+        hit bugs that are specific to this compute capability, such as vLLM falling back from its fast FP4
+        code to slower general-purpose code, before most other users do, because few people own one. It is not a drop-in Linux CUDA
         box, and working around these problems takes real time.
       </p>
       <p>
-        <strong>The Mac is a very good inference machine and a poor development platform.</strong> MLX runs
-        20–40% faster than llama.cpp on the same chip, so the M5 Ultra estimates here may be low. Upstream
-        vLLM does not run on Metal, but the community <em>vllm-mlx</em> project reimplements the important
-        parts: continuous batching, a paged KV cache and prefix caching. What the Mac lacks is the
+        <strong>The Mac is a very good inference machine and a poor platform for developing LLMs,
+        including fine-tuning.</strong> MLX runs 20–40% faster than llama.cpp on the same chip. Upstream
+        vLLM does not run on <a class="def" href="#def-platforms">Metal</a>, but the community <em>vllm-mlx</em> project reimplements the important
+        parts: continuous batching, a paged <a class="def" href="#def-kv">KV cache</a> and prefix caching. What the Mac lacks is the
         fine-tuning toolchain. PEFT, TRL, Unsloth and Axolotl are CUDA projects, and MLX's own LoRA
         tools are a separate ecosystem. If the job is serving models, the Mac is fine. If it includes
         conventional fine-tuning or running research code as published, it is not.
       </p>
       <p>
-        <strong>On AMD's integrated chips, the software cancels out the memory.</strong> On Strix-class
-        hardware (gfx1151), the Vulkan backend beats AMD's own ROCm on llama.cpp prompt processing by about
-        2.5&times; (880 versus 350 tok/s on Llama-2-7B Q4_0). The HIP path is barely faster than the CPU
-        for prefill, and the gfx1151 rocBLAS kernels are several times less efficient than the
-        discrete-GPU versions. PyTorch needs community wheels, because there are no official ones. Gorgon Halo offers
+        <strong>On AMD's integrated chips, the software cancels out the memory.</strong> On <a class="def" href="#def-halo">Strix-class</a>
+        hardware (<a class="def" href="#def-gfx">gfx1151</a>), the <a class="def" href="#def-platforms">Vulkan</a> backend beats AMD's own ROCm on llama.cpp <a class="def" href="#def-prefill">prompt processing</a> by about
+        2.5&times; (880 versus 350 <a class="def" href="#def-toks">tok/s</a> on Llama-2-7B Q4_0). llama.cpp's ROCm backend is built on <a class="def" href="#def-hip">HIP</a>,
+        AMD's counterpart to CUDA, and on this chip it is barely faster than the CPU for prefill. AMD's
+        math library for gfx1151 is several times less efficient than its versions for discrete GPUs, and
+        PyTorch has no official builds for the chip, so it relies on community support. Gorgon Halo offers
         160&nbsp;GB for $3,999, the most memory per dollar of anything mentioned here, and it is still hard
         to recommend.
       </p>
@@ -1992,20 +2094,20 @@
         <tbody>
 
           <tr class="band">
-            <th scope="row">AMD Gorgon Halo<small>Ryzen AI Max 400 series</small></th>
+            <th scope="row">AMD <a class="def" href="#def-halo">Gorgon Halo</a><small>Ryzen AI Max 400 series</small></th>
             <td>Shipping now</td>
             <td><span class="num">192</span> <span class="unit">GB, 160 usable</span></td>
             <td><span class="num">~256</span> <span class="unit">GB/s</span></td>
-            <td>A live Spark alternative today: 50% more memory, x86, dev box from $3,999. ROCm, not CUDA.</td>
+            <td>A live Spark alternative today: 50% more memory, x86, dev box from $3,999. <a class="def" href="#def-platforms">ROCm</a>, not <a class="def" href="#def-platforms">CUDA</a>.</td>
             <td><span class="flag yes">Announced</span></td>
           </tr>
 
           <tr>
-            <th scope="row">DGX Spark software<small>TensorRT-LLM, llama.cpp, PyTorch</small></th>
+            <th scope="row">DGX Spark software<small><a class="def" href="#def-engine">TensorRT-LLM</a>, <a class="def" href="#def-engine">llama.cpp</a>, <a class="def" href="#def-pytorch">PyTorch</a></small></th>
             <td>Continuous</td>
             <td>unchanged</td>
             <td>unchanged</td>
-            <td>NVIDIA claims 2.5&times; average gains since launch, concentrated in prefill. Decode is bandwidth-bound and cannot improve.</td>
+            <td>NVIDIA claims 2.5&times; average gains since launch, concentrated in <a class="def" href="#def-prefill">prefill</a>. <a class="def" href="#def-decode">Decode</a> is bandwidth-bound and cannot improve.</td>
             <td><span class="flag yes">Claimed</span></td>
           </tr>
 
@@ -2020,7 +2122,7 @@
 
           <tr>
             <th scope="row">NVIDIA N2 series</th>
-            <td>Q3 2027</td>
+            <td><a class="def" href="#def-q3">Q3</a> 2027</td>
             <td>unknown</td>
             <td>unknown</td>
             <td>The earliest credible basis for a second-generation Spark.</td>
@@ -2032,7 +2134,7 @@
             <td>2027–2028</td>
             <td>unknown</td>
             <td><span class="num">461</span>–<span class="num">691</span> <span class="unit">GB/s</span></td>
-            <td>The first unified-memory box to escape the bandwidth trap. LPDDR6 at 14,400 MT/s, 256-bit or a rumored 384-bit bus.</td>
+            <td>The first <a class="def" href="#def-unified">unified-memory</a> box to escape the <a class="def" href="#def-bandwidth">bandwidth</a> trap. LPDDR6 at 14,400 MT/s, 256-bit or a rumored 384-bit bus.</td>
             <td><span class="flag mid">Leak, unconfirmed</span></td>
           </tr>
 
@@ -2077,8 +2179,8 @@
         GB10 chip into laptops. AMD's Gorgon Halo adds memory to 2025 silicon, and its real successor
         arrives in 2027 at the earliest. DRAM prices are rising, so waiting is likely to cost money rather
         than save it. The one interesting item on the horizon is LPDDR6. If Medusa Halo ships at
-        691&nbsp;GB/s with a large memory pool, it breaks the trade between usable memory and bandwidth that this
-        whole page is about. But it is two years away and unconfirmed, so you cannot plan a purchase around it.
+        691&nbsp;GB/s with a large memory pool, it breaks the trade-off between <a class="def" href="#def-usable">usable memory</a> and
+        bandwidth. But it is two years away and unconfirmed, so you cannot plan a purchase around it.
       </p>
     </div>
   </section>
@@ -2087,8 +2189,9 @@
     <div class="sec-head">
       <h2>Configuring the Mac, if it's the Mac</h2>
       <p class="sec-note">
-        Apple sells the M5 Ultra in two bins. For LLM work the cheaper bin would be the better buy, because
-        <strong>both run at the same 1,200&nbsp;GB/s</strong> and decode is bandwidth-bound.
+        Apple sells the M5 Ultra in two <a class="def" href="#def-bin">bins</a>, and both are offered with 256&nbsp;GB. <strong>Both run at
+        the same 1,200&nbsp;GB/s</strong>, so they generate <a class="def" href="#def-token">tokens</a> at the same speed, but the 36/80 bin
+        processes prompts about 25% faster.
       </p>
     </div>
 
@@ -2105,25 +2208,25 @@
         </thead>
         <tbody>
           <tr class="band">
-            <th scope="row">Memory bandwidth</th>
+            <th scope="row">Memory <a class="def" href="#def-bandwidth">bandwidth</a></th>
             <td><span class="num">1,200</span> <span class="unit">GB/s</span></td>
             <td><span class="num">1,200</span> <span class="unit">GB/s</span></td>
             <td><span class="flag yes">No difference</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">Decode speed<small>token generation</small></th>
-            <td><span class="num">~170</span> <span class="unit">tok/s, gpt-oss-120b</span></td>
-            <td><span class="num">~170</span> <span class="unit">tok/s, gpt-oss-120b</span></td>
-            <td><span class="flag yes">Within noise</span></td>
+            <th scope="row"><a class="def" href="#def-decode">Decode</a> speed<small>token generation</small></th>
+            <td><span class="num">110–120</span> <span class="unit">tok/s, gpt-oss-120b</span></td>
+            <td><span class="num">110–120</span> <span class="unit">tok/s, gpt-oss-120b</span></td>
+            <td><span class="flag yes">No difference</span></td>
           </tr>
           <tr>
-            <th scope="row">Prefill<small>compute-bound, scales with GPU cores</small></th>
+            <th scope="row"><a class="def" href="#def-prefill">Prefill</a><small>compute-bound, scales with GPU cores</small></th>
             <td><span class="num">~2,100</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~2,600</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~25%</span> <span class="unit">faster</span></td>
           </tr>
           <tr>
-            <th scope="row">Time to first token @ 32K</th>
+            <th scope="row"><a class="def" href="#def-ttft">Time to first token</a> @ 32K</th>
             <td><span class="num">~16</span> <span class="unit">s</span></td>
             <td><span class="num">~13</span> <span class="unit">s</span></td>
             <td><span class="num">~3</span> <span class="unit">s per request</span></td>
@@ -2142,15 +2245,15 @@
           </tr>
           <tr class="band">
             <th scope="row">Price at 256GB / 1TB<small>pre-tax</small></th>
-            <td><span class="num">$9,499</span> <span class="unit">if offered</span></td>
+            <td><span class="num">$9,499</span></td>
             <td><span class="num">$10,799</span></td>
             <td><span class="num">+$1,300</span></td>
           </tr>
           <tr class="band">
-            <th scope="row">Availability at 256GB</th>
-            <td><span class="flag mid">Unconfirmed</span></td>
-            <td><span class="flag yes">Confirmed</span></td>
-            <td>—</td>
+            <th scope="row"><a class="def" href="#def-delivered">Delivered</a> at 256GB</th>
+            <td><span class="num">~$10,550</span></td>
+            <td><span class="num">~$12,000</span></td>
+            <td><span class="num">+$1,450</span></td>
           </tr>
         </tbody>
       </table>
@@ -2164,15 +2267,15 @@
       </p>
       <p>
         Decode speed is the same in both bins. The 36/80 bin prefills about 25% faster, which saves about
-        3 seconds on a 32K-token prompt. That matters if most of your work uses long prompts, and hardly
-        at all if your prompts are short. For short-prompt work the 64-core bin would be the better buy.
-        <strong>But Apple's configurator appears to offer 256&nbsp;GB only with the 36/80 bin.</strong> If so, there is no choice to make, and the delivered price is ~$12,000 rather than
-        the $9,499 that the base bin would cost before tax. Every price on this page is for the 36/80 bin.
-        Check the configurator before you budget against the lower figure.
+        3 seconds on every 32K-token prompt. Chats, agents and document work re-send a long <a class="def" href="#def-context">context</a> with
+        every request, so that wait comes back on every turn. The 30/64 bin saves about $1,450 delivered,
+        roughly 12% of the price, and it is a reasonable choice only if most of your prompts are short.
+        <strong>For most LLM work the 36/80 bin is the safer buy</strong>, and every M5 Ultra price on this
+        page is for it.
       </p>
       <p>
         The same logic applies to storage. Apple charges $500 to go from 1&nbsp;TB to 2&nbsp;TB, which is
-        $500/TB. A Thunderbolt 5 NVMe enclosure costs about $250, and Gen&nbsp;4 drives cost about
+        $500/TB. A <a class="def" href="#def-links">Thunderbolt 5</a> NVMe enclosure costs about $250, and Gen&nbsp;4 drives cost about
         $100–130/TB during the NAND shortage. A 4&nbsp;TB external drive therefore comes to about $175/TB.
         It reads at about 6,000&nbsp;MB/s, roughly 80% of the speed of the Mac's internal SSD, so a
         60&nbsp;GB model loads in about ten seconds. Take the 1&nbsp;TB internal drive and put the savings
@@ -2186,7 +2289,7 @@
       <h2>Which one, and when</h2>
       <p class="sec-note">
         Start with the largest model that you need to run, because its size sets the minimum memory.
-        Above that floor, more bandwidth means faster generation, and more compute means faster prefill
+        Above that floor, more <a class="def" href="#def-bandwidth">bandwidth</a> means faster generation, and more compute means faster <a class="def" href="#def-prefill">prefill</a>
         on long prompts. Then check that the software stack runs what you need. Each recommendation
         below names the priority that it serves.
       </p>
@@ -2194,11 +2297,11 @@
     <div class="verdicts">
 
       <article class="verdict pick">
-        <span class="cond">If value rules &middot; ~$3,660</span>
+        <span class="cond">Recommended if value rules &middot; ~$3,660</span>
         <h3>Dual RTX 3090</h3>
         <p>
           The only NVIDIA option under $5,000. Memory costs $76/GB versus the 5090's $188, and it runs a
-          70B dense model entirely on the GPUs, which the 5090 cannot. You pay for that with 700&nbsp;W and
+          70B <a class="def" href="#def-dense">dense</a> model entirely on the GPUs, which the 5090 cannot. You pay for that with 700&nbsp;W and
           a build that you have to design yourself.
         </p>
       </article>
@@ -2207,8 +2310,8 @@
         <span class="cond">If VRAM per dollar rules &middot; ~$2,550</span>
         <h3>Radeon AI PRO R9700</h3>
         <p>
-          32&nbsp;GB for 42% of a 5090's price, at $80/GB versus $188. ROCm 7.2 supports it officially,
-          unlike AMD's integrated chips. But prefill runs 3.44&times; slower than on a 5090 at 32K context,
+          32&nbsp;GB for 42% of a 5090's price, at $80/GB versus $188. <a class="def" href="#def-platforms">ROCm</a> 7.2 supports it officially,
+          unlike AMD's integrated chips. But prefill runs 3.44&times; slower than on a 5090 at 32K <a class="def" href="#def-context">context</a>,
           so it suits short prompts and batch jobs, not long-context work.
         </p>
       </article>
@@ -2228,7 +2331,7 @@
         <h3>DGX Spark 128GB</h3>
         <p>
           The only machine here with the same architecture as a GB200 deployment target, and the cheapest
-          CUDA machine that holds a 120B MoE model. At $70/GB it is not a memory-value buy. Buy it to match
+          <a class="def" href="#def-platforms">CUDA</a> machine that holds a 120B <a class="def" href="#def-moe">MoE</a> model. At $70/GB it is not a memory-value buy. Buy it to match
           your deployment stack, not for the memory.
         </p>
       </article>
@@ -2237,19 +2340,19 @@
         <span class="cond">Avoid &middot; ~$5,550</span>
         <h3>DGX Spark 64GB</h3>
         <p>
-          Worse memory value than the 128&nbsp;GB model ($101/GB versus $70), and its ~55&nbsp;GB of usable
-          memory will not hold gpt-oss-120b. It is a cheaper Spark that cannot do the job that people buy
+          Worse memory value than the 128&nbsp;GB model ($101/GB versus $70), and its ~55&nbsp;GB of <a class="def" href="#def-usable">usable
+          memory</a> will not hold gpt-oss-120b. It is a cheaper Spark that cannot do the job that people buy
           Sparks for.
         </p>
       </article>
 
       <article class="verdict pick">
-        <span class="cond">Best all-round &middot; ~$12,000</span>
+        <span class="cond">Recommended, best all-round &middot; ~$12,000</span>
         <h3>M5 Ultra 256GB</h3>
         <p>
           230&nbsp;GB at 1,200&nbsp;GB/s. It costs $3,400 <em>less</em> than two Sparks, with slightly
-          more memory and 4.4&times; the bandwidth, and it ties for the best memory value on the page. You
-          give up CUDA and the fine-tuning toolchain.
+          more memory and 3.3&times; the bandwidth, and it ties for the best memory value on the page. You
+          give up CUDA and the <a class="def" href="#def-ft">fine-tuning</a> toolchain.
         </p>
       </article>
 
@@ -2257,7 +2360,7 @@
         <span class="cond">If one box matters &middot; ~$24,750</span>
         <h3>M5 Ultra 512GB</h3>
         <p>
-          480&nbsp;GB in a single machine, running DeepSeek V3.2 at Q4 at about 31&nbsp;tok/s. At $52/GB its
+          480&nbsp;GB in a single machine, running DeepSeek V3.2 at <a class="def" href="#def-q4">Q4</a> at about 31&nbsp;<a class="def" href="#def-toks">tok/s</a>. At $52/GB its
           memory is no cheaper than the 256&nbsp;GB model's, and two of those cost $750 less with more
           throughput. Buy this because one machine is simpler to run, not to save money.
         </p>
@@ -2267,9 +2370,9 @@
         <span class="cond">If frontier weights rule &middot; ~$49,500</span>
         <h3>2&times; M5 Ultra 512GB</h3>
         <p>
-          ~960&nbsp;GB, enough for Kimi K2.5 at a trillion parameters or DeepSeek V3.2 at Q8. It is the
+          ~960&nbsp;GB, enough for Kimi K2.5 at a trillion <a class="def" href="#def-params">parameters</a> or DeepSeek V3.2 at <a class="def" href="#def-q8">Q8</a>. It is the
           only option here that runs frontier open weights at full quality. At $49,500 this is a capital
-          decision, not a hardware purchase. Requires EXO and macOS Tahoe 26.2.
+          decision, not a hardware purchase. Requires <a class="def" href="#def-exo">EXO</a> and macOS Tahoe 26.2.
         </p>
       </article>
 
@@ -2288,7 +2391,7 @@
         <h3>2&times; DGX Spark 128GB</h3>
         <p>
           It costs $3,400 <em>more</em> than a 256&nbsp;GB M5 Ultra, for about the same memory and less
-          than a quarter of the bandwidth. At $56.41 per GB/s it is the worst bandwidth value on the page.
+          than a third of the bandwidth. At $42.19 per GB/s it is the worst bandwidth value on the page.
           Buy it only if you need more than 200&nbsp;GB of memory on CUDA.
         </p>
       </article>
@@ -2307,90 +2410,112 @@
       <div class="def-group">
         <h3>Speed</h3>
         <dl>
-          <dt>Token</dt>
+          <dt id="def-token">Token</dt>
           <dd>A unit of text that a model reads and writes. An English word is about 1.3 tokens on average, so 1,000 tokens is roughly 750 words.</dd>
-          <dt>tok/s</dt>
+          <dt id="def-toks">tok/s</dt>
           <dd>Tokens per second. Unless a figure is labeled as prefill, it means generation speed: how fast the answer appears.</dd>
           <dt id="def-batch">Batch size 1</dt>
           <dd>One request handled at a time, as when one person chats with a model. Every speed on this page is for a single request at batch size 1. A server can also handle many requests together, as a larger batch. It then produces more tokens per second in total, because one read of the weights from memory serves every request in the batch. Each individual request runs a little slower.</dd>
-          <dt>Prefill</dt>
+          <dt id="def-prefill">Prefill</dt>
           <dd>The first stage of answering, in which the model processes the whole prompt before it writes anything. Prefill is limited by compute, so it scales with GPU cores. It is also called prompt processing.</dd>
-          <dt>Decode</dt>
+          <dt id="def-decode">Decode</dt>
           <dd>The second stage, in which the model writes the answer one token at a time. Each token requires reading the active weights from memory, so decode speed is limited by memory bandwidth. It is also called token generation.</dd>
-          <dt>Time to first token</dt>
+          <dt id="def-ttft">Time to first token</dt>
           <dd>How long you wait before the answer starts to appear. It is mostly prefill time, so it grows with the length of the prompt.</dd>
         </dl>
       </div>
       <div class="def-group">
         <h3>Context</h3>
         <dl>
-          <dt>Context</dt>
+          <dt id="def-context">Context</dt>
           <dd>Everything that the model works with for a request: the prompt, the earlier conversation, and any documents or tool output. "32K" means about 32,000 tokens of context (32,768 exactly).</dd>
-          <dt>KV cache</dt>
+          <dt id="def-kv">KV cache</dt>
           <dd>The memory that holds the model's processed version of the context, so that the model does not reprocess the whole context for every new token. It grows with the length of the context and competes with the model's weights for memory.</dd>
-          <dt>Prefix caching</dt>
+          <dt id="def-prefix">Prefix caching</dt>
           <dd>Reusing the KV cache for the part of a prompt that has not changed since the last request, such as a long system prompt or the earlier part of a conversation. It cuts the time to first token on follow-up requests.</dd>
-          <dt>Continuous batching</dt>
+          <dt id="def-cb">Continuous batching</dt>
           <dd>A server feature that adds new requests to a running batch as soon as there is room, rather than waiting for the batch to finish. It matters when several people or programs share one machine.</dd>
         </dl>
       </div>
       <div class="def-group">
         <h3>Models and quantization</h3>
         <dl>
-          <dt>Parameters, 70B</dt>
+          <dt id="def-params">Parameters, 70B</dt>
           <dd>The learned numbers that make up a model, also called weights. "70B" means 70 billion parameters.</dd>
-          <dt>Dense model</dt>
+          <dt id="def-dense">Dense model</dt>
           <dd>A model that uses all of its parameters for every token.</dd>
-          <dt>MoE (mixture of experts)</dt>
+          <dt id="def-moe">MoE (mixture of experts)</dt>
           <dd>A model that uses only part of its parameters for each token. gpt-oss-120b has 117 billion parameters but uses about 5.1 billion per token. All of them must fit in memory, but only the active ones are read for each token, so an MoE model generates much faster than a dense model of the same size.</dd>
-          <dt>Active parameters</dt>
+          <dt id="def-active">Active parameters</dt>
           <dd>The parameters that an MoE model actually uses for each token. Decode speed depends on these, not on the total.</dd>
           <dt id="def-quant">Quantization</dt>
           <dd>Storing each weight in fewer bits, so that the model takes less memory and generates faster, at some cost in quality. Open models are usually released at 16 bits per weight.</dd>
-          <dt>FP16, BF16</dt>
+          <dt id="def-fp16">FP16, BF16</dt>
           <dd>16-bit formats, the usual full size of an open model. A 70B model takes about 140&nbsp;GB.</dd>
-          <dt>Q8</dt>
+          <dt id="def-q8">Q8</dt>
           <dd>About 8 bits per weight, half the size of FP16: about 70&nbsp;GB for a 70B model. Quality is very close to the original.</dd>
-          <dt>Q4</dt>
+          <dt id="def-q4">Q4</dt>
           <dd>About 4 to 5 bits per weight, roughly a quarter of the size of FP16: about 40&nbsp;GB for a 70B model. It is the usual choice for local use, with a small loss in quality. "Q4-class" means any format of about 4 bits. Names such as Q4_K_M are specific llama.cpp formats in this class.</dd>
-          <dt>Q3, Q2</dt>
+          <dt id="def-q3">Q3, Q2</dt>
           <dd>About 3 and 2 bits per weight. They let a larger model fit in less memory, but quality drops noticeably, especially at Q2.</dd>
-          <dt>FP8, MXFP4, NVFP4</dt>
-          <dd>8-bit and 4-bit floating-point formats. Newer NVIDIA GPUs can run some of them in hardware, which makes them faster. The RTX 3090 cannot. The gpt-oss models are released in MXFP4.</dd>
-          <dt>GGUF, AWQ, GPTQ</dt>
+          <dt id="def-fp8">FP8, FP4</dt>
+          <dd>Floating-point formats that use 8 and 4 bits per number. A GPU with hardware support for a format runs it much faster than a GPU that has to convert it first. NVIDIA added FP8 support with its Ada and Hopper chips, and FP4 with Blackwell, which includes the RTX 5090, the RTX PRO 6000 and the DGX Spark. The RTX 3090 supports neither.</dd>
+          <dt id="def-mxfp4">MXFP4, NVFP4</dt>
+          <dd>Two 4-bit formats that store one shared scale factor for each small block of weights, which keeps more accuracy than plain 4-bit numbers. MXFP4 is an open industry standard with one scale per 32 weights, and the gpt-oss models are released in it. NVFP4 is NVIDIA's version, with one scale per 16 weights.</dd>
+          <dt id="def-gguf">GGUF, AWQ, GPTQ</dt>
           <dd>Formats for quantized models. GGUF is the llama.cpp format and the most widely available. AWQ and GPTQ are 4-bit methods used mainly with vLLM.</dd>
         </dl>
       </div>
       <div class="def-group">
         <h3>Hardware</h3>
         <dl>
-          <dt>Usable memory</dt>
+          <dt id="def-usable">Usable memory</dt>
           <dd>The memory available for the model and its KV cache. For a GPU it is the card's own memory (VRAM). For a unified-memory machine it is the total minus what the operating system needs.</dd>
-          <dt>Unified memory</dt>
+          <dt id="def-unified">Unified memory</dt>
           <dd>A design in which the CPU and GPU share one pool of memory, as in the Mac Studio, the DGX Spark and AMD's Halo chips. It allows much more memory per machine than a GPU card, usually at lower bandwidth.</dd>
-          <dt>Memory bandwidth</dt>
+          <dt id="def-bandwidth">Memory bandwidth</dt>
           <dd>How many gigabytes per second (GB/s) the chip can read from memory. It sets the ceiling on decode speed.</dd>
-          <dt>Effective bandwidth</dt>
+          <dt id="def-effbw">Effective bandwidth</dt>
           <dd>For a pair of machines, the bandwidth that the pair delivers in practice, worked out from how much faster it runs than one machine.</dd>
-          <dt>Bin</dt>
+          <dt id="def-bin">Bin</dt>
           <dd>One version of a chip, sorted by how many of its cores work. Apple sells the M5 Ultra with a 30-core CPU and 64-core GPU, or with a 36-core CPU and 80-core GPU ("36/80"). Both bins have the same memory bandwidth.</dd>
-          <dt>Delivered cost</dt>
+          <dt id="def-delivered">Delivered cost</dt>
           <dd>Street price plus about 11% sales tax, plus a host PC for the GPU configurations.</dd>
-          <dt>Layer splitting, tensor parallelism</dt>
-          <dd>Two ways to split a model across GPUs. With layer splitting, each GPU holds some of the layers and the GPUs take turns, so you gain memory but not speed. With tensor parallelism, every layer is split across the GPUs so that they work at the same time, which is faster but harder to set up.</dd>
-          <dt>RDMA</dt>
+          <dt id="def-split">Layer splitting, tensor parallelism</dt>
+          <dd>Two ways to split a model across GPUs or machines. With layer splitting, also called pipeline parallelism, each GPU holds some of the layers and the GPUs take turns, so you gain memory but not speed. With tensor parallelism, every layer is split across the GPUs so that they work at the same time, which is faster but harder to set up.</dd>
+          <dt id="def-rdma">RDMA</dt>
           <dd>Remote direct memory access. It lets one machine read another's memory directly over the cable that connects them, which cuts the delay when two machines share one model.</dd>
+          <dt id="def-links">Thunderbolt 5, ConnectX-7</dt>
+          <dd>The links used to join two machines. Macs use Thunderbolt 5, rated at 80&nbsp;Gb/s. The DGX Spark has a ConnectX-7 network port, rated at 200&nbsp;Gb/s. Both support RDMA.</dd>
+          <dt id="def-gfx">gfx1151, gfx1201</dt>
+          <dd>AMD's code names for two of its GPU designs. ROCm uses these names to decide which chips it supports. gfx1151 is the GPU built into the Strix Halo and Gorgon Halo chips. gfx1201 is the RDNA 4 GPU in the Radeon AI PRO R9700. Support for one says nothing about support for the other.</dd>
+          <dt id="def-halo">Strix Halo, Gorgon Halo, Medusa Halo</dt>
+          <dd>Generations of AMD's Ryzen AI Max chips, which put the CPU and GPU in one package with unified memory, like a Mac or a DGX Spark. Strix Halo launched in 2025, Gorgon Halo is its refresh with more memory, and Medusa Halo is expected in 2027 or 2028. The software tables call them "AMD Halo".</dd>
+          <dt id="def-aarch64">aarch64</dt>
+          <dd>The 64-bit Arm instruction set, used by the DGX Spark and by Macs. Most PC and server software is built first for x86, so some of it is missing or late on aarch64.</dd>
+          <dt id="def-sm">Compute capability, sm_121</dt>
+          <dd>NVIDIA's version number for a GPU's feature set. The DGX Spark's chip is sm_121, which few other machines share, so prebuilt software often lacks support for it.</dd>
         </dl>
       </div>
       <div class="def-group">
         <h3>Software</h3>
         <dl>
-          <dt>CUDA, ROCm, Metal, Vulkan</dt>
+          <dt id="def-platforms">CUDA, ROCm, Metal, Vulkan</dt>
           <dd>The programming platforms for NVIDIA GPUs, AMD GPUs, Apple silicon and (for Vulkan) GPUs from any vendor. Inference software has to support the platform that your hardware uses.</dd>
-          <dt>MLX</dt>
+          <dt id="def-hip">HIP</dt>
+          <dd>AMD's programming interface for its GPUs, part of ROCm. It closely follows CUDA's design, so that CUDA code can be ported to AMD. llama.cpp's ROCm backend is built on it.</dd>
+          <dt id="def-mlx">MLX</dt>
           <dd>Apple's machine-learning framework for Apple silicon. mlx-lm is its tool for running language models.</dd>
-          <dt>Inference engine</dt>
-          <dd>The program that loads a model and answers requests. llama.cpp runs almost everywhere, and Ollama is an easy-to-use wrapper around it. vLLM and SGLang are built to serve many requests at once. EXO splits a model across several machines.</dd>
+          <dt id="def-engine">Inference engine</dt>
+          <dd>The program that loads a model and answers requests. llama.cpp runs almost everywhere, and Ollama is an easy-to-use wrapper around it. vLLM and SGLang are built to serve many requests at once, and TensorRT-LLM is NVIDIA's own engine. vllm-mlx is a community version of vLLM for Macs.</dd>
+          <dt id="def-exo">EXO</dt>
+          <dd>Open-source software from EXO Labs that runs one model across several Macs, using RDMA over Thunderbolt 5. The clustering section compares it with the alternatives.</dd>
+          <dt id="def-pytorch">PyTorch</dt>
+          <dd>The most widely used framework for training and running models. Most research code and fine-tuning tools are written for it, and they run best on CUDA.</dd>
+          <dt id="def-ft">Fine-tuning, LoRA, QLoRA</dt>
+          <dd>Further training of a model on your own data. LoRA trains a small set of added weights instead of the whole model, and QLoRA does the same on a quantized model to save memory.</dd>
+          <dt id="def-spec">Speculative decoding</dt>
+          <dd>A small draft model guesses the next few tokens, and the large model checks all of the guesses in one pass. It speeds up decode when the guesses are often right.</dd>
         </dl>
       </div>
     </div>
@@ -2399,7 +2524,7 @@
   <footer>
     <h4>Method and confidence</h4>
     <p>
-      <strong>Prices are delivered cost:</strong> street price plus about 11% sales tax (a US West Coast
+      <strong>Prices are <a class="def" href="#def-delivered">delivered cost</a>:</strong> street price plus about 11% sales tax (a US West Coast
       metro rate), applied to every configuration so that they compare fairly. Substitute your own rate.
       The GPU configurations also include a host PC, at about $500 before tax for a single-card build,
       $600 for a dual-card build and $1,500 for the RTX PRO 6000 workstation. Street prices were checked
@@ -2415,11 +2540,10 @@
       median is $1,460, and used listings start at about $1,907.
     </p>
     <p>
-      <strong>Mac Studio with M5 Ultra.</strong> It starts at $5,499 for the 30-core CPU / 64-core GPU bin
+      <strong>Mac Studio with M5 Ultra.</strong> It starts at $5,499 for the 30-core CPU / 64-core GPU <a class="def" href="#def-bin">bin</a>
       with 96&nbsp;GB and 1&nbsp;TB. Upgrades cost $1,300 for the 36/80 bin, $4,000 for 256&nbsp;GB and
-      $500 for 2&nbsp;TB. The configurator appears to offer 256&nbsp;GB only with the 36/80 bin, so the
-      working figure is $10,799 before tax, about $12,000 delivered, as confirmed in a real configurator
-      session. <strong>The 512&nbsp;GB model costs $22,299</strong> with the 36/80 bin and 1&nbsp;TB, about
+      $500 for 2&nbsp;TB. The configurator offers 256&nbsp;GB with either bin: $9,499 with the 30/64 bin
+      and $10,799 with the 36/80 bin, about $10,550 and $12,000 delivered. This page uses the 36/80 bin. <strong>The 512&nbsp;GB model costs $22,299</strong> with the 36/80 bin and 1&nbsp;TB, about
       $24,750 delivered. Its memory option alone is $15,500. The first 160&nbsp;GB above the 96&nbsp;GB
       base cost $25/GB, and the next 256&nbsp;GB cost $45/GB, so do not extrapolate Apple's memory prices
       in a straight line.
@@ -2432,42 +2556,47 @@
       current prices before you buy.
     </p>
     <p>
-      <strong>Performance.</strong> R9700 figures are measured llama.cpp results on a single card. It runs
-      Qwen3.5-35B-A3B at 127.4 tok/s on Vulkan, or 156.3 when tuned, and Qwen3.5-27B dense at 29–33 tok/s.
-      With a tuned ROCm build it runs Qwen2.5-Coder-7B at ~99 tok/s, and it prefills a 512-token prompt
-      at ~2,713 tok/s. The dual-card figures are based on layer splitting, so decode speed matches a
+      <strong>Performance.</strong> R9700 figures are measured <a class="def" href="#def-engine">llama.cpp</a> results on a single card. It runs
+      Qwen3.5-35B-A3B at 127.4 <a class="def" href="#def-toks">tok/s</a> on <a class="def" href="#def-platforms">Vulkan</a>, or 156.3 when tuned, and Qwen3.5-27B <a class="def" href="#def-dense">dense</a> at 29–33 tok/s.
+      With a tuned <a class="def" href="#def-platforms">ROCm</a> build it runs Qwen2.5-Coder-7B at ~99 tok/s, and it <a class="def" href="#def-prefill">prefills</a> a 512-token prompt
+      at ~2,713 tok/s. The dual-card figures are based on <a class="def" href="#def-split">layer splitting</a>, so <a class="def" href="#def-decode">decode</a> speed matches a
       single card and only memory grows. The dual-card 70B figure is derived, not measured. The DGX
       Spark gpt-oss results are measured, and come from the llama.cpp benchmark thread. The RTX 3090 and
-      RTX PRO 6000 results are measured, and come from published llama.cpp and Ollama runs. The M5 Max
-      results at 614&nbsp;GB/s come from hardware-corner's benchmark set, including gpt-oss-120b Q8 at
+      RTX PRO 6000 results are measured, and come from published llama.cpp and <a class="def" href="#def-engine">Ollama</a> runs. The M5 Max
+      results at 614&nbsp;GB/s come from hardware-corner's benchmark set, including gpt-oss-120b <a class="def" href="#def-q8">Q8</a> at
       87.9&nbsp;tok/s decode and 1,325&nbsp;tok/s prefill.
-      <strong>All M5 Ultra figures are derived, not measured.</strong> They are scaled from the M5 Max
-      results by the 1.95&times; bandwidth ratio, since the Ultra is two Max dies. Apple claims 4.3&times;
-      the AI compute of the M3 Ultra, so prefill may beat these estimates. RTX 5090 speeds come from RTX
+      <strong>M5 Ultra figures for gpt-oss-120b and gpt-oss-20b are measured</strong> by owners with <a class="def" href="#def-mlx">MLX</a>
+      on 256&nbsp;GB machines: gpt-oss-120b runs at 110&nbsp;tok/s in oMLX on the 80-core GPU, and at 120
+      in a separate MLX run that falls to 96 at 32K <a class="def" href="#def-token">tokens</a> of <a class="def" href="#def-context">context</a>. The other M5 Ultra figures are
+      derived. Where no measurement exists, they are scaled from the M5 Max results by the 1.95&times;
+      <a class="def" href="#def-bandwidth">bandwidth</a> ratio, since the Ultra is two Max dies. For gpt-oss-120b that scaling predicted about
+      170&nbsp;tok/s, well above the measured 110–120, so treat the derived M5 Ultra figures as optimistic.
+      Apple claims 4.3&times; the AI compute of the M3 Ultra, so prefill may beat the estimates. RTX 5090 speeds come from RTX
       PRO 6000 measurements, since both use the GB202 die at the full 1,792&nbsp;GB/s. Other derived
       figures use tok/s ≈ bandwidth × efficiency ÷ bytes read per token. Treat every figure as ±20%.
     </p>
     <p>
-      <strong>Context figures.</strong> KV cache sizes are calculated from published model architectures
+      <strong>Context figures.</strong> <a class="def" href="#def-kv">KV cache</a> sizes are calculated from published model architectures
       (2 × layers × KV heads × head dim × bytes), not measured. They come to about 0.32&nbsp;MB per token
       for a Llama-class 70B and 0.26&nbsp;MB for a 32B. gpt-oss-120b needs only about 0.036&nbsp;MB per
       token, because it uses grouped-query attention and half of its layers keep only a 128-token window.
-      Time to first token is the context length divided by the prefill rate at that context length. The
+      <a class="def" href="#def-ttft">Time to first token</a> is the context length divided by the prefill rate at that context length. The
       Spark's figures are measured: decode falls from 60.57&nbsp;tok/s with an empty context to 40.55 with
-      32K tokens of context, and prefill falls from 1,956&nbsp;tok/s to 1,027. The other columns apply the same shape, because the slowdown
-      depends on the ratio of KV cache to weights rather than on the machine.
+      32K tokens of context, and prefill falls from 1,956&nbsp;tok/s to 1,027. The M5 Ultra's decode loss
+      is measured too: gpt-oss-120b falls from 120&nbsp;tok/s to 96, a 20% loss. The other columns apply
+      the Spark's shape, because the slowdown depends mostly on the ratio of KV cache to weights.
     </p>
     <p>
       <strong>Structural caveats.</strong> Dual-3090 speeds are based on llama.cpp layer splitting, where the
-      cards work in turn and effective bandwidth stays at 936&nbsp;GB/s. vLLM tensor parallelism reaches
-      about 1.4–1.6× that, with a more fragile setup. Two-Spark figures are based on pipeline parallelism
-      over the 200GbE ConnectX-7 link, which adds memory but not throughput. NVIDIA has not published
-      cluster-scaling figures comparable to Apple's, so that flat figure is an inference from the
-      interconnect. An expert-parallel Spark cluster with RDMA might do better. Multi-Mac figures come
+      cards work in turn and <a class="def" href="#def-effbw">effective bandwidth</a> stays at 936&nbsp;GB/s. <a class="def" href="#def-engine">vLLM</a> tensor parallelism reaches
+      about 1.4–1.6× that, with a more fragile setup. Two-Spark figures are based on tensor parallelism in vLLM
+      or <a class="def" href="#def-engine">TensorRT-LLM</a> over the 200GbE <a class="def" href="#def-links">ConnectX-7</a> link. The +33% for the pair comes from gpt-oss-120b in
+      vLLM: about 60&nbsp;tok/s on one Spark and 81 on two with community patches, and 38 versus 52 with
+      the standard release. With layer splitting the pair adds memory but not speed. Multi-Mac figures come
       from four M3 Ultra Studios at 819&nbsp;GB/s, scaled by bandwidth to the M5 Ultra. They require macOS
-      Tahoe 26.2 for the Thunderbolt 5 RDMA driver and EXO as the runtime. They do not apply to llama.cpp,
-      which gets slower as you add nodes. Batching and prefix caching on Apple silicon require the
-      community vllm-mlx server, not mlx-lm or llama.cpp.
+      Tahoe 26.2 for the Thunderbolt 5 <a class="def" href="#def-rdma">RDMA</a> driver and <a class="def" href="#def-exo">EXO</a> as the runtime. They do not apply to llama.cpp,
+      which gets slower as you add nodes. Batching and <a class="def" href="#def-prefix">prefix caching</a> on Apple silicon require the
+      community <a class="def" href="#def-engine">vllm-mlx</a> server, not mlx-lm or llama.cpp.
     </p>
   </footer>
 
