@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bandwidth or Capacity</title>
+<title>Bandwidth or Usable Memory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -111,12 +111,11 @@
   h1 {
     font-family: var(--f-display);
     font-weight: 700;
-    font-size: clamp(2.2rem, 5.6vw, 3.7rem);
-    line-height: 1.03;
+    font-size: clamp(1.6rem, calc(4.4vw - 4px), 3.1rem);
+    line-height: 1.08;
     letter-spacing: -.028em;
     margin: 0;
     text-wrap: balance;
-    max-width: 17ch;
   }
   h1 em {
     font-style: normal;
@@ -554,7 +553,7 @@
       <span class="sep">/</span>
       <span>Prices checked 1 Nov 2026</span>
     </div>
-    <h1>Every rig is short of <em>bandwidth</em> or short of <em>room</em>.</h1>
+    <h1>Every rig is short of <em>bandwidth</em> or <em>usable memory</em>.</h1>
     <p class="deck">
       Token generation is memory-bandwidth-bound, and the size of the model sets the minimum memory you
       need. Those two numbers determine almost everything else, and nothing here offers plenty of both at a
@@ -635,7 +634,7 @@
           </div>
         </div>
         <p class="card-char">
-          The cheapest 32&nbsp;GB on this page, at 42% of a 5090's cost for the same capacity. In exchange
+          The cheapest 32&nbsp;GB on this page, at 42% of a 5090's cost for the same memory. In exchange
           you get 36% of its bandwidth, a third of its prefill speed, and ROCm.
         </p>
       </article>
@@ -657,7 +656,7 @@
         </div>
         <p class="card-char">
           64&nbsp;GB for $1,000 more than dual 3090s, and the only way to fit a 70B Q4 model on AMD GPUs.
-          As with the Spark pair, the second card adds room but no single-stream speed.
+          As with the Spark pair, the second card adds memory but no single-stream speed.
         </p>
       </article>
 
@@ -782,7 +781,7 @@
           </div>
         </div>
         <p class="card-char">
-          Unlike a Spark cluster, this pair gains throughput as well as room. With EXO and RDMA over
+          Unlike a Spark cluster, this pair gains throughput as well as memory. With EXO and RDMA over
           Thunderbolt 5, two nodes measured about 34% faster than one.
         </p>
       </article>
@@ -1287,7 +1286,7 @@
 
     <div class="scroller">
       <table class="narrow">
-        <caption>Radeon AI PRO R9700 versus the NVIDIA cards at similar capacity</caption>
+        <caption>Radeon AI PRO R9700 versus the NVIDIA cards with similar memory</caption>
         <thead>
           <tr>
             <th scope="col">Discrete cards</th>
@@ -1559,10 +1558,10 @@
 
   <section>
     <div class="sec-head">
-      <h2>Clustering: does a second box buy speed, or only room?</h2>
+      <h2>Clustering: does a second box buy speed, or only memory?</h2>
       <p class="sec-note">
         macOS Tahoe 26.2 added an RDMA driver for Thunderbolt 5, which lets one Mac read another's memory
-        directly. With EXO as the runtime, two Macs gain throughput as well as room. The table below holds
+        directly. With EXO as the runtime, two Macs gain throughput as well as memory. The table below holds
         the hardware and interconnect fixed and varies only the model and the runtime, so the rows can be
         compared directly. The Spark cluster is covered separately below the table, because nobody has
         published an equivalent measurement for it.
@@ -1615,7 +1614,7 @@
       </p>
       <p>
         Here is what is known. The two Sparks are joined by a 200GbE ConnectX-7 link. Under pipeline
-        parallelism each layer still runs once, so the second box adds capacity but not throughput. The
+        parallelism each layer still runs once, so the second box adds memory but not throughput. The
         flat two-Spark figure on this page comes from that reasoning, and it is <strong>an inference from
         the interconnect, not a benchmark</strong>. NVIDIA has published nothing comparable to Apple's
         four-node numbers. EXO gains speed on Macs by spreading the expert weights so that each node reads
@@ -1977,7 +1976,7 @@
         GB10 chip into laptops. AMD's Gorgon Halo adds memory to 2025 silicon, and its real successor
         arrives in 2027 at the earliest. DRAM prices are rising, so waiting is likely to cost money rather
         than save it. The one interesting item on the horizon is LPDDR6. If Medusa Halo ships at
-        691&nbsp;GB/s with a large memory pool, it breaks the trade between capacity and bandwidth that this
+        691&nbsp;GB/s with a large memory pool, it breaks the trade between usable memory and bandwidth that this
         whole page is about. But it is two years away and unconfirmed, so you cannot plan a purchase around it.
       </p>
     </div>
@@ -2236,7 +2235,7 @@
       Qwen3.5-35B-A3B at 127.4 tok/s on Vulkan, or 156.3 when tuned, and Qwen3.5-27B dense at 29–33 tok/s.
       With a tuned ROCm build it runs Qwen2.5-Coder-7B at ~99 tok/s, and it prefills a 512-token prompt
       at ~2,713 tok/s. The dual-card figures are based on layer splitting, so decode speed matches a
-      single card and only capacity grows. The dual-card 70B figure is derived, not measured. The DGX
+      single card and only memory grows. The dual-card 70B figure is derived, not measured. The DGX
       Spark gpt-oss results are measured, and come from the llama.cpp benchmark thread. The RTX 3090 and
       RTX PRO 6000 results are measured, and come from published llama.cpp and Ollama runs. The M5 Max
       results at 614&nbsp;GB/s come from hardware-corner's benchmark set, including gpt-oss-120b Q8 at
@@ -2261,7 +2260,7 @@
       <strong>Structural caveats.</strong> Dual-3090 speeds are based on llama.cpp layer splitting, where the
       cards work in turn and effective bandwidth stays at 936&nbsp;GB/s. vLLM tensor parallelism reaches
       about 1.4–1.6× that, with a more fragile setup. Two-Spark figures are based on pipeline parallelism
-      over the 200GbE ConnectX-7 link, which adds capacity but not throughput. NVIDIA has not published
+      over the 200GbE ConnectX-7 link, which adds memory but not throughput. NVIDIA has not published
       cluster-scaling figures comparable to Apple's, so that flat figure is an inference from the
       interconnect. An expert-parallel Spark cluster with RDMA might do better. Multi-Mac figures come
       from four M3 Ultra Studios at 819&nbsp;GB/s, scaled by bandwidth to the M5 Ultra. They require macOS
