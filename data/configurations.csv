@@ -3,6 +3,7 @@ Dual RTX 3090,48,936,936,3660,15,76,3.91,CUDA x86,700,used pair at ~$1350 each; 
 Single RTX 5090,32,1792,1792,6000,12,188,3.35,CUDA x86,575,new floor $4921 / used floor $5880; used trades above new on thin stock
 1x Radeon AI PRO R9700,32,640,640,2550,,80,3.98,ROCm 7.2 / Vulkan,300,$1299 MSRP but ~$1800 street; gfx1201 officially supported
 2x Radeon AI PRO R9700,64,640,640,4660,,73,7.28,ROCm 7.2 / Vulkan,600,only AMD path to 70B Q4 on GPU; second card adds room not speed
+Strix Halo 128GB,115,256,256,3900,,34,15.23,Vulkan / ROCm x86,140,Ryzen AI Max+ 395 mini PC at ~$3500 street; usable memory assumes Linux with the GPU limit raised to ~120GB (Windows caps it at 96GB)
 DGX Spark 64GB,55,273,273,5550,,101,20.33,CUDA aarch64,140,new SKU 3 Oct; cannot hold gpt-oss-120b (~60GB needed)
 DGX Spark 128GB,110,273,273,7700,48,70,28.21,CUDA aarch64,140,raised from $4699 to $6950 on 3 Oct
 2x DGX Spark 128GB,220,273,365,15400,48,70,42.19,CUDA aarch64,280,+33% with tensor parallelism in vLLM (gpt-oss-120b); layer splitting adds memory only; $3400 more than one M5 Ultra 256GB

@@ -15,6 +15,10 @@ original before quoting numbers.
 - [M5 Ultra LLM benchmarks, fireside-labs](https://github.com/fireside-labs/m5-ultra-llm-benchmarks) — an owner's 30-core CPU / 64-core GPU, 256 GB machine, which confirms that the bin is sold at 256 GB
 - [LLM tokens/sec benchmarks 2026: RTX 4090 vs 3090](https://mustafa.net/llm-tokens-per-second-benchmarks/) — RTX 3090 dense figures
 - [Why DGX Spark runs 70B LLMs at 2.7 tokens/s](https://www.mayhemcode.com/2026/08/why-dgx-spark-runs-70b-llms-at-27.html)
+- [Strix Halo guide: benchmarks, hogeheer499-commits](https://github.com/hogeheer499-commits/strix-halo-guide/blob/main/BENCHMARKS.md) — gpt-oss-120b MXFP4 on Vulkan at 55.6 tok/s, and prefill from 729 tok/s on a 2K prompt to 478 on a 32K prompt (Beelink GTR9 Pro, 128 GB)
+- [Strix Halo LLM performance, visorcraft](https://github.com/visorcraft/strix-halo-llm-perf) — Llama 3.1 70B Q4 at 5.1 tok/s, Qwen2.5 32B at 11.3, 14B at 24.5, 7B at 47.3, and Qwen3 235B at Q3_K_M at 17.2
+- [Strix Halo GPU LLM performance tests, Framework community](https://community.frame.work/t/amd-strix-halo-ryzen-ai-max-395-gpu-llm-performance-tests/72521) — gpt-oss-20b at 77.3 tok/s and gpt-oss-120b at 54.8 on Vulkan
+- [Strix Halo LLM inference notes, Level1Techs](https://forum.level1techs.com/t/strix-halo-llm-inference-notes/249466) — ROCm versus Vulkan on gpt-oss and a 70B dense model
 - [Radeon AI PRO R9700 for local AI in 2026](https://runaihome.com/blog/amd-radeon-ai-pro-r9700-local-ai-hardware-guide-2026/) — R9700 measured llama.cpp results and street pricing
 - [AMD Radeon AI PRO R9700 dual-GPU AI inference performance, Puget Systems](https://www.pugetsystems.com/labs/articles/amd-radeon-ai-pro-r9700-dual-gpu-ai-inference-performance/)
 - [AMD Radeon AI PRO R9700 Linux performance, Phoronix](https://www.phoronix.com/review/amd-radeon-ai-pro-r9700)
@@ -68,6 +72,12 @@ original before quoting numbers.
 - [Apple's 512GB Mac Studio RAM upgrade now costs $15,500, iDrop News](https://www.idropnews.com/news/apple-512gb-m5-ultra-mac-studio-upgrade-cost/270296)
 - [AMD officially prices Radeon AI PRO R9700 at $1,299, WCCFtech](https://wccftech.com/amd-officially-launches-radeon-ai-pro-r9700-at-1299/)
 - [Used Radeon AI PRO R9700 listings, GPUpoet](https://gpupoet.com/gpu/shop/amd-radeon-ai-pro-r9700)
+- [Ryzen AI Max+ 395 mini PC comparison, ComputingForGeeks](https://computingforgeeks.com/ryzen-ai-max-395-mini-pc-comparison/) — 128 GB Strix Halo mini PCs at $3,449 to $3,649 in October 2026
+- [GMKtec EVO-X2 (128GB) price and specs, AI Gear Watch](https://aigearwatch.com/hardware/gmktec-evo-x2-128gb/)
+- [AMD's Ryzen AI Halo launches with 128GB at $3,999, TweakTown](https://www.tweaktown.com/news/112183/amds-ryzen-ai-halo-ai-mini-pc-launches-in-the-us-with-128gb-memory-and-a-dollars3999-price-tag/index.html)
+- [Ryzen AI Halo with Max+ PRO 495 launches at $7,299 with 192GB, VideoCardz](https://videocardz.com/newz/amd-ryzen-ai-halo-with-ryzen-ai-max-pro-495-launches-at-7299-with-192gb-memory)
+- [AMD Gorgon Halo PCs span $6,799 to $9,249, Shattered](https://shattered.io/amd-gorgon-halo-pcs-pricing-6799-9249-2026/)
+- [Increasing the VRAM allocation on AMD AI APUs under Linux, Jeff Geerling](https://www.jeffgeerling.com/blog/2025/increasing-vram-allocation-on-amd-ai-apus-under-linux/)
 - [SSD price index](https://cheapestssd.com/ssd-price-index/) — NAND trend and $/TB, as of August 2026
 
 ## Roadmap
