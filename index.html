@@ -564,7 +564,7 @@
       Token generation is memory-bandwidth-bound, and the size of the model sets the minimum memory you
       need. Those two numbers determine almost everything else, and nothing here offers plenty of both at a
       reasonable price. <strong>What you are really buying is memory.</strong> At current prices, every
-      M5 Ultra configuration costs about $52 per gigabyte of usable memory, against $70 for a DGX Spark
+      M5 Ultra configuration costs about $52 per gigabyte of usable memory, versus $70 for a DGX Spark
       and $188 for an RTX 5090.
     </p>
   </header>
@@ -681,7 +681,7 @@
           </div>
         </div>
         <p class="card-char">
-          $2,150 cheaper than the 128GB model, but it costs more per gigabyte ($101 against $70). It
+          $2,150 cheaper than the 128GB model, but it costs more per gigabyte ($101 versus $70). It
           also <strong>cannot hold gpt-oss-120b</strong>, which is the main reason to buy a Spark.
         </p>
       </article>
@@ -766,7 +766,7 @@
         </div>
         <p class="card-char">
           $22,299 before tax. The memory option alone is $15,500, because Apple charges $45/GB for the
-          top 256&nbsp;GB against $25/GB below it. Holds DeepSeek V3.2 at Q4 with room to spare.
+          top 256&nbsp;GB versus $25/GB below it. Holds DeepSeek V3.2 at Q4 with room to spare.
         </p>
       </article>
 
@@ -828,7 +828,7 @@
 
     <div class="figure" id="fig">
       <svg viewBox="0 0 720 400" role="img" aria-labelledby="fig-t fig-d">
-        <title id="fig-t">Usable memory against effective bandwidth for twelve configurations</title>
+        <title id="fig-t">Usable memory versus effective bandwidth for twelve configurations</title>
         <desc id="fig-d">
           On a logarithmic memory axis: RTX 5090 at 32 gigabytes and 1,792 gigabytes per second. Radeon AI
           PRO R9700 at the same 32 gigabytes but only 640. Dual RTX 3090 at 48 and 936. Two R9700 at 64 and
@@ -1269,7 +1269,7 @@
 
     <div class="scroller">
       <table class="narrow">
-        <caption>Radeon AI PRO R9700 against the NVIDIA cards at similar capacity</caption>
+        <caption>Radeon AI PRO R9700 versus the NVIDIA cards at similar capacity</caption>
         <thead>
           <tr>
             <th scope="col">Discrete cards</th>
@@ -1378,7 +1378,7 @@
       </p>
       <p>
         <strong>Prefill rules it out for agentic work.</strong> The R9700 processes a 512-token prompt at
-        2,713&nbsp;tok/s against the 5090's 7,026, and the gap widens to <strong>3.44&times; at 32K</strong>.
+        2,713&nbsp;tok/s versus the 5090's 7,026, and the gap widens to <strong>3.44&times; at 32K</strong>.
         An agent loop re-sends its whole context every turn, so prefill is the speed that you notice most,
         and it is where this card is weakest. It is a good low-cost card for batch work and a poor one for
         driving a coding agent.
@@ -1844,7 +1844,7 @@
       <p>
         <strong>On AMD's integrated chips, the software cancels out the memory.</strong> On Strix-class
         hardware (gfx1151), the Vulkan backend beats AMD's own ROCm on llama.cpp prompt processing by about
-        2.5&times; (880 against 350 tok/s on Llama-2-7B Q4_0). The HIP path is barely faster than the CPU
+        2.5&times; (880 versus 350 tok/s on Llama-2-7B Q4_0). The HIP path is barely faster than the CPU
         for prefill, and the gfx1151 rocBLAS kernels are several times less efficient than the
         discrete-GPU versions. PyTorch needs community wheels, because there are no official ones. Gorgon Halo offers
         160&nbsp;GB for $3,999, the most memory per dollar of anything mentioned here, and I still would not
@@ -2078,7 +2078,7 @@
         <span class="cond">If value rules &middot; ~$3,660</span>
         <h3>Dual RTX 3090</h3>
         <p>
-          The only NVIDIA option under $5,000. Memory costs $76/GB against the 5090's $188, and it runs a
+          The only NVIDIA option under $5,000. Memory costs $76/GB versus the 5090's $188, and it runs a
           70B dense model entirely on the GPUs, which the 5090 cannot. You pay for that with 700&nbsp;W and
           a build that you have to design yourself.
         </p>
@@ -2088,7 +2088,7 @@
         <span class="cond">If VRAM per dollar rules &middot; ~$2,550</span>
         <h3>Radeon AI PRO R9700</h3>
         <p>
-          32&nbsp;GB for 42% of a 5090's price, at $80/GB against $188. ROCm 7.2 supports it officially,
+          32&nbsp;GB for 42% of a 5090's price, at $80/GB versus $188. ROCm 7.2 supports it officially,
           unlike AMD's integrated chips. But prefill runs 3.44&times; slower than on a 5090 at 32K context,
           so it is the wrong card for an agent loop and a good one for batch work.
         </p>
@@ -2118,7 +2118,7 @@
         <span class="cond">Avoid &middot; ~$5,550</span>
         <h3>DGX Spark 64GB</h3>
         <p>
-          Worse memory value than the 128&nbsp;GB model ($101/GB against $70), and its ~55&nbsp;GB of usable
+          Worse memory value than the 128&nbsp;GB model ($101/GB versus $70), and its ~55&nbsp;GB of usable
           memory will not hold gpt-oss-120b. It is a cheaper Spark that cannot do the job that people buy
           Sparks for.
         </p>
@@ -2188,10 +2188,10 @@
     </p>
     <p>
       <strong>Pre-tax street prices.</strong> RTX 3090 used $1,350, new $1,550–$1,950. RTX 5090 new from
-      $4,921 and used from $5,880, against a $1,999 MSRP. Tom's Hardware has reported, without
+      $4,921 and used from $5,880, versus a $1,999 MSRP. Tom's Hardware has reported, without
       confirmation, that NVIDIA has stopped GB202 production for consumer cards. DGX Spark 128GB
       <strong>$6,950</strong> and 64GB $4,999. RTX PRO 6000 $15,999–$16,000. <strong>Radeon AI PRO
-      R9700</strong> $1,800 a card, against a $1,299 MSRP that no retailer charges. The lowest tracked US
+      R9700</strong> $1,800 a card, versus a $1,299 MSRP that no retailer charges. The lowest tracked US
       price was $1,827 on 26 October, and Amazon listings were near $1,700 in mid-October. The 12-month
       median is $1,460, and used listings start at about $1,907.
     </p>

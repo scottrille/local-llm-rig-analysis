@@ -35,7 +35,7 @@ Fixed figures that contradicted the page's own inputs:
   vllm-mlx, as the stack section already did.
 - Dual 3090 is "the only NVIDIA option under $5,000", not "the only option",
   since both R9700 configurations are cheaper. Removed a claim that the RTX
-  5090 costs more than a 128 GB Spark ($6,000 against $7,700).
+  5090 costs more than a 128 GB Spark ($6,000 versus $7,700).
 - Memory bars for the RTX 3090 and RTX 5090 cards were scaled to an old
   maximum. They now match the 960 GB scale.
 
@@ -50,7 +50,7 @@ Added single and dual R9700 configurations: 32 GB GDDR6 at 640 GB/s, ~$2,550
 delivered for one. The cheapest 32 GB on the page, at 42% of an RTX 5090's cost
 for the same capacity.
 
-Given its own comparison table against the other discrete cards rather than a
+Given its own table comparing it with the other discrete cards rather than a
 column in the main matrix, applying the apples-to-apples principle from the
 clustering fix.
 
@@ -90,7 +90,7 @@ $5,880, above new. RTX 3090 used rose 23%. Apple changed nothing.
 **Three verdicts reversed:**
 
 - Apple went from losing on memory value to winning it. The Spark was $47/GB
-  against the Mac's $52 in August. It became $70 against $52.
+  versus the Mac's $52 in August. It became $70 versus $52.
 - Two Sparks went from about $1,600 cheaper than a 256 GB M5 Ultra to $3,400 more
   expensive, for a quarter of the bandwidth. Moved from "hard to justify" to
   "avoid".
@@ -131,7 +131,7 @@ those figures moved to measurement-derived values.
 **Context section added.** One vague row became three measured costs: KV cache
 capacity, time to first token, and decode decay.
 
-**Delivered-cost basis adopted.** Mac prices had been quoted pre-tax against
+**Delivered-cost basis adopted.** Mac prices had been quoted pre-tax, while
 others that included a build, which skewed every comparison. Everything moved to
 street price plus ~11% sales tax, applied uniformly.
 

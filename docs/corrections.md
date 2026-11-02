@@ -204,7 +204,7 @@ state-agnostic "~11% sales tax (a US West Coast metro rate)" for this export.
 ## 13. Price-change percentages on inconsistent bases
 
 **Claimed:** RTX 5090 +64% since August, dual RTX 3090 +5%, two DGX Sparks
-+40% against a single Spark's +48%.
++40% versus a single Spark's +48%.
 
 **Actual:** The page's own figures give the 5090's street floor about +13%
 ($4,288–$4,381 to $4,921) and the delivered configuration +12%. Used 3090s
@@ -232,7 +232,7 @@ keep a 128-token window. The cache is about 0.036 MB/token, ~1.2 GB at 32K, a
 traffic rise of about 45%. That predicts a 31% slowdown, which fits the
 measurement. Doubling the traffic would have predicted 50%.
 
-**Also:** a dense 70B at 32K carries ~10.5 GB of cache against ~36 GB of
+**Also:** a dense 70B at 32K carries ~10.5 GB of cache versus ~36 GB of
 weights. It loses about a fifth of its decode speed, which is not "barely
 notices".
 
