@@ -7,7 +7,7 @@ original before quoting numbers.
 ## Benchmarks: measured performance
 
 - [Performance of llama.cpp on NVIDIA DGX Spark](https://github.com/ggml-org/llama.cpp/discussions/16578) — the primary Spark source, including the depth curve (gpt-oss-120b tg32 from 60.57 at depth 0 to 40.55 at 32K, pp2048 from 1,956 to 1,027)
-- [Local LLM benchmarks on RTX PRO 6000 Blackwell](https://www.vaditaslim.com/blog/local-llm-benchmarks-rtx-pro-6000) — eight models, pp512 and tg128
+- [Local LLM benchmarks on RTX PRO 6000 Blackwell](https://www.vaditaslim.com/blog/ai/local-llm-benchmarks-rtx-pro-6000) — eight models, pp512 and tg128
 - [sglang LLM inference: RTX Pro 6000 vs DGX Spark](https://github.com/casualcomputer/rtx_pro_6000_vs_dgx_spark) — six architectures, batch sizes 1 to 32
 - [Apple M5 Max for local LLMs: first benchmarks](https://www.hardware-corner.net/m5-max-local-llm-benchmarks-20261233/) — the M5 Max basis for the M5 Ultra extrapolations
 - [gpt-oss-120b on M5 Ultra (80c), oMLX benchmark](https://omlx.ai/benchmarks/performance/dx5x4yhw) — 110.1 tok/s decode on a 256 GB machine, 24 Sep 2026
@@ -68,7 +68,7 @@ original before quoting numbers.
 - [Apple's 512GB Mac Studio RAM upgrade now costs $15,500, iDrop News](https://www.idropnews.com/news/apple-512gb-m5-ultra-mac-studio-upgrade-cost/270296)
 - [AMD officially prices Radeon AI PRO R9700 at $1,299, WCCFtech](https://wccftech.com/amd-officially-launches-radeon-ai-pro-r9700-at-1299/)
 - [Used Radeon AI PRO R9700 listings, GPUpoet](https://gpupoet.com/gpu/shop/amd-radeon-ai-pro-r9700)
-- [SSD price tracker, August 2026](https://cheapestssd.com/ssd-price-tracker/) — NAND trend and $/TB
+- [SSD price index](https://cheapestssd.com/ssd-price-index/) — NAND trend and $/TB, as of August 2026
 
 ## Roadmap
 
