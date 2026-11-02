@@ -148,6 +148,30 @@
     color: var(--ink-2);
     font-size: .9375rem;
   }
+  section[id] { scroll-margin-top: 16px; }
+
+  /* link icon after each section title; the URL it sets can be copied and shared */
+  .anchor {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-left: .3em;
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--ink-3);
+    opacity: .7;
+    transition: opacity .15s, color .15s;
+  }
+  .anchor svg {
+    width: .75em;
+    height: .75em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+  }
+  h2:hover .anchor, .anchor:focus-visible { opacity: 1; }
+  .anchor:hover { color: var(--accent); }
+  .anchor:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
   /* ---------- config cards ---------- */
 
@@ -653,9 +677,9 @@
     </p>
   </header>
 
-  <section>
+  <section id="configurations">
     <div class="sec-head">
-      <h2>The eleven configurations</h2>
+      <h2>The eleven configurations<a class="anchor" href="#configurations" aria-label="Link to this section: The eleven configurations"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Bars are scaled to the largest value in this comparison: 960&nbsp;GB of <a class="def" href="#def-usable">usable memory</a> and
         1,792&nbsp;GB/s of <a class="def" href="#def-bandwidth">bandwidth</a>. Prices are <a class="def" href="#def-delivered">delivered cost</a> at current street rates, including about
@@ -899,9 +923,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="memory-versus-bandwidth">
     <div class="sec-head">
-      <h2>Memory versus bandwidth</h2>
+      <h2>Memory versus bandwidth<a class="anchor" href="#memory-versus-bandwidth" aria-label="Link to this section: Memory versus bandwidth"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Up and to the right is better. The memory axis is logarithmic because the range spans 32&nbsp;GB
         to nearly a terabyte. For clustered configurations the vertical axis shows <em>effective</em>
@@ -1060,9 +1084,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="memory-cost">
     <div class="sec-head">
-      <h2>What memory actually costs</h2>
+      <h2>What memory actually costs<a class="anchor" href="#memory-cost" aria-label="Link to this section: What memory actually costs"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Since memory sets most of the price, the two fair value measures are dollars per gigabyte of
         <a class="def" href="#def-usable">usable memory</a> and dollars per gigabyte per second of <a class="def" href="#def-bandwidth">bandwidth</a>. All figures are <a class="def" href="#def-delivered">delivered cost</a>,
@@ -1162,9 +1186,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="capability-matrix">
     <div class="sec-head">
-      <h2>Model capability matrix</h2>
+      <h2>Model capability matrix<a class="anchor" href="#capability-matrix" aria-label="Link to this section: Model capability matrix"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Expected performance characteristics of the hardware platforms across different model <a class="def" href="#def-params">parameters</a>.
         Generation speed is at <a class="def" href="#def-batch">batch size 1</a>, with <a class="def" href="#def-q4">Q4-class</a> <a class="def" href="#def-quant">quantization</a> unless noted. The shaded rows are
@@ -1367,9 +1391,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="amd">
     <div class="sec-head">
-      <h2>The AMD option, compared to other discrete cards</h2>
+      <h2>The AMD option, compared to other discrete cards<a class="anchor" href="#amd" aria-label="Link to this section: The AMD option, compared to other discrete cards"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         The R9700 gets its own table rather than a column in the matrix above, because it competes with the
         other discrete cards, not with <a class="def" href="#def-unified">unified-memory</a> machines. All figures here are for llama.cpp-class
@@ -1500,9 +1524,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="context">
     <div class="sec-head">
-      <h2>Context, which changes all of the above</h2>
+      <h2>Context, which changes all of the above<a class="anchor" href="#context" aria-label="Link to this section: Context, which changes all of the above"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Every number in the matrix is measured starting with an empty <a class="def" href="#def-context">context</a>: the model generates right
         after a very short prompt. That keeps the <a class="def" href="#def-kv">KV cache</a> from adding to the memory that each <a class="def" href="#def-token">token</a> reads,
@@ -1666,9 +1690,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="clustering">
     <div class="sec-head">
-      <h2>Clustering: does a second box buy speed, or only memory?</h2>
+      <h2>Clustering: does a second box buy speed, or only memory?<a class="anchor" href="#clustering" aria-label="Link to this section: Clustering: does a second box buy speed, or only memory?"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         macOS Tahoe 26.2 added an <a class="def" href="#def-rdma">RDMA</a> driver for <a class="def" href="#def-links">Thunderbolt 5</a>, which lets one Mac read another's memory
         directly (Thunderbolt 5 is rated at 80&nbsp;Gb/s, and RDMA traffic between Macs reaches about
@@ -1835,9 +1859,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="software">
     <div class="sec-head">
-      <h2>The software each platform runs</h2>
+      <h2>The software each platform runs<a class="anchor" href="#software" aria-label="Link to this section: The software each platform runs"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         These machines use four different software stacks. The stack determines what you can run, how soon
         after a model's release you can run it, and what else you can do besides inference. One thing is
@@ -2068,9 +2092,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="horizon">
     <div class="sec-head">
-      <h2>What's on the horizon</h2>
+      <h2>What's on the horizon<a class="anchor" href="#horizon" aria-label="Link to this section: What's on the horizon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         When to buy is part of the decision, so here is what is coming and how certain each item is. In
         short, <strong>nothing much better arrives in the next twelve months</strong>, and memory prices are
@@ -2185,9 +2209,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="configuring-the-mac">
     <div class="sec-head">
-      <h2>Configuring the Mac, if it's the Mac</h2>
+      <h2>Configuring the Mac, if it's the Mac<a class="anchor" href="#configuring-the-mac" aria-label="Link to this section: Configuring the Mac, if it's the Mac"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Apple sells the M5 Ultra in two <a class="def" href="#def-bin">bins</a>, and both are offered with 256&nbsp;GB. <strong>Both run at
         the same 1,200&nbsp;GB/s</strong>, so they generate <a class="def" href="#def-token">tokens</a> at the same speed, but the 36/80 bin
@@ -2284,9 +2308,9 @@
     </div>
   </section>
 
-  <section>
+  <section id="recommendations">
     <div class="sec-head">
-      <h2>Which one, and when</h2>
+      <h2>Which one, and when<a class="anchor" href="#recommendations" aria-label="Link to this section: Which one, and when"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Start with the largest model that you need to run, because its size sets the minimum memory.
         Above that floor, more <a class="def" href="#def-bandwidth">bandwidth</a> means faster generation, and more compute means faster <a class="def" href="#def-prefill">prefill</a>
@@ -2401,7 +2425,7 @@
 
   <section id="definitions">
     <div class="sec-head">
-      <h2>Terms used on this page</h2>
+      <h2>Terms used on this page<a class="anchor" href="#definitions" aria-label="Link to this section: Terms used on this page"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Definitions of the technical terms above, grouped by topic.
       </p>
