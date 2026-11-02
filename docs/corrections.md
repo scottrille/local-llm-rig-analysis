@@ -290,6 +290,23 @@ offered at $9,499 list.
 
 ---
 
+## 18. Gorgon Halo's price
+
+**Claimed:** Gorgon Halo offers 160 GB for $3,999, the most memory per dollar of
+anything on the page.
+
+**Actually:** $3,999 buys AMD's Ryzen AI Halo with the older Strix Halo chip
+and 128 GB. The Gorgon Halo version, with 192 GB, costs $7,299, and other
+Gorgon Halo machines cost about $6,400 to $7,400. Its bandwidth is 273 GB/s,
+not ~256.
+
+**Fix:** The software callout and the roadmap row give the real prices. The
+128 GB Strix Halo, at about $3,500 street, is now a configuration on the page.
+At $34/GB it has the cheapest memory, which also ends the Mac's claim to the
+lowest cost per gigabyte.
+
+---
+
 ## The pattern
 
 Four of these (1, 2, 3, 8) are the same error: treating a number with a clock on
@@ -299,7 +316,8 @@ concluding the capability did not exist. One (7) is a model applied outside its
 validated range. One (9) is a presentation failure that smuggled an assumption
 in alongside measurements. Two (13, 15) are internal inconsistencies: a fix
 made in one place and not followed through the rest of the page. Two (16, 17)
-are derived figures that stayed on the page after measurements appeared.
+are derived figures that stayed on the page after measurements appeared. One (18)
+confused two products that AMD sells under the same Ryzen AI Halo name.
 
 The conclusions in this repo will age. The habit of marking which numbers were
 measured, which were derived, and which were assumed is what makes it possible

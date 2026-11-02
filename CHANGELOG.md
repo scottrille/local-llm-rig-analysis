@@ -7,6 +7,19 @@ revision changed a verdict rather than just a number, that is called out.
 
 ---
 
+## 2 Nov 2026: Strix Halo added
+
+**AMD's Strix Halo is now a configuration.** A 128 GB Ryzen AI Max+ 395 mini PC
+costs about $3,900 delivered, or $34 per gigabyte of usable memory, the
+cheapest on the page. Apple's $52/GB is no longer the lowest. It appears in the
+cards, the chart, the cost table, the capability matrix, the context table and
+the recommendations, with measured llama.cpp results: gpt-oss-120b at about
+55 tok/s and prefill at about a third of a DGX Spark's speed.
+
+**Gorgon Halo's price corrected.** The page said that Gorgon Halo offered
+160 GB for $3,999. That price buys AMD's 128 GB Strix Halo box. The 192 GB
+Gorgon Halo costs about $6,400 to $7,400.
+
 ## 2 Nov 2026: light and dark switch
 
 A button at the top right of the page switches between light and dark mode.

@@ -1,6 +1,6 @@
 # Local LLM Inference Hardware: Bandwidth or Usable Memory
 
-A comparison of eleven hardware configurations for running large language models
+A comparison of twelve hardware configurations for running large language models
 locally, built between August and November 2026 during a severe DRAM and NAND
 shortage that repriced the entire category mid-analysis.
 
@@ -29,9 +29,12 @@ gpt-oss-120b activates about 5.1B parameters per token, so it needs memory for
 all of them but bandwidth for only a slice. That is why a DGX Spark runs a 120B
 MoE at 60 tok/s and a 32B dense model at 8 tok/s. See `docs/methodology.md`.
 
-**The cheapest memory on the page is Apple's.** All four M5 Ultra
-configurations cost about $52 per gigabyte of usable memory. The DGX Spark was
-$47/GB in August and is $70/GB after NVIDIA's October price increase.
+**The cheapest memory on the page is AMD's Strix Halo.** A 128 GB Ryzen AI
+Max+ 395 mini PC costs about $34 per gigabyte of usable memory, with roughly a
+DGX Spark's bandwidth, but AMD's software for the chip is the weakest here. All
+four M5 Ultra configurations cost about $52/GB, with 4.7 times the bandwidth.
+The DGX Spark was $47/GB in August and is $70/GB after NVIDIA's October price
+increase.
 
 **Prefill matters more than decode for agentic work.** An agent loop re-sends its
 whole context every turn, so the time to the first token is most of the wait

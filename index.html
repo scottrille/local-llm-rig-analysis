@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bandwidth or Usable Memory</title>
 <meta name="author" content="Scott Cottrille, Claude">
-<meta name="description" content="Every M5 Ultra configuration costs about $52 per gigabyte of usable memory, versus $70 for a DGX Spark and $188 for an RTX 5090. Eleven ways to run large language models locally, compared on memory, speed, long-context behavior, software and price.">
+<meta name="description" content="A Strix Halo mini PC costs about $34 per gigabyte of usable memory, every M5 Ultra configuration about $52, a DGX Spark $70 and an RTX 5090 $188. Twelve ways to run large language models locally, compared on memory, speed, long-context behavior, software and price.">
 <link rel="canonical" href="https://scottrille.github.io/local-llm-rig-analysis/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Local LLM rig analysis">
 <meta property="og:title" content="Every rig is short of bandwidth or usable memory">
-<meta property="og:description" content="Every M5 Ultra configuration costs about $52 per gigabyte of usable memory, versus $70 for a DGX Spark and $188 for an RTX 5090. Eleven ways to run large language models locally, compared on memory, speed, long-context behavior, software and price.">
+<meta property="og:description" content="A Strix Halo mini PC costs about $34 per gigabyte of usable memory, every M5 Ultra configuration about $52, a DGX Spark $70 and an RTX 5090 $188. Twelve ways to run large language models locally, compared on memory, speed, long-context behavior, software and price.">
 <meta property="og:url" content="https://scottrille.github.io/local-llm-rig-analysis/">
 <meta property="og:image" content="https://scottrille.github.io/local-llm-rig-analysis/images/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Chart of usable memory versus effective bandwidth for eleven local LLM hardware configurations, with bubble size showing cost per gigabyte of memory">
+<meta property="og:image:alt" content="Chart of usable memory versus effective bandwidth for twelve local LLM hardware configurations, with bubble size showing cost per gigabyte of memory">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -537,6 +537,11 @@
 
   .cell { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
 
+  /* the eight-column tables need tighter cells to fit a 1,024px window without scrolling */
+  table.wide thead th, table.wide tbody td { padding-left: 8px; padding-right: 8px; }
+  table.wide tbody th { min-width: 150px; padding-left: 12px; padding-right: 8px; }
+  table.wide .flag { letter-spacing: .04em; }
+
   button.sort {
     all: unset;
     cursor: pointer;
@@ -746,16 +751,16 @@
     <p class="deck">
       <a class="def" href="#def-decode">Token generation</a> is memory-bandwidth-bound, and the size of the model sets the minimum memory you
       need. Those two numbers determine almost everything else, and none of the hardware options here offers
-      plenty of both at a reasonable price. <strong>What you are really buying is memory.</strong> At current prices, every
-      M5 Ultra configuration costs about $52 per gigabyte of <a class="def" href="#def-usable">usable memory</a>, versus $70 for a DGX Spark
-      and $188 for an RTX 5090. This page compares eleven ways to run models locally on memory, speed,
+      plenty of both at a reasonable price. <strong>What you are really buying is memory.</strong> At current prices, a <a class="def" href="#def-halo">Strix Halo</a> mini PC
+      costs about $34 per gigabyte of <a class="def" href="#def-usable">usable memory</a>, every M5 Ultra configuration about $52, a DGX Spark $70
+      and an RTX 5090 $188. This page compares twelve ways to run models locally on memory, speed,
       long-context behavior, software and price, and ends with a recommendation for each priority.
     </p>
   </header>
 
   <section id="configurations">
     <div class="sec-head">
-      <h2>The eleven configurations<a class="anchor" href="#configurations" aria-label="Link to this section: The eleven configurations"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
+      <h2>The twelve configurations<a class="anchor" href="#configurations" aria-label="Link to this section: The twelve configurations"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.12-2.12a3 3 0 0 0-4.24-4.24l-.7.7"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0L3.14 8.62a3 3 0 0 0 4.24 4.24l.7-.7"/></svg></a></h2>
       <p class="sec-note">
         Bars are scaled to the largest value in this comparison: 960&nbsp;GB of <a class="def" href="#def-usable">usable memory</a> and
         1,792&nbsp;GB/s of <a class="def" href="#def-bandwidth">bandwidth</a>. Prices are <a class="def" href="#def-delivered">delivered cost</a> at current street rates, including about
@@ -851,6 +856,27 @@
 
       <article class="card">
         <div class="card-top">
+          <h3>Strix Halo 128GB</h3>
+          <span class="price">~$3,900 delivered</span>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-row"><span>Usable memory</span><b>~115 GB</b></div>
+            <div class="track"><div class="fill" style="width:12.0%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>Bandwidth</span><b>256 GB/s</b></div>
+            <div class="track"><div class="fill" style="width:14.3%"></div></div>
+          </div>
+        </div>
+        <p class="card-char">
+          A Spark's memory and bandwidth for half the price, and the cheapest memory here at $34/GB. AMD's
+          software for this chip is the weakest on the page.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
           <h3>DGX Spark 64GB</h3>
           <span class="price">~$5,550 delivered</span>
         </div>
@@ -929,7 +955,7 @@
         </div>
         <p class="card-char">
           Twice the memory of a 128GB Spark and 4.4&times; the bandwidth, for $4,300 more. Ties with the
-          other Apple configurations for the lowest cost per gigabyte on the page.
+          other Apple configurations at $52/GB, and only the <a class="def" href="#def-halo">Strix Halo</a> has cheaper memory.
         </p>
       </article>
 
@@ -1013,8 +1039,8 @@
 
     <div class="figure" id="fig">
       <svg viewBox="0 0 720 440" role="img" aria-labelledby="fig-t fig-d">
-        <title id="fig-t">Usable memory versus effective bandwidth for twelve configurations, with bubble area showing cost per gigabyte of memory</title>
-        <desc id="fig-d">Logarithmic memory axis, linear bandwidth axis. Bubble area is proportional to delivered cost per gigabyte of usable memory. RTX 5090: 32 GB, 1,792 GB/s, $188 per GB; RTX PRO 6000: 96 GB, 1,792 GB/s, $202 per GB; Dual RTX 3090: 48 GB, 936 GB/s, $76 per GB; Radeon AI PRO R9700: 32 GB, 640 GB/s, $80 per GB; 2× Radeon AI PRO R9700: 64 GB, 640 GB/s, $73 per GB; DGX Spark 64GB: 55 GB, 273 GB/s, $101 per GB; DGX Spark 128GB: 110 GB, 273 GB/s, $70 per GB; 2× DGX Spark 128GB: 220 GB, 365 GB/s, $70 per GB; M5 Ultra 256GB: 230 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 256GB: 460 GB, 1,600 GB/s, $52 per GB; M5 Ultra 512GB: 480 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 512GB: 960 GB, 1,600 GB/s, $52 per GB.</desc>
+        <title id="fig-t">Usable memory versus effective bandwidth for thirteen configurations, with bubble area showing cost per gigabyte of memory</title>
+        <desc id="fig-d">Logarithmic memory axis, linear bandwidth axis. Bubble area is proportional to delivered cost per gigabyte of usable memory. RTX 5090: 32 GB, 1,792 GB/s, $188 per GB; RTX PRO 6000: 96 GB, 1,792 GB/s, $202 per GB; Dual RTX 3090: 48 GB, 936 GB/s, $76 per GB; Radeon AI PRO R9700: 32 GB, 640 GB/s, $80 per GB; 2× Radeon AI PRO R9700: 64 GB, 640 GB/s, $73 per GB; Strix Halo 128GB: 115 GB, 256 GB/s, $34 per GB; DGX Spark 64GB: 55 GB, 273 GB/s, $101 per GB; DGX Spark 128GB: 110 GB, 273 GB/s, $70 per GB; 2× DGX Spark 128GB: 220 GB, 365 GB/s, $70 per GB; M5 Ultra 256GB: 230 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 256GB: 460 GB, 1,600 GB/s, $52 per GB; M5 Ultra 512GB: 480 GB, 1,200 GB/s, $52 per GB; 2× M5 Ultra 512GB: 960 GB, 1,600 GB/s, $52 per GB.</desc>
 
         <line class="grid-line" x1="80" y1="286" x2="690" y2="286"></line>
         <line class="grid-line" x1="80" y1="222" x2="690" y2="222"></line>
@@ -1079,6 +1105,9 @@
         <!-- 2× M5 Ultra 512GB -->
         <circle class="bubble" cx="680.9" cy="145.2" r="12.2"></circle>
         <circle class="bubble-c" cx="680.9" cy="145.2" r="2.5"></circle>
+        <!-- Strix Halo 128GB -->
+        <circle class="bubble" cx="369.6" cy="317.2" r="9.8"></circle>
+        <circle class="bubble-c" cx="369.6" cy="317.2" r="2.5"></circle>
         <g class="lbl" data-for="RTX 5090">
           <text class="pt-label" x="212" y="119" text-anchor="start">RTX 5090</text>
           <text class="pt-sub" x="212" y="133" text-anchor="start">$188/GB</text>
@@ -1098,6 +1127,10 @@
         <g class="lbl" data-for="2× Radeon AI PRO R9700">
           <text class="pt-label" x="292" y="232" text-anchor="start">2× R9700</text>
           <text class="pt-sub" x="292" y="246" text-anchor="start">$73/GB</text>
+        </g>
+        <g class="lbl" data-for="Strix Halo 128GB">
+          <text class="pt-label" x="346" y="321" text-anchor="end">Strix Halo</text>
+          <text class="pt-sub" x="346" y="335" text-anchor="end">$34/GB</text>
         </g>
         <g class="lbl" data-for="DGX Spark 64GB">
           <text class="pt-label" x="237" y="313" text-anchor="end">Spark 64GB</text>
@@ -1133,6 +1166,7 @@
         <circle class="hit" cx="241.5" cy="230.2" r="18.7" tabindex="0" data-n="Dual RTX 3090" data-s="48 GB · 936 GB/s · $76/GB · ~$3,660 delivered"></circle>
         <circle class="hit" cx="182.0" cy="268.1" r="19.1" tabindex="0" data-n="Radeon AI PRO R9700" data-s="32 GB · 640 GB/s · $80/GB · ~$2,550 delivered"></circle>
         <circle class="hit" cx="283.7" cy="268.1" r="18.4" tabindex="0" data-n="2× Radeon AI PRO R9700" data-s="64 GB · 640 GB/s · $73/GB · ~$4,660 delivered"></circle>
+        <circle class="hit" cx="369.6" cy="317.2" r="13.8" tabindex="0" data-n="Strix Halo 128GB" data-s="115 GB · 256 GB/s · $34/GB · ~$3,900 delivered"></circle>
         <circle class="hit" cx="261.4" cy="315.1" r="21.0" tabindex="0" data-n="DGX Spark 64GB" data-s="55 GB · 273 GB/s · $101/GB · ~$5,550 delivered"></circle>
         <circle class="hit" cx="363.1" cy="315.1" r="18.1" tabindex="0" data-n="DGX Spark 128GB" data-s="110 GB · 273 GB/s · $70/GB · ~$7,700 delivered"></circle>
         <circle class="hit" cx="464.8" cy="303.3" r="18.1" tabindex="0" data-n="2× DGX Spark 128GB" data-s="220 GB · ~365 GB/s effective · $70/GB · ~$15,400 delivered"></circle>
@@ -1152,8 +1186,10 @@
       </svg>
       <div class="tip" id="tip" role="status" aria-live="polite"></div>
       <p class="fig-caption">
-        The RTX PRO 6000 is drawn as a dashed reference, not an option. The four Apple bubbles are the
-        smallest on the chart, at $52/GB, and the RTX 5090 and PRO 6000 are the largest, at $188 and $202.
+        The RTX PRO 6000 is drawn as a dashed reference, not an option. The <a class="def" href="#def-halo">Strix Halo</a> has the smallest
+        bubble, at $34/GB, and it sits almost on top of the 128&nbsp;GB Spark, with nearly the same memory
+        and bandwidth. The four Apple bubbles come next, at $52/GB, and the RTX 5090 and PRO 6000 are the
+        largest, at $188 and $202.
         The R9700 sits directly below the RTX 5090 with the same memory, at $80/GB versus $188, and with
         36% of the bandwidth. Hover over any bubble to see its <a class="def" href="#def-delivered">delivered cost</a>.
       </p>
@@ -1166,8 +1202,8 @@
       <p class="sec-note">
         Since memory sets most of the price, the two fair value measures are dollars per gigabyte of
         <a class="def" href="#def-usable">usable memory</a> and dollars per gigabyte per second of <a class="def" href="#def-bandwidth">bandwidth</a>. All figures are <a class="def" href="#def-delivered">delivered cost</a>,
-        including about 11% sales tax, so adjust them for your own rate. <strong>The DGX Spark costs
-        $70/GB for memory, and every Apple configuration costs $52/GB.</strong> The 512&nbsp;GB tier gives
+        including about 11% sales tax, so adjust them for your own rate. <strong>A <a class="def" href="#def-halo">Strix Halo</a> mini PC
+        costs $34/GB for memory, every Apple configuration costs $52/GB, and the DGX Spark costs $70/GB.</strong> The 512&nbsp;GB tier gives
         you more memory in one box, but not cheaper per GB/s of bandwidth. Select a cost column's heading to sort by it, and
         select it again to reverse the order.
       </p>
@@ -1209,6 +1245,12 @@
             <td><span class="num">$73</span></td>
             <td><span class="num">$7.28</span></td>
           </tr>
+          <tr class="band">
+            <th scope="row">Strix Halo 128GB<small>Ryzen AI Max+ 395 mini PC, ~$3,500 street</small></th>
+            <td><span class="num">~$3,900</span></td>
+            <td><span class="num">$34</span> <span class="flag yes">Best</span></td>
+            <td><span class="num">$15.23</span></td>
+          </tr>
           <tr>
             <th scope="row">DGX Spark 64GB<small>new SKU, 3 Oct</small></th>
             <td><span class="num">~$5,550</span></td>
@@ -1230,25 +1272,25 @@
           <tr class="band">
             <th scope="row">M5 Ultra 256GB<small>36/80 <a class="def" href="#def-bin">bin</a>, 1TB SSD</small></th>
             <td><span class="num">~$12,000</span></td>
-            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
+            <td><span class="num">$52</span></td>
             <td><span class="num">$10.00</span></td>
           </tr>
           <tr class="band">
             <th scope="row">M5 Ultra 512GB<small>36/80 bin, 1TB SSD</small></th>
             <td><span class="num">~$24,750</span></td>
-            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
+            <td><span class="num">$52</span></td>
             <td><span class="num">$20.63</span></td>
           </tr>
           <tr class="band">
             <th scope="row">2&times; M5 Ultra 256GB<small><a class="def" href="#def-links">Thunderbolt 5</a> <a class="def" href="#def-rdma">RDMA</a> cluster</small></th>
             <td><span class="num">~$24,000</span></td>
-            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
+            <td><span class="num">$52</span></td>
             <td><span class="num">$15.00</span></td>
           </tr>
           <tr class="band">
             <th scope="row">2&times; M5 Ultra 512GB<small>Thunderbolt 5 RDMA cluster</small></th>
             <td><span class="num">~$49,500</span></td>
-            <td><span class="num">$52</span> <span class="flag yes">Tied best</span></td>
+            <td><span class="num">$52</span></td>
             <td><span class="num">$30.94</span></td>
           </tr>
           <tr>
@@ -1278,12 +1320,13 @@
 
     <div class="scroller">
       <table class="wide">
-        <caption>Capabilities of six local inference configurations</caption>
+        <caption>Capabilities of seven local inference configurations</caption>
         <thead>
           <tr>
             <th scope="col">Capability</th>
             <th scope="col">Dual RTX 3090<small>48 GB &middot; 936 GB/s</small></th>
             <th scope="col">RTX 5090<small>32 GB &middot; 1,792 GB/s</small></th>
+            <th scope="col">Strix Halo<small>115 GB &middot; 256 GB/s</small></th>
             <th scope="col">1&times; DGX Spark<small>110 GB &middot; 273 GB/s</small></th>
             <th scope="col">2&times; DGX Spark<small>220 GB &middot; ~365 GB/s effective</small></th>
             <th scope="col">M5 Ultra 256GB<small>230 GB &middot; 1,200 GB/s</small></th>
@@ -1296,6 +1339,7 @@
             <th scope="row">Small <a class="def" href="#def-dense">dense</a><small>8–14B, Q4</small></th>
             <td><span class="num">55–95</span> <span class="unit">tok/s</span></td>
             <td><span class="num">120–160</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">25–40</span> <span class="unit">tok/s</span></td>
             <td><span class="num">15–30</span> <span class="unit">tok/s</span></td>
             <td><span class="num">15–30</span> <span class="unit">tok/s</span></td>
             <td><span class="num">110–165</span> <span class="unit">tok/s</span></td>
@@ -1306,6 +1350,7 @@
             <th scope="row">Mid dense<small>32B, Q4</small></th>
             <td><span class="num">~28</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~56</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">~11</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~8</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~11</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~50</span> <span class="unit">tok/s</span></td>
@@ -1316,6 +1361,7 @@
             <th scope="row">Large dense<small>70B, Q4 &middot; ~40 GB</small></th>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
             <td><span class="flag no">Will not fit</span></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~5</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">2.7–5</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">3.6–6.7</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~25</span> <span class="unit">tok/s</span></span></div></td>
@@ -1326,6 +1372,7 @@
             <th scope="row">Small <a class="def" href="#def-moe">MoE</a><small>gpt-oss-20b &middot; ~12 GB</small></th>
             <td><span class="num">70–90</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~200</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">77</span> <span class="unit">tok/s</span></td>
             <td><span class="num">86</span> <span class="unit">tok/s</span></td>
             <td><span class="num">86</span> <span class="unit">tok/s</span></td>
             <td><span class="num">184</span> <span class="unit">tok/s</span></td>
@@ -1336,6 +1383,7 @@
             <th scope="row">Large MoE<small>gpt-oss-120b</small></th>
             <td><div class="cell"><span class="flag mid">CPU offload</span><span><span class="num">10–20</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag no">Will not fit</span><span><span class="num">5–15</span> <span class="unit">tok/s</span></span></div></td>
+            <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">55</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">60.6</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">81</span> <span class="unit">tok/s, vLLM</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">110–120</span> <span class="unit">tok/s</span></span></div></td>
@@ -1346,6 +1394,7 @@
             <th scope="row">Very large MoE<small>Qwen3 235B class, Q4</small></th>
             <td><span class="flag no">Will not fit</span></td>
             <td><span class="flag no">Will not fit</span></td>
+            <td><div class="cell"><span class="flag mid">Q3 only</span><span><span class="num">~17</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag mid">Q3 only</span><span><span class="num">~15</span> <span class="unit">tok/s</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">11.7</span> <span class="unit">tok/s, NVFP4</span></span></div></td>
             <td><div class="cell"><span class="flag yes">Fits</span><span><span class="num">~29</span> <span class="unit">tok/s</span></span></div></td>
@@ -1354,6 +1403,7 @@
 
           <tr class="band">
             <th scope="row">Frontier MoE<small>DeepSeek V3.2 671B, Q4 &middot; ~340 GB</small></th>
+            <td><span class="flag no">No</span></td>
             <td><span class="flag no">No</span></td>
             <td><span class="flag no">No</span></td>
             <td><span class="flag no">No</span></td>
@@ -1370,12 +1420,14 @@
             <td>gpt-oss-120b</td>
             <td>gpt-oss-120b</td>
             <td>gpt-oss-120b</td>
+            <td>gpt-oss-120b</td>
           </tr>
 
           <tr>
             <th scope="row"><a class="def" href="#def-prefill">Prefill</a><small>prompt processing</small></th>
             <td><span class="num">2,000–4,000</span> <span class="unit">tok/s</span></td>
             <td><span class="num">2,600–8,000</span> <span class="unit">tok/s</span></td>
+            <td><span class="num">330–770</span> <span class="unit">tok/s</span></td>
             <td><span class="num">1,027–1,956</span> <span class="unit">tok/s</span></td>
             <td><span class="num">1,027–1,956</span> <span class="unit">tok/s</span></td>
             <td><span class="num">~2,600</span> <span class="unit">tok/s</span></td>
@@ -1390,6 +1442,7 @@
             <td><span class="flag yes">Model limit</span></td>
             <td><span class="flag yes">Model limit</span></td>
             <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
           </tr>
 
           <tr class="band">
@@ -1400,12 +1453,14 @@
             <td><span class="flag yes">Model limit</span></td>
             <td><span class="flag yes">Model limit</span></td>
             <td><span class="flag yes">Model limit</span></td>
+            <td><span class="flag yes">Model limit</span></td>
           </tr>
 
           <tr class="band">
             <th scope="row">Software stack</th>
             <td><div class="cell"><span class="flag yes">CUDA, x86</span><span class="unit">everything works</span></div></td>
             <td><div class="cell"><span class="flag yes">CUDA, x86</span><span class="unit">everything works</span></div></td>
+            <td><div class="cell"><span class="flag no">Vulkan, x86</span><span class="unit">no CUDA, ROCm unreliable</span></div></td>
             <td><div class="cell"><span class="flag mid">CUDA, aarch64</span><span class="unit">container-first, sm_121</span></div></td>
             <td><div class="cell"><span class="flag mid">CUDA, aarch64</span><span class="unit">plus cluster config</span></div></td>
             <td><div class="cell"><span class="flag no">Metal / MLX</span><span class="unit">no CUDA, no upstream vLLM</span></div></td>
@@ -1416,6 +1471,7 @@
             <th scope="row">Concurrent serving<small><a class="def" href="#def-cb">continuous batching</a></small></th>
             <td><span class="flag yes">vLLM</span></td>
             <td><span class="flag yes">vLLM</span></td>
+            <td><div class="cell"><span class="flag mid">vLLM</span><span class="unit">community builds</span></div></td>
             <td><span class="flag yes">vLLM</span></td>
             <td><span class="flag yes">vLLM</span></td>
             <td><div class="cell"><span class="flag mid">vllm-mlx</span><span class="unit">community project</span></div></td>
@@ -1426,6 +1482,7 @@
             <th scope="row">Fine-tuning reach</th>
             <td><a class="def" href="#def-ft">QLoRA</a> to 70B</td>
             <td>LoRA to ~32B</td>
+            <td>Community <a class="def" href="#def-pytorch">PyTorch</a> only</td>
             <td>QLoRA past 70B</td>
             <td>Largest <a class="def" href="#def-platforms">CUDA</a> reach</td>
             <td><a class="def" href="#def-mlx">MLX</a> LoRA only</td>
@@ -1435,6 +1492,7 @@
           <tr>
             <th scope="row">Build &amp; ops burden</th>
             <td><span class="flag no">Highest</span></td>
+            <td><span class="flag mid">Moderate</span></td>
             <td><span class="flag mid">Moderate</span></td>
             <td><span class="flag yes">None</span></td>
             <td><span class="flag yes">Low</span></td>
@@ -1446,6 +1504,7 @@
             <th scope="row">Peak power</th>
             <td><span class="num">700</span> <span class="unit">W, loud</span></td>
             <td><span class="num">575</span> <span class="unit">W, loud</span></td>
+            <td><span class="num">~140</span> <span class="unit">W, quiet</span></td>
             <td><span class="num">140</span> <span class="unit">W, silent</span></td>
             <td><span class="num">280</span> <span class="unit">W, silent</span></td>
             <td><span class="num">~270</span> <span class="unit">W, quiet</span></td>
@@ -1456,6 +1515,7 @@
             <th scope="row">Cost as configured</th>
             <td><span class="num">~$3,660</span></td>
             <td><span class="num">~$6,000</span></td>
+            <td><span class="num">~$3,900</span></td>
             <td><span class="num">~$7,700</span></td>
             <td><span class="num">~$15,400</span></td>
             <td><span class="num">~$12,000</span></td>
@@ -1623,6 +1683,7 @@
             <th scope="col">With context</th>
             <th scope="col">Dual RTX 3090</th>
             <th scope="col">RTX 5090</th>
+            <th scope="col">Strix Halo</th>
             <th scope="col">1&times; DGX Spark</th>
             <th scope="col">2&times; DGX Spark</th>
             <th scope="col">M5 Ultra 256GB</th>
@@ -1635,6 +1696,7 @@
             <th scope="row">KV free after 70B <a class="def" href="#def-q4">Q4</a><small>weights ~40 GB</small></th>
             <td><span class="num">~6</span> <span class="unit">GB</span></td>
             <td><span class="flag no">No fit</span></td>
+            <td><span class="num">~75</span> <span class="unit">GB</span></td>
             <td><span class="num">~68</span> <span class="unit">GB</span></td>
             <td><span class="num">~178</span> <span class="unit">GB</span></td>
             <td><span class="num">~188</span> <span class="unit">GB</span></td>
@@ -1645,6 +1707,7 @@
             <th scope="row">KV free after gpt-oss-120b<small>weights ~60 GB at <a class="def" href="#def-mxfp4">MXFP4</a></small></th>
             <td><span class="flag no">No fit</span></td>
             <td><span class="flag no">No fit</span></td>
+            <td><span class="num">~55</span> <span class="unit">GB</span></td>
             <td><span class="num">~48</span> <span class="unit">GB</span></td>
             <td><span class="num">~158</span> <span class="unit">GB</span></td>
             <td><span class="num">~168</span> <span class="unit">GB</span></td>
@@ -1655,6 +1718,7 @@
             <th scope="row"><a class="def" href="#def-ttft">Time to first token</a> @ 32K<small>prefill only</small></th>
             <td><span class="num">~11</span> <span class="unit">s</span></td>
             <td><span class="num">~6</span> <span class="unit">s</span></td>
+            <td><span class="num">~69</span> <span class="unit">s</span></td>
             <td><span class="num">~31</span> <span class="unit">s</span></td>
             <td><span class="num">~31</span> <span class="unit">s</span></td>
             <td><span class="num">~13</span> <span class="unit">s</span></td>
@@ -1665,6 +1729,7 @@
             <th scope="row">Time to first token @ 128K</th>
             <td><div class="cell"><span class="flag mid">If it fits</span><span><span class="num">~43</span> <span class="unit">s</span></span></div></td>
             <td><div class="cell"><span class="flag mid">If it fits</span><span><span class="num">~26</span> <span class="unit">s</span></span></div></td>
+            <td><span class="num">~275</span> <span class="unit">s</span></td>
             <td><span class="num">~125</span> <span class="unit">s</span></td>
             <td><span class="num">~125</span> <span class="unit">s</span></td>
             <td><span class="num">~50</span> <span class="unit">s</span></td>
@@ -1675,6 +1740,7 @@
             <th scope="row">Decode loss with 32K tokens of context<small>versus an empty context</small></th>
             <td><span class="num">~30%</span></td>
             <td><span class="num">~30%</span></td>
+            <td><span class="num">~33%</span></td>
             <td><div class="cell"><span class="num">33%</span><span class="unit">measured: 60.6 → 40.6</span></div></td>
             <td><span class="num">33%</span></td>
             <td><div class="cell"><span class="num">20%</span><span class="unit">measured: 120 → 96</span></div></td>
@@ -1685,6 +1751,7 @@
             <th scope="row">Prefill loss with 32K tokens of context</th>
             <td><span class="num">~40%</span></td>
             <td><span class="num">~40%</span></td>
+            <td><span class="num">~55%</span></td>
             <td><div class="cell"><span class="num">47%</span><span class="unit">measured: 1,956 → 1,027</span></div></td>
             <td><span class="num">47%</span></td>
             <td><span class="num">~45%</span></td>
@@ -1695,6 +1762,7 @@
             <th scope="row"><a class="def" href="#def-prefix">Prefix caching</a><small>reuse of the unchanged prefix</small></th>
             <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
             <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
+            <td><div class="cell"><span class="flag mid">llama.cpp</span><span class="unit">prompt cache per slot</span></div></td>
             <td><div class="cell"><span class="flag yes">vLLM APC</span><span class="unit">near-free reuse</span></div></td>
             <td><span class="flag mid">Per-node only</span></td>
             <td><div class="cell"><span class="flag yes">vllm-mlx</span><span class="unit">community, not upstream</span></div></td>
@@ -1703,6 +1771,7 @@
 
           <tr>
             <th scope="row">KV <a class="def" href="#def-quant">quantization</a></th>
+            <td><span class="flag yes">Q8 / Q4 KV</span></td>
             <td><span class="flag yes">Q8 / Q4 KV</span></td>
             <td><span class="flag yes">Q8 / Q4 KV</span></td>
             <td><span class="flag yes">Q8 / Q4 KV</span></td>
@@ -2161,9 +2230,8 @@
         2.5&times; (880 versus 350 <a class="def" href="#def-toks">tok/s</a> on Llama-2-7B Q4_0). llama.cpp's ROCm backend is built on <a class="def" href="#def-hip">HIP</a>,
         AMD's counterpart to CUDA, and on this chip it is barely faster than the CPU for prefill. AMD's
         math library for gfx1151 is several times less efficient than its versions for discrete GPUs, and
-        PyTorch has no official builds for the chip, so it relies on community support. Gorgon Halo offers
-        160&nbsp;GB for $3,999, the most memory per dollar of anything mentioned here, and it is still hard
-        to recommend.
+        PyTorch has no official builds for the chip, so it relies on community support. That matters, because a
+        128&nbsp;GB Strix Halo mini PC is the cheapest memory on this page, at $34/GB.
       </p>
     </div>
   </section>
@@ -2197,9 +2265,9 @@
             <th scope="row">AMD <a class="def" href="#def-halo">Gorgon Halo</a><small>Ryzen AI Max 400 series</small></th>
             <td>Shipping now</td>
             <td><span class="num">192</span> <span class="unit">GB, 160 usable</span></td>
-            <td><span class="num">~256</span> <span class="unit">GB/s</span></td>
-            <td>A live Spark alternative today: 50% more memory, x86, dev box from $3,999. <a class="def" href="#def-platforms">ROCm</a>, not <a class="def" href="#def-platforms">CUDA</a>.</td>
-            <td><span class="flag yes">Announced</span></td>
+            <td><span class="num">273</span> <span class="unit">GB/s</span></td>
+            <td>The same GPU as the Strix Halo, with 50% more memory and 7% more <a class="def" href="#def-bandwidth">bandwidth</a>, for about $6,400 to $7,400. <a class="def" href="#def-platforms">ROCm</a>, not <a class="def" href="#def-platforms">CUDA</a>.</td>
+            <td><span class="flag yes">On sale</span></td>
           </tr>
 
           <tr>
@@ -2234,7 +2302,7 @@
             <td>2027–2028</td>
             <td>unknown</td>
             <td><span class="num">461</span>–<span class="num">691</span> <span class="unit">GB/s</span></td>
-            <td>The first <a class="def" href="#def-unified">unified-memory</a> box to escape the <a class="def" href="#def-bandwidth">bandwidth</a> trap. LPDDR6 at 14,400 MT/s, 256-bit or a rumored 384-bit bus.</td>
+            <td>The first <a class="def" href="#def-unified">unified-memory</a> box to escape the bandwidth trap. LPDDR6 at 14,400 MT/s, 256-bit or a rumored 384-bit bus.</td>
             <td><span class="flag mid">Leak, unconfirmed</span></td>
           </tr>
 
@@ -2436,6 +2504,17 @@
         </p>
       </article>
 
+      <article class="verdict">
+        <span class="cond">If memory per dollar rules &middot; ~$3,900</span>
+        <h3>Strix Halo 128GB</h3>
+        <p>
+          About 115&nbsp;GB for half the price of a DGX Spark, at $34/GB, the cheapest memory on the page.
+          It runs gpt-oss-120b at about 55&nbsp;<a class="def" href="#def-toks">tok/s</a>, close to the Spark's 61, but prefill runs at about a
+          third of the Spark's speed. The catch is AMD's software: ROCm is unreliable on this chip, so most
+          people run <a class="def" href="#def-engine">llama.cpp</a> on <a class="def" href="#def-platforms">Vulkan</a>, and <a class="def" href="#def-pytorch">PyTorch</a> relies on community builds.
+        </p>
+      </article>
+
       <article class="verdict avoid">
         <span class="cond">Avoid &middot; ~$5,550</span>
         <h3>DGX Spark 64GB</h3>
@@ -2451,8 +2530,8 @@
         <h3>M5 Ultra 256GB</h3>
         <p>
           230&nbsp;GB at 1,200&nbsp;GB/s. It costs $3,400 <em>less</em> than two Sparks, with slightly
-          more memory and 3.3&times; the bandwidth, and it ties for the best memory value on the page. You
-          give up CUDA and the <a class="def" href="#def-ft">fine-tuning</a> toolchain.
+          more memory and 3.3&times; the bandwidth. Only the <a class="def" href="#def-halo">Strix Halo</a> has cheaper memory, at a fifth of the
+          bandwidth. You give up CUDA and the <a class="def" href="#def-ft">fine-tuning</a> toolchain.
         </p>
       </article>
 
@@ -2460,7 +2539,7 @@
         <span class="cond">If one box matters &middot; ~$24,750</span>
         <h3>M5 Ultra 512GB</h3>
         <p>
-          480&nbsp;GB in a single machine, running DeepSeek V3.2 at <a class="def" href="#def-q4">Q4</a> at about 31&nbsp;<a class="def" href="#def-toks">tok/s</a>. At $52/GB its
+          480&nbsp;GB in a single machine, running DeepSeek V3.2 at <a class="def" href="#def-q4">Q4</a> at about 31&nbsp;tok/s. At $52/GB its
           memory is no cheaper than the 256&nbsp;GB model's, and two of those cost $750 less with more
           throughput. Buy this because one machine is simpler to run, not to save money.
         </p>
@@ -2637,7 +2716,10 @@
       <strong>$6,950</strong> and 64GB $4,999. RTX PRO 6000 $15,999–$16,000. <strong>Radeon AI PRO
       R9700</strong> $1,800 a card, versus a $1,299 MSRP that no retailer charges. The lowest tracked US
       price was $1,827 on 26 October, and Amazon listings were near $1,700 in mid-October. The 12-month
-      median is $1,460, and used listings start at about $1,907.
+      median is $1,460, and used listings start at about $1,907. <strong><a class="def" href="#def-halo">Strix Halo</a></strong> mini PCs
+      with the Ryzen AI Max+ 395 and 128&nbsp;GB cost $3,449–$3,649, including the GMKtec EVO-X2, the
+      Framework Desktop (without an SSD) and the Bosgame M5. This page uses $3,500. AMD's own Ryzen AI
+      Halo costs $3,999 with 128&nbsp;GB, and $7,299 with the Gorgon Halo chip and 192&nbsp;GB.
     </p>
     <p>
       <strong>Mac Studio with M5 Ultra.</strong> It starts at $5,499 for the 30-core CPU / 64-core GPU <a class="def" href="#def-bin">bin</a>
@@ -2660,7 +2742,11 @@
       Qwen3.5-35B-A3B at 127.4 <a class="def" href="#def-toks">tok/s</a> on <a class="def" href="#def-platforms">Vulkan</a>, or 156.3 when tuned, and Qwen3.5-27B <a class="def" href="#def-dense">dense</a> at 29–33 tok/s.
       With a tuned <a class="def" href="#def-platforms">ROCm</a> build it runs Qwen2.5-Coder-7B at ~99 tok/s, and it <a class="def" href="#def-prefill">prefills</a> a 512-token prompt
       at ~2,713 tok/s. The dual-card figures are based on <a class="def" href="#def-split">layer splitting</a>, so <a class="def" href="#def-decode">decode</a> speed matches a
-      single card and only memory grows. The dual-card 70B figure is derived, not measured. The DGX
+      single card and only memory grows. The dual-card 70B figure is derived, not measured. Strix Halo
+      figures are measured llama.cpp results on 128&nbsp;GB Ryzen AI Max+ 395 machines, mostly with
+      the Vulkan backend: gpt-oss-120b at 55&nbsp;tok/s, gpt-oss-20b at 77, a 70B dense model at about
+      5, and Qwen3 235B at <a class="def" href="#def-q3">Q3</a> at 17. Its <a class="def" href="#def-usable">usable memory</a> is for Linux,
+      with the GPU's memory limit raised to about 120&nbsp;GB. Windows caps the GPU at 96&nbsp;GB. The DGX
       Spark gpt-oss results are measured, and come from the llama.cpp benchmark thread. The RTX 3090 and
       RTX PRO 6000 results are measured, and come from published llama.cpp and <a class="def" href="#def-engine">Ollama</a> runs. The M5 Max
       results at 614&nbsp;GB/s come from hardware-corner's benchmark set, including gpt-oss-120b <a class="def" href="#def-q8">Q8</a> at
@@ -2683,7 +2769,9 @@
       <a class="def" href="#def-ttft">Time to first token</a> is the context length divided by the prefill rate at that context length. The
       Spark's figures are measured: decode falls from 60.57&nbsp;tok/s with an empty context to 40.55 with
       32K tokens of context, and prefill falls from 1,956&nbsp;tok/s to 1,027. The M5 Ultra's decode loss
-      is measured too: gpt-oss-120b falls from 120&nbsp;tok/s to 96, a 20% loss. The other columns apply
+      is measured too: gpt-oss-120b falls from 120&nbsp;tok/s to 96, a 20% loss. The Strix Halo's prefill
+      is measured on gpt-oss-120b: 729&nbsp;tok/s on a 2K prompt, and 69&nbsp;seconds for a 32K prompt.
+      Its decode loss is not measured. The other columns apply
       the Spark's shape, because the slowdown depends mostly on the ratio of KV cache to weights.
     </p>
     <p>
