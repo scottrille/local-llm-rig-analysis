@@ -1,11 +1,17 @@
 # Changelog
 
-Version history of the comparison page, from 28 August to 1 November 2026.
+Version history of the comparison page, from 28 August to 2 November 2026.
 
 Prices were restated three times and several conclusions reversed. Where a
 revision changed a verdict rather than just a number, that is called out.
 
 ---
+
+## 2 Nov 2026: links to each section
+
+Each section title now ends with a link icon. Clicking it puts the section's
+address in the browser's address bar, so you can copy it and share a link that
+opens at that section.
 
 ## 1 Nov 2026: measured results, term links, clearer explanations
 

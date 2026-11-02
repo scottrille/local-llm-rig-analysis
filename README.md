@@ -4,8 +4,9 @@ A comparison of eleven hardware configurations for running large language models
 locally, built between August and November 2026 during a severe DRAM and NAND
 shortage that repriced the entire category mid-analysis.
 
-**The page:** open `index.html` in any browser. It is a single self-contained
-file, with no build step and no dependencies beyond three Google Fonts families.
+**[View the page](https://scottrille.github.io/local-llm-rig-analysis/)**, or
+open `index.html` in any browser. It is a single self-contained file, with no
+build step and no dependencies beyond three Google Fonts families.
 
 ## The thesis
 
@@ -63,6 +64,8 @@ every reversal.
 | `data/configurations.csv` | The configuration matrix as machine-readable data |
 | `scripts/validate_html.py` | Structure and table-consistency checker for the page |
 | `scripts/wrap_document.py` | Wraps an HTML fragment as a complete document |
+| `scripts/make_og_image.mjs` | Renders the link-preview image from the page's headline and chart |
+| `images/og-image.png` | The 1200×630 image that Facebook and other sites show for links to the page |
 | `LICENSE` | The CC BY 4.0 license |
 
 ## Confidence
