@@ -132,7 +132,7 @@ those figures moved to measurement-derived values.
 capacity, time to first token, and decode decay.
 
 **Delivered-cost basis adopted.** Mac prices had been quoted pre-tax, while
-others that included a build, which skewed every comparison. Everything moved to
+the others included a build, and that skewed every comparison. Everything moved to
 street price plus ~11% sales tax, applied uniformly.
 
 **M5 Ultra added.** Announced 25 August, three days before the first version.
