@@ -585,6 +585,9 @@
   .verdict.pick .cond { color: var(--pos); }
   .verdict.avoid .cond { color: var(--neg); }
   .verdict.avoid { border-left-color: var(--neg); }
+  /* worth considering: a yellow bar, clearly apart from the red of "Avoid" */
+  .verdict.consider { border-left-color: var(--accent-fill); }
+  .verdict.consider .cond { color: var(--warn); }
 
   .verdict .cond {
     font-family: var(--f-mono);
@@ -2504,8 +2507,8 @@
         </p>
       </article>
 
-      <article class="verdict">
-        <span class="cond">If memory per dollar rules &middot; ~$3,900</span>
+      <article class="verdict consider">
+        <span class="cond">Consider if memory per dollar rules &middot; ~$3,900</span>
         <h3>Strix Halo 128GB</h3>
         <p>
           About 115&nbsp;GB for half the price of a DGX Spark, at $34/GB, the cheapest memory on the page.
