@@ -48,8 +48,8 @@ in August, up from $75 in April, with specific drives at $105–$130/TB.
 **Why:** NAND is in the same shortage as DRAM. Fabs are prioritizing AI and
 data-center orders.
 
-**Note:** The recommendation survived (Apple charges $500/TB), but at 2x to 3.5x
-better rather than the 3x to 5x implied.
+**Note:** The recommendation survived (Apple charges $500/TB), but external
+storage is 2x to 2.9x cheaper, not the 3x or more implied.
 
 ---
 
@@ -201,6 +201,58 @@ state-agnostic "~11% sales tax (a US West Coast metro rate)" for this export.
 
 ---
 
+## 13. Price-change percentages on inconsistent bases
+
+**Claimed:** RTX 5090 +64% since August, dual RTX 3090 +5%, two DGX Sparks
++40% versus a single Spark's +48%.
+
+**Actual:** The page's own figures give the 5090's street floor about +13%
+($4,288–$4,381 to $4,921) and the delivered configuration +12%. Used 3090s
+rose 23%, which lifts the dual-3090 build about 15%. Two Sparks rose 48%, the
+same as one. The August comparisons built on the two-Spark figure were also
+off: the Spark was $47/GB, not $50, and two Sparks were about $1,600 cheaper
+than a 256 GB M5 Ultra, not $1,000.
+
+**Why:** The 64% came from a source whose baseline was not checked against the
+August price already on the page. The other figures mixed list-price changes
+with delivered-cost changes.
+
+**Lesson:** When a percentage and its two endpoints are all on the page, check
+that they agree.
+
+---
+
+## 14. The gpt-oss-120b KV cache counted every layer
+
+**Claimed:** 0.072 MB/token, ~2.4 GB at 32K, "nearly doubles" per-token memory
+traffic, which was said to match the measured 33% slowdown.
+
+**Actual:** Only half of gpt-oss-120b's layers use full attention. The others
+keep a 128-token window. The cache is about 0.036 MB/token, ~1.2 GB at 32K, a
+traffic rise of about 45%. That predicts a 31% slowdown, which fits the
+measurement. Doubling the traffic would have predicted 50%.
+
+**Also:** a dense 70B at 32K carries ~10.5 GB of cache versus ~36 GB of
+weights. It loses about a fifth of its decode speed, which is not "barely
+notices".
+
+---
+
+## 15. Rows that did not follow later corrections
+
+**Problem:** After the large-MoE figures were corrected (#7), the matrix still
+named 235B-class and 671B models as the best that the M5 Ultra runs at 50 tok/s
+or more, though its own cells put them at ~29 and ~31. After the vllm-mlx
+correction (#5), two rows still called the Mac "single-user" with "no vLLM".
+After the R9700 was added, a verdict still called dual 3090s "the only option
+under $5,000".
+
+**Why:** Each fix changed the section it started in and was not traced to
+every other place that depended on the old figure. This is the same lesson as
+#2.
+
+---
+
 ## The pattern
 
 Four of these (1, 2, 3, 8) are the same error: treating a number with a clock on
@@ -208,7 +260,8 @@ it as a fact rather than an observation. Two (5, 6) are the same error in a
 different costume: checking the canonical implementation, finding it absent, and
 concluding the capability did not exist. One (7) is a model applied outside its
 validated range. One (9) is a presentation failure that smuggled an assumption
-in alongside measurements.
+in alongside measurements. Two (13, 15) are internal inconsistencies: a fix
+made in one place and not followed through the rest of the page.
 
 The conclusions in this repo will age. The habit of marking which numbers were
 measured, which were derived, and which were assumed is what makes it possible

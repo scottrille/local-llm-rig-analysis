@@ -60,7 +60,7 @@ like?
 The framing that mattered: in agentic work you are not reading the stream. The
 model emits reasoning, tool calls, and diffs, and you wait for the whole turn. A
 3,000-token response at 20 tok/s is 150 seconds; at 150 tok/s it is 20. Across
-20 to 30 turns that is 45 minutes against 6.
+20 to 30 turns that is 50 to 75 minutes versus 7 to 10.
 
 ---
 
@@ -123,8 +123,8 @@ not how you reach it.
 
 Three conclusions changed the ranking: the Spark's CUDA claim is narrower than it
 sounds (`corrections.md` #10), the Mac is an excellent inference appliance and a
-poor development platform, and AMD's software was weaker than its specs — later
-partially corrected (`corrections.md` #6).
+poor development platform, and AMD's software was weaker than its specs (later
+partially corrected, `corrections.md` #6).
 
 ---
 
@@ -178,7 +178,7 @@ Correct, and the fix generalized. See `corrections.md` #9. The principle carried
 forward: hold the conditions fixed within a table, vary one thing, and put
 inferred numbers somewhere that says they are inferred.
 
-This is also why the AMD card later got its own comparison table against the
+This is also why the AMD card later got its own table comparing it with the
 other discrete GPUs rather than a column in the main matrix.
 
 ---

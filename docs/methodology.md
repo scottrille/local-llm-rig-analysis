@@ -56,8 +56,10 @@ separate costs:
 
 1. **KV cache memory.** Computed from published architectures as
    `2 × layers × KV heads × head dim × bytes`. Roughly 0.32 MB/token for a
-   Llama-class 70B, 0.26 MB for a 32B, and 0.072 MB for gpt-oss-120b, whose
-   grouped-query attention and sliding-window layers make it unusually cheap.
+   Llama-class 70B and 0.26 MB for a 32B. gpt-oss-120b needs only about
+   0.036 MB/token: it uses grouped-query attention, and only half of its 36
+   layers use full attention. The other half keep a 128-token sliding window,
+   so their cache does not grow with context.
 2. **Prefill time.** Context ÷ prefill rate at that depth.
 3. **Decode decay.** Attention reads the entire cache on every token generated.
 
@@ -66,11 +68,12 @@ The Spark's depth curve is measured: 60.57 tok/s decode at depth 0 falling to
 same shape, because the decay is a property of the KV-to-weights ratio rather
 than of the machine.
 
-**MoE models decay faster with context than dense ones**, because the cache is
-compared against *active* parameters. gpt-oss-120b reads ~2.7 GB of weights per
-token against ~2.4 GB of cache at 32K, so it nearly doubles its per-token memory
-traffic. A dense 70B reads 40 GB of weights against the same few GB and barely
-notices.
+**MoE models slow down more with context than dense models do**, because the
+cache adds to a small number: the *active* parameters. gpt-oss-120b reads
+~2.7 GB of weights per token and ~1.2 GB of cache at 32K, so its memory traffic
+per token rises about 45%. That predicts a decode loss of about 31%, close to
+the 33% measured on the Spark. A dense 70B reads ~36 GB of weights and ~10.5 GB
+of cache at 32K, a rise of about 29%, so it loses about a fifth of its speed.
 
 ## Which figures are measured
 
@@ -118,8 +121,12 @@ server rather than `mlx-lm` or llama.cpp.
 
 ## Prices
 
-Delivered cost, meaning street price plus about 11% sales tax, applied uniformly
-so the comparison holds. Substitute your own rate.
+Delivered cost, meaning street price plus about 11% sales tax, applied to every
+configuration so that they compare fairly. Substitute your own rate.
+
+GPU configurations also include a host PC, priced before tax at about $500 for a
+single-card build, $600 for a dual-card build and $1,500 for the RTX PRO 6000
+workstation. Unified-memory machines (Spark, Mac) need no host.
 
 These are asking prices, not completed sales, and they were wrong twice during
 this analysis. The lesson recorded in `corrections.md`: do not extrapolate a

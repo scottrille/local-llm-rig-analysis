@@ -1,20 +1,56 @@
 # Changelog
 
-Version history of the comparison page. Fourteen published versions between
-28 August and 1 November 2026.
+Version history of the comparison page, from 28 August to 1 November 2026.
 
 Prices were restated three times and several conclusions reversed. Where a
 revision changed a verdict rather than just a number, that is called out.
 
 ---
 
-## 1 Nov 2026 — Radeon AI PRO R9700 added
+## 1 Nov 2026: consistency and public-release pass
+
+Rewrote the page so that it describes only the current state of the analysis.
+Removed text that referred to earlier versions of the page ("better than this
+page said", "a reversal", "now priced") and the per-row "since August" price
+arrows and column. One paragraph in the footer now records how prices moved.
+
+Fixed figures that contradicted the page's own inputs:
+
+- RTX 5090 price change: +64% became about +13% (street floor) and +12%
+  (delivered configuration). The page's own August street price was
+  $4,288–$4,381 and the current floor is $4,921.
+- Two-Spark price change: +40% became +48%, matching the single Spark. The
+  August comparison figures built on it ($50/GB, "$1,000 cheaper than the Mac")
+  were $47/GB and about $1,600.
+- Dual RTX 3090 price change: +5% became +15%, consistent with the 23% rise in
+  used 3090 prices.
+- gpt-oss-120b KV cache: 0.072 MB/token became 0.036 MB/token, because only
+  half of its layers use full attention. At 32K the cache is ~1.2 GB, not
+  ~2.4 GB, and that fits the measured 33% decode loss better.
+- Dense 70B decode at 32K: "barely notices" became "loses about a fifth".
+- "Best model at ≥50 tok/s" for the M5 Ultra columns: 235B-class and 671B
+  became gpt-oss-120b at Q8, since the page's own figures put the larger
+  models at ~29 and ~31 tok/s.
+- M5 Ultra "concurrent serving" and "software stack" rows now reflect
+  vllm-mlx, as the stack section already did.
+- Dual 3090 is "the only NVIDIA option under $5,000", not "the only option",
+  since both R9700 configurations are cheaper. Removed a claim that the RTX
+  5090 costs more than a 128 GB Spark ($6,000 versus $7,700).
+- Memory bars for the RTX 3090 and RTX 5090 cards were scaled to an old
+  maximum. They now match the 960 GB scale.
+
+Documented that GPU configurations include a host PC (about $500 to $1,500
+before tax). Applied plain-language editing throughout.
+
+---
+
+## 1 Nov 2026: Radeon AI PRO R9700 added
 
 Added single and dual R9700 configurations: 32 GB GDDR6 at 640 GB/s, ~$2,550
 delivered for one. The cheapest 32 GB on the page, at 42% of an RTX 5090's cost
 for the same capacity.
 
-Given its own comparison table against the other discrete cards rather than a
+Given its own table comparing it with the other discrete cards rather than a
 column in the main matrix, applying the apples-to-apples principle from the
 clustering fix.
 
@@ -28,7 +64,7 @@ rate, since the original was inferred from a timezone.
 
 ---
 
-## 28 Oct 2026 — M5 Ultra 512GB real price
+## 28 Oct 2026: M5 Ultra 512GB real price
 
 Apple published $22,299 for the 512 GB tier, about $24,750 delivered. The page
 had estimated $16,000 by extrapolating Apple's own 96 to 256 GB rate linearly,
@@ -45,17 +81,17 @@ and was low by $6,300.
 
 ---
 
-## 19 Oct 2026 — October repricing
+## 19 Oct 2026: October repricing
 
 NVIDIA raised the DGX Spark 128 GB from $4,699 to $6,950 (48%) and added a 64 GB
-SKU at $4,999. The RTX 5090 rose 64% to a $4,921 new floor, with used at $5,880,
-above new. RTX 3090 used rose 23%. Apple changed nothing.
+SKU at $4,999. The RTX 5090's new floor rose about 13% to $4,921, with used at
+$5,880, above new. RTX 3090 used rose 23%. Apple changed nothing.
 
 **Three verdicts reversed:**
 
-- Apple went from losing on memory value to winning it. The Spark was $50/GB
-  against the Mac's $52 in August; it became $70 against $52.
-- Two Sparks went from $1,000 cheaper than a 256 GB M5 Ultra to $3,400 more
+- Apple went from losing on memory value to winning it. The Spark was $47/GB
+  versus the Mac's $52 in August. It became $70 versus $52.
+- Two Sparks went from about $1,600 cheaper than a 256 GB M5 Ultra to $3,400 more
   expensive, for a quarter of the bandwidth. Moved from "hard to justify" to
   "avoid".
 - The new 64 GB Spark was flagged as a trap for this use case: it costs more than
@@ -63,7 +99,7 @@ above new. RTX 3090 used rose 23%. Apple changed nothing.
 
 ---
 
-## Late Aug / early Sep 2026 — structural revisions
+## Late Aug / early Sep 2026: structural revisions
 
 **Clustering table restructured.** A reader caught that it mixed three rows of
 (model × runtime) with a fourth row for a different platform, a different model,
@@ -95,8 +131,8 @@ those figures moved to measurement-derived values.
 **Context section added.** One vague row became three measured costs: KV cache
 capacity, time to first token, and decode decay.
 
-**Delivered-cost basis adopted.** Mac prices had been quoted pre-tax against
-others that included a build, which skewed every comparison. Everything moved to
+**Delivered-cost basis adopted.** Mac prices had been quoted pre-tax, while
+the others included a build, and that skewed every comparison. Everything moved to
 street price plus ~11% sales tax, applied uniformly.
 
 **M5 Ultra added.** Announced 25 August, three days before the first version.
@@ -105,7 +141,7 @@ conclusion that the Spark was the capacity option.
 
 ---
 
-## 28 Aug 2026 — first version
+## 28 Aug 2026: first version
 
 Four configurations: dual RTX 3090, single RTX 5090, one DGX Spark, two DGX
 Sparks. Built around the capacity-versus-bandwidth trade and the finding that

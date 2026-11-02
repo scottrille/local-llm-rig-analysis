@@ -5,7 +5,7 @@ locally, built between August and November 2026 during a severe DRAM and NAND
 shortage that repriced the entire category mid-analysis.
 
 **The page:** open `index.html` in any browser. It is a single self-contained
-file, no build step and no dependencies beyond two Google Fonts.
+file, with no build step and no dependencies beyond three Google Fonts families.
 
 ## The thesis
 
@@ -28,23 +28,25 @@ gpt-oss-120b activates about 5.1B parameters per token, so it needs capacity for
 all of them but bandwidth for only a slice. That is why a DGX Spark runs a 120B
 MoE at 60 tok/s and a 32B dense model at 8 tok/s. See `docs/methodology.md`.
 
-**The cheapest memory on the page is Apple's, which was not true a year ago.**
-All four M5 Ultra configurations land at $52/GB. The DGX Spark was $50/GB in
-August and is $70/GB after an October price increase.
+**The cheapest memory on the page is Apple's.** All four M5 Ultra
+configurations cost about $52 per gigabyte of usable memory. The DGX Spark was
+$47/GB in August and is $70/GB after NVIDIA's October price increase.
 
 **Prefill matters more than decode for agentic work.** An agent loop re-sends its
-whole context every turn, so time-to-first-token dominates perceived speed. This
-is where the low-bandwidth machines and the AMD card are weakest, and it does not
-show up in the tokens/sec figures people usually quote.
+whole context every turn, so the time to the first token is most of the wait
+that you notice. This is where the low-bandwidth machines and the AMD card are
+weakest, and it does not show up in the tokens/sec figures that people usually
+quote.
 
-**Clustering behaves completely differently across platforms.** Two Macs over
+**Clustering works very differently across platforms.** Two Macs over
 Thunderbolt 5 with RDMA and EXO gain about 34% throughput. The same hardware
-running llama.cpp *loses* 16%. The runtime, not the silicon, decides whether a
+running llama.cpp *loses* 16%. The runtime, not the silicon, determines whether a
 second box helps.
 
-**Prices moved more than the analysis did.** Between August and November the RTX
-5090 rose 64%, the DGX Spark 128GB rose 48%, and Apple changed nothing. Several
-conclusions inverted without any hardware changing. `docs/corrections.md` tracks
+**Prices moved more than the analysis did.** Between August and October NVIDIA
+raised the DGX Spark 128GB list price 48%, used RTX 3090s rose 23%, the lowest
+new RTX 5090 price rose about 13%, and Apple changed nothing. Several
+conclusions reversed without any hardware changing. `docs/corrections.md` tracks
 every reversal.
 
 ## Contents
@@ -69,9 +71,11 @@ from the bandwidth model rather than measured. `docs/methodology.md` marks which
 is which, and `docs/corrections.md` is the honest record of where the derivations
 failed.
 
-Prices are street rates as of 1 November 2026, delivered cost including about 11%
-sales tax applied uniformly. They were wrong twice during this analysis and will
-be wrong again. Re-check before buying anything.
+Prices are street rates checked between 19 October and 1 November 2026. They are
+delivered cost: street price plus about 11% sales tax on every configuration,
+plus a host PC for the GPU builds (about $500 before tax for one card, $600 for
+two, $1,500 for the RTX PRO 6000 workstation). They were wrong twice during this
+analysis and will be wrong again. Check them again before you buy anything.
 
 ## Before publishing this repo
 
