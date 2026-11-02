@@ -533,6 +533,18 @@
   }
   .callout p + p { color: var(--ink-2); font-size: .9375rem; }
 
+  /* ---------- table titles ---------- */
+
+  .tbl-head { display: flex; flex-direction: column; gap: 4px; margin: 12px 0 -10px; }
+  .tbl-head h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -.012em;
+    margin: 0;
+  }
+  .tbl-head p { margin: 0; color: var(--ink-2); font-size: .9375rem; }
+
   /* ---------- definitions ---------- */
 
   a.def {
@@ -1736,9 +1748,14 @@
       </p>
     </div>
 
+    <div class="tbl-head">
+      <h3 id="tbl-engines">Which inference engines run on each platform</h3>
+      <p>
+        An inference engine is the program that loads a model and answers requests. Check that the engine you plan to use runs on the platform you are considering, because the engine determines most of the features in the next table.
+      </p>
+    </div>
     <div class="scroller">
-      <table class="wide">
-        <caption>Inference engine availability by platform</caption>
+      <table class="wide" aria-labelledby="tbl-engines">
         <thead>
           <tr>
             <th scope="col">Engine</th>
@@ -1809,9 +1826,14 @@
       </table>
     </div>
 
+    <div class="tbl-head">
+      <h3 id="tbl-features">Features that come from the software, not the chip</h3>
+      <p>
+        These features determine how well a machine serves several users at once, how quickly it answers follow-up requests, and whether you can fine-tune models on it. The software provides them, so two machines with similar hardware can differ here.
+      </p>
+    </div>
     <div class="scroller">
-      <table class="wide">
-        <caption>Capabilities that follow from the stack, not the silicon</caption>
+      <table class="wide" aria-labelledby="tbl-features">
         <thead>
           <tr>
             <th scope="col">Capability</th>
@@ -1868,9 +1890,14 @@
       </table>
     </div>
 
+    <div class="tbl-head">
+      <h3 id="tbl-models">Getting models onto the machine</h3>
+      <p>
+        How your applications reach the machine, how soon a newly released model runs on it, and which model file formats it can load.
+      </p>
+    </div>
     <div class="scroller">
-      <table class="narrow">
-        <caption>Model and format availability</caption>
+      <table class="narrow" aria-labelledby="tbl-models">
         <thead>
           <tr>
             <th scope="col">Concern</th>
